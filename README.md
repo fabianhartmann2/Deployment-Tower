@@ -45,7 +45,7 @@ python3 -m venv .venv
 .venv/bin/python -m deployment_station.export
 ```
 
-On Windows, substitute `.venv\Scripts\python.exe` for `.venv/bin/python`. Installed console-script equivalents are `deployment-station-export` and `deployment-station-validate`.
+On Windows, substitute `.venv\Scripts\python.exe` for `.venv/bin/python`. Installed console-script equivalents are `deployment-station-export`, `deployment-station-validate`, and the macOS-only `deployment-station-quicklook`.
 
 The export command rebuilds all parts from `parameters.py`, writes STEP/STL and renders, reopens every STEP, validates every STL, writes the manifest and reports, and exits non-zero if any validation result is `FAIL`. A report-only rerun against the existing STL directory is:
 
@@ -73,6 +73,18 @@ The current source registry expects **19 printable definitions**: 15 installed a
 - `reports/export_manifest.json`, with the authoritative regenerated paths, sizes, SHA-256 hashes, and design-space STEP bounding boxes.
 
 STEP files remain in assembly coordinates. STL files receive the documented print-orientation transform and are placed on `Z=0`. No 3MF is generated because this export path cannot preserve dependable slicer/process settings.
+
+### macOS Finder model
+
+`exports/interactive/complete_assembly_finder.usdz` is a color, interactive Quick Look model containing all 15 installed printed parts, the three equipment references, and seven interface-hardware references. Select it in Finder and press Space, or open it directly, to orbit, pan, and zoom. It uses metres-per-unit metadata corresponding to the millimetre CAD model and passes Apple's strict RealityKit USDZ validation.
+
+On macOS with the Apple USD command-line tools available, regenerate it with:
+
+```sh
+.venv/bin/python -m deployment_station.quicklook
+```
+
+This convenience visualization is generated separately from the fail-gated STEP/STL manifest and is not a manufacturing export.
 
 ## Direct versus extended interfaces
 

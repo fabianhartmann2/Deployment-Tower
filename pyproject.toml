@@ -20,6 +20,7 @@ test = ["pytest>=8.0"]
 [project.scripts]
 deployment-station-export = "deployment_station.export:main"
 deployment-station-validate = "deployment_station.validation:main"
+deployment-station-quicklook = "deployment_station.quicklook:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
