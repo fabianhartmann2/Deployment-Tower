@@ -12,11 +12,11 @@ The stack from bottom to top is:
 2. a horizontal Mac mini on an open-ring, three-pad cradle with four positive-Z clip/cam retainers and two bottom-operated release rails;
 3. a shell-supported, separately covered APV/mains compartment, a distinct low-voltage/data lane, and a provisional reserved Mac-AC route;
 4. a horizontal RUTM30 on four replaceable compliant support pads and a shell-supported removable tray at `Z=151`; and
-5. a reinforced upper shell and cap with a removable, dual lateral squeeze-pawl T-lock handle.
+5. a reinforced upper shell and cap with a removable handle carried by four externally accessible M3 screws, broad feet, full-depth cap bosses, and shell-tied load paths.
 
-The lower and upper shell modules fit the Bambu Lab X1 Carbon's 256 mm build cube. The upper shell also carries two 70 x 70 mm push-in cantilever logo panels and two screw-fastened, vertically oriented recessed Wi-Fi antenna transport docks. The C8 inlet island and closed terminal tunnel are integral to the power compartment: the surrounding rear service panel removes around the island, leaving that mechanical mains boundary in place. Inside the box, raised cable-tie bridges preserve a solid floor, the two APV fixing axes use top-service blind insert pilots, and four wall-tied columns reach the removable cover. These are mechanical provisions only and do not authorize wiring or energization.
+The lower and upper shell modules fit the Bambu Lab X1 Carbon's 256 mm build cube. The upper shell also carries two 70 x 70 mm logo panels retained by two outward-accessible M3 screws each and two screw-fastened, vertically oriented recessed Wi-Fi antenna transport docks. The C8 inlet island and closed terminal tunnel are integral to the power compartment: the surrounding rear service panel removes around the island, leaving that mechanical mains boundary in place. Inside the box, raised cable-tie bridges preserve a solid floor, the two APV fixing axes use top-service blind insert pilots, and four wall-tied columns reach the removable cover. These are mechanical provisions only and do not authorize wiring or energization.
 
-The current joint labels deliberately distinguish **M3x14 base**, **M3x10 Mac-cradle**, recessed low-head **M3x6 router-tray**, **M3x8 service/cover**, and **M4x18 cap/seam** stacks. All screw heads, inserts, engagement, torque, and final lengths remain provisional until coupon and joint-stack tests pass.
+The current joint labels deliberately distinguish **M3x14 base**, **M3x10 Mac-cradle**, **M3x10 handle**, recessed low-head **M3x6 router-tray**, **M3x8 logo/service/cover**, and **M4x18 cap/seam** stacks. The handle screws seat on the full 5 mm feet rather than in deep counterbores. All screw heads, inserts, engagement, torque, and final lengths remain provisional until coupon and joint-stack tests pass.
 
 The official router geometry is imported from `reference/0112_RUTM30AMBKX_02.STEP`. The Mac, APV, antennas, C8, extensions, plugs, and cable paths are controlled placeholders; see [assumptions.md](reports/assumptions.md).
 
@@ -112,8 +112,8 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 | `shell.py` | Split shell, rear seat, seam keys/bolts, logo/dock receivers, equipment supports, and cap load path |
 | `router_tray.py`, `rear_panel.py` | Router retention, four compliant support lands/pad template, recessed low-head tray screws, rear panel, replaceable bezel, RF window, and provisional two-hole extension flanges |
 | `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, full-height cover columns, exits, and cover |
-| `handle.py` | Six-fastener cap, structural beams, dual T-locks, squeeze pawls, and lock coupon |
-| `wifi_dock.py`, `logo_panel.py` | Screw-fastened antenna docks and push-in cantilever logo panels |
+| `handle.py` | Six-fastener cap, structural beams, four-screw handle feet/bosses, and mounting coupon |
+| `wifi_dock.py`, `logo_panel.py` | Screw-fastened antenna docks and two-screw replaceable logo panels |
 | `coupons.py` | Eight high-risk physical-fit articles |
 | `assembly.py`, `render.py` | Part registry, assemblies, non-printable references, and views |
 | `validation.py`, `export.py` | Fail-closed computational checks and reproducible outputs |

@@ -61,7 +61,6 @@ class FitParameters:
     service_panel_per_side: float = 0.35
     logo_panel_per_side: float = 0.25
     snap_feature_per_side: float = 0.20
-    handle_lock_per_side: float = 0.35
     wifi_clip_radial: float = 0.45
     insert_pilot_allowance: float = -0.15
 
@@ -212,17 +211,12 @@ class HandleParameters:
     leg_width: float = 18.0
     leg_depth: float = 26.0
     anchor_spacing: float = 108.0
-    tongue_width: float = 15.0
-    tongue_length: float = 24.0
-    tongue_height: float = 6.0
-    dovetail_top_width: float = 11.0
-    socket_length: float = 30.0
-    socket_depth: float = 6.4
-    detent_diameter: float = 3.2
-    detent_deflection: float = 0.8
+    foot_width: float = 42.0
+    foot_depth: float = 32.0
+    foot_thickness: float = 5.0
+    fastener_offset_x: float = 14.0
     reinforcement_rib_thickness: float = 5.0
-    insert_boss_diameter: float = 10.0
-    design_static_factor: float = 2.0
+    design_static_factor: float = 4.0
     provisional_complete_mass_kg: float = 1.8
 
 
@@ -259,6 +253,7 @@ class LogoParameters:
     emboss_height: float = 0.8
     center_z: float = 156.0
     finger_notch_diameter: float = 8.0
+    fastener_offset_y: float = 25.0
 
 
 @dataclass(frozen=True)
@@ -267,11 +262,15 @@ class FastenerParameters:
     base_screw: str = "M3x14"
     cradle_screw: str = "M3x10"
     router_tray_screw: str = "M3x6"
+    logo_screw: str = "M3x8"
+    handle_screw: str = "M3x10"
     structural_screw: str = "M4x18"
     service_screw_length: float = 8.0
     base_screw_length: float = 14.0
     cradle_screw_length: float = 10.0
     router_tray_screw_length: float = 6.0
+    logo_screw_length: float = 8.0
+    handle_screw_length: float = 10.0
     structural_screw_length: float = 18.0
     minimum_thread_engagement: float = 4.5
     m3_clearance_diameter: float = 3.4

@@ -6,6 +6,7 @@ import cadquery as cq
 
 from .geometry import box_at, cylinder_axis, rounded_panel_xz, rounded_rect_ring
 from .handle import cap_fastener_positions
+from .logo_panel import logo_mount_positions
 from .mac_mount import mac_cradle_fastener_positions
 from .parameters import DEFAULT, StationParameters
 from .power_compartment import power_mount_fastener_positions
@@ -132,9 +133,9 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     part = part.cut(_rear_opening_cut(p, z0, height))
     part = part.cut(_rear_panel_seat_cut(p))
 
-    # Full-depth shallow pockets and four concealed push-in receiver blocks per
-    # side carry the replaceable logo panels without geometric interpenetration.
-    inner_x = e.width / 2.0 - e.wall
+    # Full-depth shallow pockets seat the panels with 0.25 mm face clearance.
+    # Two blind M3 insert bosses per side are webbed to the intact shell outside
+    # the pocket; visible screws provide an unambiguous, reversible load path.
     for side in (-1, 1):
         pocket_inner = e.width / 2.0 - logo.thickness - p.fits.logo_panel_per_side
         pocket_outer = e.width / 2.0 + 1.0
@@ -146,18 +147,31 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
             (side * ((pocket_inner + pocket_outer) / 2.0), 0.0, logo.center_z),
         )
         part = part.cut(pocket)
-        receiver_inner = e.width / 2.0 - 10.5
-        receiver_depth = inner_x - receiver_inner
-        for y in (-26.0, 26.0):
-            for z in (logo.center_z - 22.0, logo.center_z + 22.0):
-                receiver = box_at(receiver_depth, 10.0, 16.0, (side * ((inner_x + receiver_inner) / 2.0), y, z))
-                slot = box_at(
-                    receiver_depth + 2.0,
-                    3.2 + 2.0 * p.fits.logo_panel_per_side,
-                    8.0 + 2.0 * p.fits.logo_panel_per_side,
-                    (side * ((inner_x + receiver_inner) / 2.0), y, z),
-                )
-                part = part.union(receiver).cut(slot)
+        # The boss face reaches the panel's inner face, eliminating clamp-up
+        # bending while the surrounding pocket retains 0.25 mm assembly relief.
+        boss_length = 7.0 + p.fits.logo_panel_per_side
+        for _axis_x, y, z in logo_mount_positions("right" if side > 0 else "left", p):
+            boss_start_x = side * (pocket_inner - boss_length)
+            boss = cylinder_axis(
+                f.m3_boss_diameter / 2.0,
+                boss_length,
+                (boss_start_x, y, z),
+                (side, 0, 0),
+            )
+            pilot = cylinder_axis(
+                f.m3_insert_hole_diameter / 2.0,
+                f.insert_depth + 0.7,
+                (side * (pocket_inner + 0.1), y, z),
+                (-side, 0, 0),
+            )
+            web_y = 31.5 if y > 0.0 else -31.5
+            web = box_at(
+                boss_length,
+                14.0,
+                f.m3_boss_diameter,
+                (side * (pocket_inner - boss_length / 2.0), web_y, z),
+            )
+            part = part.union(boss).union(web).cut(pilot)
         notch = cylinder_axis(
             logo.finger_notch_diameter / 2.0 + 0.4,
             e.wall + 2.0,

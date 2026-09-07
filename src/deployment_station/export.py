@@ -72,13 +72,13 @@ def _print_oriented(name: str, obj: cq.Workplane) -> cq.Workplane:
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 90.0)
     elif name in {"logo_panel_left", "wifi_dock_left"}:
         obj = obj.rotate((0, 0, 0), (0, 1, 0), -90.0)
-    elif name in {"logo_panel_right", "logo_panel_blank_template", "wifi_dock_right", "coupon_logo_retention", "coupon_wifi_dock"}:
+    elif name in {"logo_panel_right", "logo_panel_blank_template", "wifi_dock_right", "coupon_wifi_dock"}:
         obj = obj.rotate((0, 0, 0), (0, 1, 0), 90.0)
     elif name == "logo_panel_example_embossed":
         # Edge-print the raised-face template.  Either face-down orientation
         # would rest on the emboss or inward hooks and suspend the 70 mm face.
         pass
-    elif name in {"removable_handle", "coupon_handle_lock"}:
+    elif name == "removable_handle":
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 90.0)
     return _ground_and_pack_print_solids(obj)
 

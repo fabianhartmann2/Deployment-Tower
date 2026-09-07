@@ -19,7 +19,6 @@ from deployment_station.router_tray import router_support_pad_positions
 from deployment_station.shell import lower_shell
 from deployment_station.validation import (
     ASSEMBLY_INTERFERENCE_ALLOWLIST,
-    _handle_mating_check,
     _intersection_volume,
     _sampled_translation_clearance,
     apv_top_service_mount_check,
@@ -27,6 +26,8 @@ from deployment_station.validation import (
     extension_mount_hole_checks,
     fastener_stack_checks,
     geometry_checks,
+    handle_structural_mount_check,
+    logo_screw_mount_check,
     mac_base_pad_stack_check,
     mac_ac_corridor_packaging_check,
     mac_ac_gland_passage_check,
@@ -86,8 +87,8 @@ def test_all_required_coupons_exist_and_are_valid():
         "coupon_c8_cutout",
         "coupon_insert_boss",
         "coupon_rear_panel_fit",
-        "coupon_logo_retention",
-        "coupon_handle_lock",
+        "coupon_logo_mount",
+        "coupon_handle_mount",
         "coupon_wifi_dock",
         "coupon_mac_button_recess",
         "coupon_router_rf_access",
@@ -133,8 +134,8 @@ def test_sampled_translation_clearance_detects_an_intermediate_obstacle():
     assert "moving/obstacle" in blocked.detail
 
 
-def test_only_handle_pawl_preload_is_allowlisted():
-    assert set(ASSEMBLY_INTERFERENCE_ALLOWLIST) == {frozenset(("upper_cap", "removable_handle"))}
+def test_screw_mounted_parts_require_no_interference_allowance():
+    assert ASSEMBLY_INTERFERENCE_ALLOWLIST == {}
 
 
 def test_c8_terminal_tunnel_opens_into_main_compartment():
@@ -194,13 +195,27 @@ def test_mac_cradle_has_clear_positive_vertical_retention():
     assert mac_vertical_retention_check(DEFAULT, unlinked_releases, mac_reference()).status == "FAIL"
 
 
-def test_handle_mating_check_is_not_satisfied_by_two_unmated_solids():
+def test_handle_mount_check_is_not_satisfied_by_two_unmated_solids():
     disconnected_interface = {
         "removable_handle": box_at(128.0, 20.0, 18.0, (0.0, 0.0, 340.0)),
         "upper_cap": box_at(165.0, 165.0, 12.0, (0.0, 0.0, 274.0)),
     }
     assert all(len(part.solids().vals()) == 1 for part in disconnected_interface.values())
-    assert _handle_mating_check(DEFAULT, disconnected_interface).status == "FAIL"
+    assert handle_structural_mount_check(DEFAULT, disconnected_interface).status == "FAIL"
+
+
+def test_logo_mount_check_rejects_a_blocked_panel_hole(validation_parts):
+    assert logo_screw_mount_check(DEFAULT, validation_parts).status == "PASS"
+    panel = validation_parts["logo_panel_right"]
+    blocked = cylinder_axis(
+        DEFAULT.fasteners.m3_clearance_diameter / 2.0 - 0.1,
+        DEFAULT.logo.thickness + 0.2,
+        (DEFAULT.enclosure.width / 2.0 + 0.1, -DEFAULT.logo.fastener_offset_y, DEFAULT.logo.center_z),
+        (-1.0, 0.0, 0.0),
+    )
+    damaged = dict(validation_parts)
+    damaged["logo_panel_right"] = panel.union(blocked)
+    assert logo_screw_mount_check(DEFAULT, damaged).status == "FAIL"
 
 
 def test_sampled_motion_check_detects_an_intermediate_obstruction():
@@ -226,6 +241,8 @@ def test_fastener_stack_checks_cover_all_screw_families_and_reject_wrong_lengths
         "fastener stack: removable base M3x14",
         "fastener stack: Mac cradle M3x10",
         "fastener stack: router tray M3x6",
+        "fastener stack: reinforced handle M3x10",
+        "fastener stack: logo panels M3x8",
         "fastener stack: upper cap M4x18",
         "fastener stack: structural shell seam M4x18",
         "fastener stack: power-compartment cover M3x8",
@@ -239,6 +256,10 @@ def test_fastener_stack_checks_cover_all_screw_families_and_reject_wrong_lengths
         cradle_screw_length=8.0,
         router_tray_screw="M3x8",
         router_tray_screw_length=8.0,
+        logo_screw="M3x6",
+        logo_screw_length=6.0,
+        handle_screw="M3x8",
+        handle_screw_length=8.0,
         structural_screw="M4x12",
         structural_screw_length=12.0,
     )
@@ -249,6 +270,8 @@ def test_fastener_stack_checks_cover_all_screw_families_and_reject_wrong_lengths
     assert wrong_results["fastener stack: removable base M3x14"] == "FAIL"
     assert wrong_results["fastener stack: Mac cradle M3x10"] == "FAIL"
     assert wrong_results["fastener stack: router tray M3x6"] == "FAIL"
+    assert wrong_results["fastener stack: reinforced handle M3x10"] == "FAIL"
+    assert wrong_results["fastener stack: logo panels M3x8"] == "FAIL"
     assert wrong_results["fastener stack: upper cap M4x18"] == "FAIL"
     assert wrong_results["fastener stack: structural shell seam M4x18"] == "FAIL"
     assert wrong_results["fastener stack: power-compartment cover M3x8"] == "PASS"
@@ -320,7 +343,8 @@ def test_full_geometry_validation_has_no_failures():
     pairwise_results = [result for result in results if result.name.startswith("assembly interference: ")]
     assert len(pairwise_results) == installed_count * (installed_count - 1) // 2
     assert "Mac power-button continuous swept path" in result_names
-    assert "handle dual-lock bearing interface" in result_names
+    assert "handle four-screw reinforced mounting stack" in result_names
+    assert "logo panels four-screw replaceable mounting stack" in result_names
     assert "C8 terminal tunnel/main-compartment passage" in result_names
     assert "sealed-floor raised power tie bridges" in result_names
     assert "Mac AC nominal gland aperture" in result_names
@@ -338,6 +362,8 @@ def test_full_geometry_validation_has_no_failures():
         "fastener stack: removable base M3x14",
         "fastener stack: Mac cradle M3x10",
         "fastener stack: router tray M3x6",
+        "fastener stack: reinforced handle M3x10",
+        "fastener stack: logo panels M3x8",
         "fastener stack: upper cap M4x18",
         "fastener stack: structural shell seam M4x18",
         "fastener stack: power-compartment cover M3x8",
@@ -357,6 +383,8 @@ def test_full_geometry_validation_has_no_failures():
         "fastener stack: removable base M3x14",
         "fastener stack: Mac cradle M3x10",
         "fastener stack: router tray M3x6",
+        "fastener stack: reinforced handle M3x10",
+        "fastener stack: logo panels M3x8",
         "fastener stack: upper cap M4x18",
         "fastener stack: structural shell seam M4x18",
         "fastener stack: power-compartment cover M3x8",

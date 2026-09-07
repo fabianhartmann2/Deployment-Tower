@@ -63,7 +63,7 @@ The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled p
 | Mac extension flange datums | Two provisional M3 axes per extension, vertical pitch 20; diameter-3.4 clearances |
 | Mac button approach | 26 wide; installed base run follows the button-to-rear distance (42.5 before the rounded end); continuous swept path validated with diameter-11 probe |
 | Base intake opening | diameter 116 at Mac Y centre |
-| Logo faces | 70 x 70, radius 6, centre `Z=156`, 0.8 reveal; four push-in cantilever studs each |
+| Logo faces | 70 x 70 x 2.4, radius 6, centre `Z=156`, 0.8 reveal; two outward-accessible M3 axes each at Y `+/-25` |
 | Wi-Fi dock backplates | 36 x 98 x 3, centre `(Y,Z)=(53,216)` on each side; two M3 positions per dock |
 
 `finger_well_reach=38` controls the isolated button coupon. The installed base and cradle derive their longer clearances from the provisional button and rear-face coordinates.
@@ -84,10 +84,10 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `rear_panel` | 132 x 3.2 x 236 |
 | `router_interface_bezel` | 119 x 8.8 x 78 |
 | `upper_cap` | 165 x 165 x 12 |
-| `removable_handle` | 130.8 x 26 x 82 |
+| `removable_handle` | 150 x 32 x 76 |
 | each `wifi_dock_*` | 17.85 x 36 x 98 |
-| each installed/blank logo panel | 12.9 x 70 x 70 |
-| example embossed logo panel | 13.7 x 70 x 70 |
+| each installed/blank logo panel | 2.4 x 70 x 70 |
+| example embossed logo panel | 3.2 x 70 x 70 |
 | Mac compliant-pad template | 14.6 x 14.6 x 2 |
 | router compliant-pad template | 8 x 16 x 1.3 |
 
@@ -98,8 +98,8 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_c8_cutout` | 55 x 3.2 x 35 |
 | `coupon_insert_boss` | 46 x 28 x 14 |
 | `coupon_rear_panel_fit` | 54 x 9 x 34 |
-| `coupon_logo_retention` | 25.2 x 20 x 24 |
-| `coupon_handle_lock` | 66.4 x 48 x 23 |
+| `coupon_logo_mount` | 23.2 x 32 x 18 |
+| `coupon_handle_mount` | 100 x 36 x 12 |
 | `coupon_wifi_dock` | 17.9 x 120 x 42 |
 | `coupon_mac_button_recess` | 54 x 58 x 12 |
 | `coupon_router_rf_access` | 110 x 3.2 x 46 |
@@ -122,7 +122,6 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `sliding_fit_per_side` | 0.30 | General sliding/seam-key fit |
 | `service_panel_per_side` | 0.35 | Panel/lip coupon fit |
 | `logo_panel_per_side` | 0.25 | Logo receiver clearance |
-| `handle_lock_per_side` | 0.35 | T-lock clearance |
 | `wifi_clip_radial` | 0.45 | Antenna capture allowance |
 | `snap_feature_per_side`, `insert_pilot_allowance` | 0.20, -0.15 | Reserved references; actual mechanisms/coupon variants have explicit geometry |
 
@@ -167,12 +166,11 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | --- | --- | --- |
 | Handle grip span/depth/height | 128/20/18 | Nominal grip |
 | Rise; leg width/depth | 58; 18/26 | Printed handle |
-| Anchor spacing | 108 | Lock centres at X `+/-54` |
-| Tongue W/L/H; neck width | 15/24/6; 11 | Dual T-lock geometry |
-| Socket length/depth | 30/6.4 | Cap interface |
-| Rib thickness / lock boss diameter | 5/10 | Structural geometry |
-| Complete mass / static factor | 1.8 kg provisional / 2.0 | Inputs for future test, not a rating |
-| Handle detent diameter/deflection | 3.2/0.8 | Legacy/reserved values; current positive lock uses explicit lateral pawl geometry |
+| Anchor spacing | 108 | Leg/foot centres at X `+/-54` |
+| Foot W/D/T | 42/32/5 | Broad cap bearing area; screw heads seat on the unrecessed top surface; 7 mm screw-centre edge distance |
+| Fastener offset | `+/-14` from each anchor | Four M3 axes at X `-68,-40,+40,+68`, Y `-42` |
+| Rib thickness | 5 | Structural geometry |
+| Complete mass / proof-load factor | 1.8 kg provisional / 4.0 | 70.6 N provisional test target; not a rating |
 | Antenna length/base/stem | 91/30/12 | Photo-derived placeholder |
 | Antenna hub/proximal/tip | 18/15/5 | Placeholder reference-solid sections |
 | Dock backplate W/H/T | 36/98/3 | Recessed removable dock |
@@ -181,13 +179,13 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Logo size/thickness/radius | 70/2.4/6 | Face geometry |
 | Logo pocket depth/reveal/emboss | 1.6/0.8/0.8 | Appearance parameters |
 | Logo centre Z / finger notch | 156 / diameter 8 | Placement/removal |
-| Logo rail and detent fields | 5/2.6/54; diameter 2.8 | Legacy/reserved; current panels use four explicit push-in cantilever studs/hooks |
+| Logo fastener offset | Y `+/-25` | Two outward-accessible M3 screws per panel into shell-webbed blind inserts |
 
 ### Fasteners, inserts, and print
 
 | Parameter group | Defaults | Meaning |
 | --- | --- | --- |
-| M3 screw stacks | M3x14 base; M3x10 cradle; low-head M3x6 router tray; M3x8 service/cover | Separate lengths prevent marginal engagement or blind-pilot bottoming; all provisional pending joint tests |
+| M3 screw stacks | M3x14 base; M3x10 cradle/handle; low-head M3x6 router tray; M3x8 logo/service/cover | Separate lengths prevent marginal engagement or blind-pilot bottoming; all provisional pending joint tests |
 | Structural screw stack | M4x18 | Cap and shell-seam joints; provisional pending joint tests |
 | M3/M4 clearance holes | diameter 3.4 / 4.5 | Modeled clearances |
 | M3/M4 insert pilots | diameter 4.2 / 5.6 | Provisional heat-set holes |

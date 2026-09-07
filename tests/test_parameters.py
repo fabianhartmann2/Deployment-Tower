@@ -26,7 +26,6 @@ def test_joint_clearances_are_separate_parameters():
         fits.service_panel_per_side,
         fits.logo_panel_per_side,
         fits.snap_feature_per_side,
-        fits.handle_lock_per_side,
         fits.wifi_clip_radial,
     }
     assert len(values) >= 4
@@ -43,5 +42,7 @@ def test_service_joint_lengths_are_distinct_by_grip_stack():
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)
     assert (fasteners.cradle_screw, fasteners.cradle_screw_length) == ("M3x10", 10.0)
     assert (fasteners.router_tray_screw, fasteners.router_tray_screw_length) == ("M3x6", 6.0)
+    assert (fasteners.logo_screw, fasteners.logo_screw_length) == ("M3x8", 8.0)
+    assert (fasteners.handle_screw, fasteners.handle_screw_length) == ("M3x10", 10.0)
     assert (fasteners.service_screw, fasteners.service_screw_length) == ("M3x8", 8.0)
     assert (fasteners.structural_screw, fasteners.structural_screw_length) == ("M4x18", 18.0)

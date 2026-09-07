@@ -1,10 +1,10 @@
-"""Reinforced cap and tool-free sliding T-lock handle."""
+"""Reinforced cap and positively screw-mounted removable handle."""
 
 from __future__ import annotations
 
 import cadquery as cq
 
-from .geometry import box_at, rounded_rect_prism
+from .geometry import box_at, cylinder_axis, rounded_rect_prism
 from .parameters import DEFAULT, StationParameters
 
 
@@ -22,6 +22,18 @@ def cap_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float,
     )
 
 
+def handle_mount_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
+    """Four M3 axes, two outside each handle leg for direct tool access."""
+
+    h = p.handle
+    anchor_y = -42.0
+    return tuple(
+        (anchor_x + offset_x, anchor_y)
+        for anchor_x in (-h.anchor_spacing / 2.0, h.anchor_spacing / 2.0)
+        for offset_x in (-h.fastener_offset_x, h.fastener_offset_x)
+    )
+
+
 def upper_cap(p: StationParameters = DEFAULT) -> cq.Workplane:
     e = p.enclosure
     h = p.handle
@@ -33,45 +45,38 @@ def upper_cap(p: StationParameters = DEFAULT) -> cq.Workplane:
     cavity = rounded_rect_prism(e.width - 18.0, e.depth - 18.0, e.cap_height - 4.0, e.outer_corner_radius - 9.0, z0 - 1.0)
     cap = cap.cut(cavity)
     anchor_y = -42.0
-    # Cross members connect each lock to both side walls and the reinforced upper
-    # shell ribs.  They are integral to the cap, not cosmetic surface features.
+    # A full-width crossmember and two solid local bearing pads carry the handle
+    # feet into both side walls and the reinforced upper-shell ribs.  The pads
+    # fill the cap below each foot instead of loading the 4 mm top skin alone.
     cap = cap.union(box_at(e.width - 16.0, 12.0, 8.0, (0.0, anchor_y, z0 + 4.0)))
     for x in (-h.anchor_spacing / 2.0, h.anchor_spacing / 2.0):
-        cap = cap.union(box_at(12.0, 32.0, 8.0, (x, -56.0, z0 + 4.0)))
-        boss = cq.Workplane("XY").center(x, anchor_y).circle(h.insert_boss_diameter / 2.0).extrude(e.cap_height).translate((0, 0, z0))
-        cap = cap.union(boss)
+        bearing_pad = box_at(
+            h.foot_width + 6.0,
+            h.foot_depth + 6.0,
+            e.cap_height - 4.0,
+            (x, anchor_y, z0 + (e.cap_height - 4.0) / 2.0),
+        )
+        longitudinal_tie = box_at(12.0, h.foot_depth + 12.0, 8.0, (x, anchor_y, z0 + 4.0))
+        cap = cap.union(bearing_pad).union(longitudinal_tie)
 
-        # Two-stage T-slot: narrow mouth over a broader structural undercut.  A
-        # top entry pocket allows the handle keys to drop in, then slide forward.
-        slot_clear = p.fits.handle_lock_per_side
-        lower = box_at(
-            h.tongue_width + 2.0 * slot_clear,
-            h.socket_length + 2.0 * slot_clear,
-            h.tongue_height / 2.0 + slot_clear,
-            (x, anchor_y, e.height - h.tongue_height * 0.72),
+    # Four blind top-entry M3 insert pilots sit inside full-depth bosses.  The
+    # two axes per foot are outside the leg footprint, so every low-head screw
+    # seats on the full 5 mm foot and remains accessible after installation.
+    for x, y in handle_mount_fastener_positions(p):
+        boss = (
+            cq.Workplane("XY")
+            .center(x, y)
+            .circle(f.m3_boss_diameter / 2.0)
+            .extrude(e.cap_height)
+            .translate((0, 0, z0))
         )
-        neck = box_at(
-            h.dovetail_top_width + 2.0 * slot_clear,
-            h.socket_length + 2.0 * slot_clear,
-            h.tongue_height / 2.0 + 2.0,
-            (x, anchor_y, e.height - h.tongue_height * 0.25),
+        insert = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0,
+            f.insert_depth + 0.2,
+            (x, y, e.height + 0.1),
+            (0, 0, -1),
         )
-        entry = box_at(
-            h.tongue_width + 2.0 * slot_clear + 2.0,
-            12.0,
-            h.socket_depth + 1.0,
-            (x, anchor_y + h.socket_length / 2.0 + 4.0, e.height - h.socket_depth / 2.0),
-        )
-        cap = cap.cut(lower.union(neck).union(entry))
-
-        # Longitudinal clearance lets the lateral spring pawl ride compressed
-        # during insertion.  At the locked position it expands into the local
-        # outer pocket; squeezing both exposed handle tabs retracts the pawls.
-        side = 1.0 if x > 0 else -1.0
-        arm_x = x + side * (h.leg_width / 2.0 - 0.4)
-        pawl_channel = box_at(2.8, 45.0, 7.5, (arm_x, -34.0, e.height - 2.75))
-        pawl_pocket = box_at(4.8, 5.2, 5.0, (x + side * (h.leg_width / 2.0 + 1.2), -51.0, e.height - 3.0))
-        cap = cap.cut(pawl_channel.union(pawl_pocket))
+        cap = cap.union(boss).cut(insert)
 
     # Four perimeter screws retain the cap; two additional screws sit directly
     # over continuous front structural spines in the upper/lower shells.  Each
@@ -96,24 +101,38 @@ def upper_cap(p: StationParameters = DEFAULT) -> cq.Workplane:
 def removable_handle(p: StationParameters = DEFAULT) -> cq.Workplane:
     e = p.enclosure
     h = p.handle
+    f = p.fasteners
     anchor_y = -42.0
-    anchor_z = e.height - h.tongue_height
     handle = cq.Workplane("XY")
     leg_center_z = e.height + h.rise / 2.0
     for x in (-h.anchor_spacing / 2.0, h.anchor_spacing / 2.0):
+        foot = box_at(
+            h.foot_width,
+            h.foot_depth,
+            h.foot_thickness,
+            (x, anchor_y, e.height + h.foot_thickness / 2.0),
+        )
         leg = box_at(h.leg_width, h.leg_depth, h.rise, (x, anchor_y, leg_center_z))
-        crossbar = box_at(h.tongue_width, h.tongue_length, h.tongue_height / 2.0, (x, anchor_y, anchor_z + h.tongue_height / 4.0))
-        neck = box_at(h.dovetail_top_width, h.tongue_length, h.tongue_height / 2.0 + 2.0, (x, anchor_y, anchor_z + h.tongue_height * 0.75))
-        handle = handle.union(leg).union(crossbar).union(neck)
-        # Exposed lateral squeeze arm and positive pawl.  The arm is anchored to
-        # the leg above the cap, remains free below it, and retracts toward the
-        # centre when the user pinches both release pads.
-        side = 1.0 if x > 0 else -1.0
-        arm_x = x + side * (h.leg_width / 2.0 - 0.4)
-        arm = box_at(2.4, 7.0, 14.0, (arm_x, -49.0, e.height + 1.0))
-        pawl = box_at(2.8, 4.0, 3.2, (x + side * (h.leg_width / 2.0 + 1.0), -51.0, e.height - 3.0))
-        release_pad = box_at(3.2, 12.0, 10.0, (x + side * (h.leg_width / 2.0 + 0.6), -49.0, e.height + 6.0))
-        handle = handle.union(arm).union(pawl).union(release_pad)
+        handle = handle.union(foot).union(leg)
+        # Broad front/rear stiffening ribs spread leg bending across nearly the
+        # full foot width without obstructing the two screw heads on its centreline.
+        for offset_y in (-h.leg_depth / 2.0 - 1.5, h.leg_depth / 2.0 + 1.5):
+            gusset = box_at(
+                h.foot_width - 6.0,
+                3.0,
+                12.0,
+                (x, anchor_y + offset_y, e.height + 6.0),
+            )
+            handle = handle.union(gusset)
+
+    for x, y in handle_mount_fastener_positions(p):
+        clearance = cylinder_axis(
+            f.m3_clearance_diameter / 2.0,
+            h.foot_thickness + 1.0,
+            (x, y, e.height - 0.5),
+            (0, 0, 1),
+        )
+        handle = handle.cut(clearance)
 
     grip_z = e.height + h.rise + h.grip_height / 2.0
     grip = rounded_rect_prism(h.grip_span, h.grip_depth, h.grip_height, min(7.0, h.grip_depth / 2.0 - 0.5), grip_z - h.grip_height / 2.0).translate((0, anchor_y, 0))
@@ -123,22 +142,26 @@ def removable_handle(p: StationParameters = DEFAULT) -> cq.Workplane:
     return handle.cut(relief)
 
 
-def handle_lock_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
+def handle_mount_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """One-foot M3 mounting coupon with the production grip and pilot depths."""
+
     h = p.handle
-    clear = p.fits.handle_lock_per_side
-    socket = rounded_rect_prism(42.0, 48.0, 10.0, 5.0)
-    lower = box_at(h.tongue_width + 2.0 * clear, h.socket_length, h.tongue_height / 2.0 + clear, (0, 0, 7.4))
-    neck = box_at(h.dovetail_top_width + 2.0 * clear, h.socket_length, h.tongue_height / 2.0 + 2.0, (0, 0, 10.0))
-    entry = box_at(h.tongue_width + 2.0 * clear + 2.0, 12.0, h.socket_depth + 1.0, (0, 18.0, 7.0))
-    pawl_channel = box_at(2.8, 38.0, 7.5, (8.4, 1.0, 6.2))
-    pawl_pocket = box_at(4.8, 5.2, 5.0, (10.0, -13.0, 6.0))
-    socket = socket.cut(lower.union(neck).union(entry).union(pawl_channel).union(pawl_pocket))
-    # Separate mating key printed beside the socket.
-    key = box_at(h.tongue_width, h.tongue_length, h.tongue_height / 2.0, (34.0, 0.0, h.tongue_height / 4.0))
-    key = key.union(box_at(h.dovetail_top_width, h.tongue_length, h.tongue_height / 2.0 + 2.0, (34.0, 0.0, h.tongue_height * 0.75)))
-    leg = box_at(h.leg_width, h.leg_depth, 18.0, (34.0, 0.0, 14.0))
-    arm = box_at(2.4, 7.0, 14.0, (42.6, -7.0, 7.0))
-    pawl = box_at(2.8, 4.0, 3.2, (44.0, -9.0, 3.0))
-    pad = box_at(3.2, 12.0, 10.0, (43.6, -7.0, 12.0))
-    key = key.union(leg).union(arm).union(pawl).union(pad)
-    return socket.union(key)
+    f = p.fasteners
+    cap_sample = box_at(h.foot_width + 8.0, h.foot_depth + 4.0, 12.0, (0.0, 0.0, 6.0))
+    foot_sample = box_at(h.foot_width, h.foot_depth, h.foot_thickness, (54.0, 0.0, h.foot_thickness / 2.0))
+    for x in (-h.fastener_offset_x, h.fastener_offset_x):
+        insert = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0,
+            f.insert_depth + 0.2,
+            (x, 0.0, 12.1),
+            (0, 0, -1),
+        )
+        cap_sample = cap_sample.cut(insert)
+        clearance = cylinder_axis(
+            f.m3_clearance_diameter / 2.0,
+            h.foot_thickness + 1.0,
+            (54.0 + x, 0.0, -0.5),
+            (0, 0, 1),
+        )
+        foot_sample = foot_sample.cut(clearance)
+    return cap_sample.union(foot_sample)

@@ -15,10 +15,10 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `power_compartment_cover` | 1 | Same reviewed material | Separate deliberate-access cover with four column-aligned M3 clearance axes |
 | `rear_panel` | 1 | Dark ASA | Eight-fastener service face; removes around fixed C8 island |
 | `router_interface_bezel` | 1 | Dark ASA | Replaceable RF/Ethernet insert with four integral cantilever hooks |
-| `upper_cap` | 1 | Matte white ASA | Six-fastener cap, cross members, T-slots, pawl pockets |
-| `removable_handle` | 1 | Candidate ASA/PA-CF after tests | Integral legs, T-keys, lateral squeeze arms/pawls, grip; no load rating |
+| `upper_cap` | 1 | Matte white ASA | Six-fastener cap, crossmember/ties, two bearing pads, four full-depth M3 handle bosses |
+| `removable_handle` | 1 | Candidate ASA/PA-CF after tests | Grip, gusseted legs/full-width ribs, two 42 x 32 x 5 mm feet, four M3 clearance axes; no load rating |
 | `wifi_dock_left`, `wifi_dock_right` | 1 each | ASA or PA candidate | Recessed vertical clips, hub shelves, cable notches, two M3 holes each |
-| `logo_panel_left`, `logo_panel_right` | 1 each | ASA or approved variant | 70 mm faces with four push-in cantilever studs/hooks each |
+| `logo_panel_left`, `logo_panel_right` | 1 each | ASA or approved variant | 70 mm faces with two outward-accessible M3 holes each |
 
 The registry contains **19 printable definitions**: the 15 installed rows above plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
 
@@ -32,8 +32,8 @@ The registry contains **19 printable definitions**: the 15 installed rows above 
 | `coupon_mac_button_recess` | After Mac measurement | Finger reach and guarding |
 | `coupon_wifi_dock` | 1 minimum | 30.0, 30.5, and 31.0 hub-capture variants |
 | `coupon_router_rf_access` | 1 minimum | Full 88 x 30 six-port opening with actual plugs, fingers/tools, liner, and bends |
-| `coupon_logo_retention` | Per panel/shell material pair | Cantilever insertion, retention, release, wear, and rattle |
-| `coupon_handle_lock` | Per structural material/orientation | T-slot and squeeze-pawl insertion/release/wear; not a carrying test |
+| `coupon_logo_mount` | Per panel/shell material pair | Two-screw insert fit, seating, torque, service cycling, and rattle |
+| `coupon_handle_mount` | Per structural material/orientation | Representative two-screw foot/pad insert stack; torque, pull-out, and section inspection |
 
 ## Owner equipment and controlled components
 
@@ -65,7 +65,7 @@ Do not freeze these parts until the actual-cable mock-up and Ethernet-topology d
 
 ## Mechanical fasteners and inserts
 
-Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradle**, **low-head M3x6 for the recessed router tray**, **M3x8 for service and the power cover**, and **M4x18 for the cap and shell seam**, with diameter-4.2 M3 pilots, diameter-5.6 M4 pilots, and 5.5 mm general insert depth. These are geometry inputs, not released purchase specifications; verify head form, bottoming, engagement, material, torque, and pull-out physically.
+Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradle and handle**, **low-head M3x6 for the recessed router tray**, **M3x8 for logo/service/cover joints**, and **M4x18 for the cap and shell seam**, with diameter-4.2 M3 pilots, diameter-5.6 M4 pilots, and 5.5 mm general insert depth. Handle screw heads remain above the feet so the full 5 mm thickness is in the grip stack. These are geometry inputs, not released purchase specifications; verify head form, bottoming, engagement, material, torque, and pull-out physically.
 
 | Joint | Modeled positions | Provisional hardware | Current mating geometry |
 | --- | ---: | --- | --- |
@@ -76,17 +76,17 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | Router tray to upper shell | 4 M3 | 4 provisional low-head M3x6 screws + 4 M3 inserts | Diameter-6.2 x 1.8 head recesses; shorter stack avoids blind-pilot bottoming; accessible after +Y router removal |
 | Rear panel to shells | 8 M3 | 8 provisional M3x8 screws + 8 M3 inserts | Counterbores and paired lower/upper rear bosses |
 | Wi-Fi docks to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outside-accessible positions per dock; webbed pocket bosses |
+| Logo panels to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outward-accessible positions per panel; shell-webbed blind bosses; 5.5 mm nominal insert overlap |
+| Removable handle to upper cap | 4 M3 | 4 provisional low-head M3x10 screws + 4 M3 inserts | Two screws per broad 5 mm foot into full-depth cap bosses/pads; 5.0 mm nominal engagement |
 | Lower-to-upper shell structural seam | 2 M4 | 2 provisional M4x18 screws + 2 M4 inserts | Upper lugs into lower front-spine inserts |
 | Upper cap to upper shell | 6 M4 | 6 provisional M4x18 screws + 6 M4 inserts | Four perimeter plus two handle-spine positions |
 | APV fixing | 2 diameter-3.6 axes | Exact screw/insert/washer or approved alternative TBD | Supplier-coordinate axes over 3 mm blind diameter-4.2 pilots with 2.7 mm sealed floor; top service after shell mounting |
 | C8 fixing | 2 diameter-3.2 positions | Supplier-approved screws/nuts/locking TBD | Fixed island pattern; terminal access/shroud review required |
 | Router bezel | 4 integral hooks | No normal fasteners | Replaceable cantilever retention; cycle test pending |
-| Logo panels | 4 integral hooks each | No normal fasteners | Push-in cantilever retention; cycle test pending |
-| Removable handle | 2 integral T-lock/pawl assemblies | No loose normal-use hardware | Squeeze-pawl release; coupon and load test pending |
 | Mac HDMI/USB-C flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional vertical-20 pattern in removable rear panel; exact extension governs |
 | Router LAN/WAN flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional horizontal-27 pattern in replaceable bezel; exact extension governs |
 
-The modeled shell service/structural patterns total **32 M3 screw/insert positions** and **8 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
+The modeled shell service/structural patterns total **40 M3 screw/insert positions** and **8 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
 
 ## Compliant and finishing items
 

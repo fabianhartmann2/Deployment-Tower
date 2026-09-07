@@ -167,7 +167,7 @@
   {
     "name": "build volume: removable_handle",
     "status": "PASS",
-    "detail": "bounding box 130.8 x 26.0 x 82.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 150.0 x 32.0 x 76.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: removable_handle",
@@ -212,7 +212,7 @@
   {
     "name": "build volume: logo_panel_left",
     "status": "PASS",
-    "detail": "bounding box 12.9 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 2.4 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: logo_panel_left",
@@ -227,7 +227,7 @@
   {
     "name": "build volume: logo_panel_right",
     "status": "PASS",
-    "detail": "bounding box 12.9 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 2.4 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: logo_panel_right",
@@ -242,7 +242,7 @@
   {
     "name": "build volume: logo_panel_blank_template",
     "status": "PASS",
-    "detail": "bounding box 12.9 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 2.4 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: logo_panel_blank_template",
@@ -252,7 +252,7 @@
   {
     "name": "build volume: logo_panel_example_embossed",
     "status": "PASS",
-    "detail": "bounding box 13.7 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 3.2 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: logo_panel_example_embossed",
@@ -310,22 +310,22 @@
     "detail": "valid shape"
   },
   {
-    "name": "coupon build volume: coupon_logo_retention",
+    "name": "coupon build volume: coupon_logo_mount",
     "status": "PASS",
-    "detail": "bounding box 25.2 x 20.0 x 24.0 mm"
+    "detail": "bounding box 23.2 x 32.0 x 18.0 mm"
   },
   {
-    "name": "coupon validity: coupon_logo_retention",
+    "name": "coupon validity: coupon_logo_mount",
     "status": "PASS",
     "detail": "valid shape"
   },
   {
-    "name": "coupon build volume: coupon_handle_lock",
+    "name": "coupon build volume: coupon_handle_mount",
     "status": "PASS",
-    "detail": "bounding box 66.4 x 48.0 x 23.0 mm"
+    "detail": "bounding box 100.0 x 36.0 x 12.0 mm"
   },
   {
-    "name": "coupon validity: coupon_handle_lock",
+    "name": "coupon validity: coupon_handle_mount",
     "status": "PASS",
     "detail": "valid shape"
   },
@@ -812,7 +812,7 @@
   {
     "name": "assembly interference: upper_cap / removable_handle",
     "status": "PASS",
-    "detail": "intersection 2.4840 mm^3 <= 4.00 mm^3 allowance (lateral squeeze-pawl preload)"
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
   },
   {
     "name": "assembly interference: upper_cap / wifi_dock_left",
@@ -955,6 +955,16 @@
     "detail": "M3x6: 1.2 mm grip, 4.8 mm pilot penetration, 4.8 mm nominal insert overlap, 5.8 mm tip relief; 4 clear axes with surrounding structural material"
   },
   {
+    "name": "fastener stack: reinforced handle M3x10",
+    "status": "PASS",
+    "detail": "M3x10: 5.0 mm grip, 5.0 mm pilot penetration, 5.0 mm nominal insert overlap, 5.7 mm tip relief; 4 clear axes with surrounding structural material"
+  },
+  {
+    "name": "fastener stack: logo panels M3x8",
+    "status": "PASS",
+    "detail": "M3x8: 2.4 mm grip, 5.6 mm pilot penetration, 5.5 mm nominal insert overlap, 6.2 mm tip relief; 4 clear axes with surrounding structural material"
+  },
+  {
     "name": "fastener stack: upper cap M4x18",
     "status": "PASS",
     "detail": "M4x18: 12.0 mm grip, 6.0 mm pilot penetration, 5.5 mm nominal insert overlap, 7.0 mm tip relief; 6 clear axes with surrounding structural material"
@@ -1055,9 +1065,14 @@
     "detail": "70.00 x 70.00 mm face; 0.25 mm/side rail clearance"
   },
   {
-    "name": "handle dual-lock bearing interface",
+    "name": "handle four-screw reinforced mounting stack",
     "status": "PASS",
-    "detail": "both squeeze pawls engage (1.242, 1.242 mm^3); +0.50 mm virtual lift engages both cap undercuts (10.440, 10.440 mm^3)"
+    "detail": "four clear M3 axes, two 42 x 32 x 5 mm feet, full-depth cap bosses/pads, and 5.0 mm nominal engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass"
+  },
+  {
+    "name": "logo panels four-screw replaceable mounting stack",
+    "status": "PASS",
+    "detail": "two outward-accessible M3 screws per panel; four clear axes, solid shell-webbed bosses, 5.5 mm nominal insert overlap, and zero installed interference"
   },
   {
     "name": "RUTM30 reference provenance",
@@ -1105,7 +1120,7 @@
     "detail": "Requires physical hardware/test; CAD does not claim completion."
   },
   {
-    "name": "logo panel 20-cycle/rattle test",
+    "name": "logo panel M3 joint torque/rattle/service-cycle test",
     "status": "PENDING",
     "detail": "Requires physical hardware/test; CAD does not claim completion."
   },
@@ -1120,7 +1135,7 @@
     "detail": "Requires physical hardware/test; CAD does not claim completion."
   },
   {
-    "name": "2x assembled-mass handle static test",
+    "name": "4x measured assembled-mass handle proof-load/creep test",
     "status": "PENDING",
     "detail": "Requires physical hardware/test; CAD does not claim completion."
   },
@@ -1145,7 +1160,7 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
-    "name": "watertight STL: coupon_handle_lock.stl",
+    "name": "watertight STL: coupon_handle_mount.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1155,7 +1170,7 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
-    "name": "watertight STL: coupon_logo_retention.stl",
+    "name": "watertight STL: coupon_logo_mount.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1280,7 +1295,7 @@
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
   {
-    "name": "grounded STL components: coupon_handle_lock.stl",
+    "name": "grounded STL components: coupon_handle_mount.stl",
     "status": "PASS",
     "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
   },
@@ -1290,7 +1305,7 @@
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
   {
-    "name": "grounded STL components: coupon_logo_retention.stl",
+    "name": "grounded STL components: coupon_logo_mount.stl",
     "status": "PASS",
     "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
   },

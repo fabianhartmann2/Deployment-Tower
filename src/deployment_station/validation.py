@@ -16,7 +16,8 @@ from .assembly import part_definitions, printable_parts
 from .components import ReferenceModel, build_reference_model, mac_intake_exclusion, router_source_kind
 from .coupons import fit_coupons
 from .geometry import bbox_dimensions, box_at, compound, cylinder_axis
-from .handle import cap_fastener_positions
+from .handle import cap_fastener_positions, handle_mount_fastener_positions
+from .logo_panel import logo_mount_positions
 from .mac_mount import (
     mac_cradle_fastener_positions,
     mac_release_rail_datums,
@@ -40,12 +41,9 @@ from .router_tray import router_support_pad_positions, router_tray_fastener_posi
 INTERSECTION_VOLUME_TOLERANCE_MM3 = 0.10
 BOUNDING_BOX_TOLERANCE_MM = 1e-6
 
-# These are the only separate printed parts intentionally modeled with a small
-# interference at the installed position.  The allowance is deliberately tiny:
-# it covers a printed detent, not a misplaced panel, shell, or structural part.
-ASSEMBLY_INTERFERENCE_ALLOWLIST: dict[frozenset[str], tuple[float, str]] = {
-    frozenset(("upper_cap", "removable_handle")): (4.0, "lateral squeeze-pawl preload"),
-}
+# Screw-mounted service parts require no modeled interpenetration.  Keep this
+# explicit so a future press/snap fit cannot silently bypass pairwise checking.
+ASSEMBLY_INTERFERENCE_ALLOWLIST: dict[frozenset[str], tuple[float, str]] = {}
 
 
 @dataclass(frozen=True)
@@ -390,49 +388,152 @@ def mac_vertical_retention_check(
     )
 
 
-def _handle_mating_check(
+def handle_structural_mount_check(
     p: StationParameters,
     parts: Mapping[str, cq.Workplane],
 ) -> CheckResult:
-    """Verify two real undercuts engage when the installed handle is lifted."""
+    """Verify the four-screw handle load path and broad cap bearing interfaces."""
 
     handle = parts["removable_handle"]
     cap = parts["upper_cap"]
     h = p.handle
-    handle_box = handle.val().BoundingBox()
-    anchor_y = (handle_box.ymin + handle_box.ymax) / 2.0
-
-    # Move through the configured lock clearance plus a small numerical/load
-    # displacement.  A valid T-lock then overlaps the cap's bearing shoulder at
-    # both anchors; mere existence of two individually connected solids cannot
-    # satisfy this check.
-    virtual_lift = p.fits.handle_lock_per_side + 0.15
-    loaded_handle = handle.translate((0.0, 0.0, virtual_lift))
-    minimum_bearing_volume = h.dovetail_top_width * h.tongue_length * 0.02
-    bearing_volumes: list[float] = []
-    pawl_volumes: list[float] = []
-    for anchor_x in (-h.anchor_spacing / 2.0, h.anchor_spacing / 2.0):
-        local_zone = box_at(
-            h.tongue_width + 4.0,
-            h.socket_length + 4.0,
-            h.tongue_height + 4.0,
-            (anchor_x, anchor_y, p.enclosure.height - h.tongue_height / 2.0),
+    f = p.fasteners
+    e = p.enclosure
+    axes = handle_mount_fastener_positions(p)
+    axis_obstructions: list[float] = []
+    boss_witnesses: list[float] = []
+    outer_radius = f.m3_boss_diameter / 2.0 - 0.1
+    inner_radius = f.m3_insert_hole_diameter / 2.0 + 0.1
+    expected_ring = pi * (outer_radius**2 - inner_radius**2)
+    for x, y in axes:
+        handle_axis = cylinder_axis(
+            f.m3_clearance_diameter / 2.0 - 0.05,
+            h.foot_thickness + 0.2,
+            (x, y, e.height - 0.1),
+            (0, 0, 1),
         )
-        pawl_volumes.append(_intersection_volume(handle.intersect(local_zone), cap))
-        bearing_volumes.append(_intersection_volume(loaded_handle.intersect(local_zone), cap))
+        cap_axis = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0 - 0.05,
+            f.insert_depth - 0.2,
+            (x, y, e.height - f.insert_depth + 0.1),
+            (0, 0, 1),
+        )
+        ring = _annular_axis_witness(
+            outer_radius,
+            inner_radius,
+            1.0,
+            (x, y, e.height - 3.5),
+            (0, 0, 1),
+        )
+        axis_obstructions.append(
+            _intersection_volume(handle_axis, handle) + _intersection_volume(cap_axis, cap)
+        )
+        boss_witnesses.append(_intersection_volume(ring, cap))
 
+    # Sample each foot over nearly its full plan area on both sides of the
+    # contact plane.  The small bore deductions are acceptable; a missing foot
+    # or cap pad is not.
+    bearing_witnesses: list[float] = []
+    expected_bearing = (h.foot_width - 2.0) * (h.foot_depth - 2.0) * 0.2
+    for anchor_x in (-h.anchor_spacing / 2.0, h.anchor_spacing / 2.0):
+        below = box_at(
+            h.foot_width - 2.0,
+            h.foot_depth - 2.0,
+            0.2,
+            (anchor_x, -42.0, e.height - 0.1),
+        )
+        above = below.translate((0.0, 0.0, 0.2))
+        bearing_witnesses.append(
+            min(_intersection_volume(below, cap), _intersection_volume(above, handle))
+        )
+
+    installed_overlap = _intersection_volume(handle, cap)
+    screw_penetration = f.handle_screw_length - h.foot_thickness
+    design_load_n = h.provisional_complete_mass_kg * 9.80665 * h.design_static_factor
+    nominal_per_screw_n = design_load_n / len(axes)
     sufficient = (
-        len(bearing_volumes) == 2
-        and min(pawl_volumes) > INTERSECTION_VOLUME_TOLERANCE_MM3
-        and min(bearing_volumes) >= minimum_bearing_volume
+        len(axes) == 4
+        and installed_overlap <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(boss_witnesses) >= 0.95 * expected_ring
+        and min(bearing_witnesses) >= 0.85 * expected_bearing
+        and f.minimum_thread_engagement <= screw_penetration <= f.insert_depth
+        and h.design_static_factor >= 4.0
     )
-    pawl_measured = ", ".join(f"{volume:.3f}" for volume in pawl_volumes)
-    bearing_measured = ", ".join(f"{volume:.3f}" for volume in bearing_volumes)
     return _check(
-        "handle dual-lock bearing interface",
+        "handle four-screw reinforced mounting stack",
         sufficient,
-        f"both squeeze pawls engage ({pawl_measured} mm^3); +{virtual_lift:.2f} mm virtual lift engages both cap undercuts ({bearing_measured} mm^3)",
-        f"pawl volumes are {pawl_measured} mm^3 (each must exceed {INTERSECTION_VOLUME_TOLERANCE_MM3:.2f}); bearing volumes after +{virtual_lift:.2f} mm lift are {bearing_measured} mm^3 (each must be >= {minimum_bearing_volume:.3f})",
+        f"four clear M3 axes, two {h.foot_width:.0f} x {h.foot_depth:.0f} x {h.foot_thickness:.0f} mm feet, "
+        f"full-depth cap bosses/pads, and {screw_penetration:.1f} mm nominal engagement; "
+        f"CAD design target {design_load_n:.1f} N total ({nominal_per_screw_n:.1f} N/screw) at "
+        f"{h.design_static_factor:.0f}x provisional assembled mass",
+        f"axes={len(axes)}, installed overlap={installed_overlap:.3f}, axis obstructions={axis_obstructions}, "
+        f"boss witnesses={boss_witnesses}, bearing witnesses={bearing_witnesses}, engagement={screw_penetration:.2f}, "
+        f"factor={h.design_static_factor:.2f}",
+    )
+
+
+def logo_screw_mount_check(
+    p: StationParameters,
+    parts: Mapping[str, cq.Workplane],
+) -> CheckResult:
+    """Verify both logo panels have two clear, supported screw axes."""
+
+    e = p.enclosure
+    f = p.fasteners
+    logo = p.logo
+    shell = parts["upper_shell"]
+    axis_obstructions: list[float] = []
+    boss_witnesses: list[float] = []
+    installed_overlaps: list[float] = []
+    outer_radius = f.m3_boss_diameter / 2.0 - 0.1
+    inner_radius = f.m3_insert_hole_diameter / 2.0 + 0.1
+    expected_ring = pi * (outer_radius**2 - inner_radius**2)
+    pocket_inner = e.width / 2.0 - logo.thickness - p.fits.logo_panel_per_side
+    for side_name, side in (("left", -1.0), ("right", 1.0)):
+        panel = parts[f"logo_panel_{side_name}"]
+        installed_overlaps.append(_intersection_volume(panel, shell))
+        for _x, y, z in logo_mount_positions(side_name, p):
+            panel_axis = cylinder_axis(
+                f.m3_clearance_diameter / 2.0 - 0.05,
+                logo.thickness + 0.2,
+                (side * (e.width / 2.0 + 0.1), y, z),
+                (-side, 0, 0),
+            )
+            shell_axis = cylinder_axis(
+                f.m3_insert_hole_diameter / 2.0 - 0.05,
+                f.insert_depth - 0.2,
+                (side * (e.width / 2.0 - logo.thickness + 0.1), y, z),
+                (-side, 0, 0),
+            )
+            ring = _annular_axis_witness(
+                outer_radius,
+                inner_radius,
+                1.0,
+                (side * (pocket_inner - 3.5), y, z),
+                (side, 0, 0),
+            )
+            axis_obstructions.append(
+                _intersection_volume(panel_axis, panel) + _intersection_volume(shell_axis, shell)
+            )
+            boss_witnesses.append(_intersection_volume(ring, shell))
+
+    penetration = f.logo_screw_length - logo.thickness
+    passed = (
+        len(axis_obstructions) == 4
+        and max(installed_overlaps) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(boss_witnesses) >= 0.95 * expected_ring
+        and min(penetration, f.insert_depth) >= f.minimum_thread_engagement
+        and penetration <= f.insert_depth + 0.7
+    )
+    return _check(
+        "logo panels four-screw replaceable mounting stack",
+        passed,
+        f"two outward-accessible M3 screws per panel; four clear axes, solid shell-webbed bosses, "
+        f"{min(penetration, f.insert_depth):.1f} mm nominal insert overlap, and zero installed interference",
+        f"axis obstructions={axis_obstructions}, boss witnesses={boss_witnesses}, "
+        f"panel/shell overlaps={installed_overlaps}, penetration={penetration:.2f}",
     )
 
 
@@ -1047,6 +1148,96 @@ def fastener_stack_checks(
         )
     )
 
+    handle_axis_obstructions: list[float] = []
+    handle_boss_witnesses: list[float] = []
+    handle_grip = p.handle.foot_thickness
+    handle_pilot_depth = f.insert_depth + 0.2
+    for x, y in handle_mount_fastener_positions(p):
+        clearance_axis = cylinder_axis(
+            f.m3_clearance_diameter / 2.0 - 0.05,
+            handle_grip + 0.2,
+            (x, y, e.height - 0.1),
+            (0, 0, 1),
+        )
+        insert_axis = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0 - 0.05,
+            f.insert_depth - 0.2,
+            (x, y, e.height - f.insert_depth + 0.1),
+            (0, 0, 1),
+        )
+        boss_ring = _annular_axis_witness(
+            base_outer_radius,
+            base_inner_radius,
+            1.0,
+            (x, y, e.height - 3.5),
+            (0, 0, 1),
+        )
+        handle_axis_obstructions.append(
+            _intersection_volume(clearance_axis, parts["removable_handle"])
+            + _intersection_volume(insert_axis, parts["upper_cap"])
+        )
+        handle_boss_witnesses.append(_intersection_volume(boss_ring, parts["upper_cap"]))
+    results.append(
+        stack_result(
+            "fastener stack: reinforced handle M3x10",
+            "M3x10",
+            f.handle_screw,
+            f.handle_screw_length,
+            10.0,
+            handle_grip,
+            handle_pilot_depth,
+            handle_axis_obstructions,
+            handle_boss_witnesses,
+            base_expected_ring,
+        )
+    )
+
+    logo_axis_obstructions: list[float] = []
+    logo_boss_witnesses: list[float] = []
+    logo_pilot_depth = f.insert_depth + 0.7
+    pocket_inner = e.width / 2.0 - p.logo.thickness - p.fits.logo_panel_per_side
+    for side_name, side in (("left", -1.0), ("right", 1.0)):
+        panel = parts[f"logo_panel_{side_name}"]
+        for _axis_x, y, z in logo_mount_positions(side_name, p):
+            clearance_axis = cylinder_axis(
+                f.m3_clearance_diameter / 2.0 - 0.05,
+                p.logo.thickness + 0.2,
+                (side * (e.width / 2.0 + 0.1), y, z),
+                (-side, 0, 0),
+            )
+            insert_axis = cylinder_axis(
+                f.m3_insert_hole_diameter / 2.0 - 0.05,
+                f.insert_depth - 0.2,
+                (side * (e.width / 2.0 - p.logo.thickness + 0.1), y, z),
+                (-side, 0, 0),
+            )
+            boss_ring = _annular_axis_witness(
+                base_outer_radius,
+                base_inner_radius,
+                1.0,
+                (side * (pocket_inner - 3.5), y, z),
+                (side, 0, 0),
+            )
+            logo_axis_obstructions.append(
+                _intersection_volume(clearance_axis, panel)
+                + _intersection_volume(insert_axis, parts["upper_shell"])
+            )
+            logo_boss_witnesses.append(_intersection_volume(boss_ring, parts["upper_shell"]))
+    results.append(
+        stack_result(
+            "fastener stack: logo panels M3x8",
+            "M3x8",
+            f.logo_screw,
+            f.logo_screw_length,
+            8.0,
+            p.logo.thickness,
+            logo_pilot_depth,
+            logo_axis_obstructions,
+            logo_boss_witnesses,
+            base_expected_ring,
+        )
+    )
+
     cap_axis_obstructions: list[float] = []
     cap_boss_witnesses: list[float] = []
     m4_outer_radius = f.m4_boss_diameter / 2.0 - 0.1
@@ -1620,7 +1811,8 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
             )
         )
 
-    results.append(_handle_mating_check(p, parts))
+    results.append(handle_structural_mount_check(p, parts))
+    results.append(logo_screw_mount_check(p, parts))
 
     results.append(
         CheckResult(
@@ -1644,10 +1836,10 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         "physical RF plug/finger/tool access",
         "local minimum-wall scan of all generated geometry",
         "Wi-Fi dock fit and 20-cycle test",
-        "logo panel 20-cycle/rattle test",
+        "logo panel M3 joint torque/rattle/service-cycle test",
         "Mac AC branch hardware, protected conduit/restraint, and qualified separation proof",
         "thermal comparison under representative load",
-        "2x assembled-mass handle static test",
+        "4x measured assembled-mass handle proof-load/creep test",
         "qualified mains design and electrical safety review",
     ):
         results.append(CheckResult(pending, "PENDING", "Requires physical hardware/test; CAD does not claim completion."))
