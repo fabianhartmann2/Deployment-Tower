@@ -1,0 +1,531 @@
+[
+  {
+    "name": "base",
+    "kind": "printable STEP",
+    "path": "exports/step/base.step",
+    "bytes": 92774,
+    "sha256": "2f59644136f793f4829527e72c0ca21b45fd4348fa8f94b0176753ddafe46e93",
+    "design_bbox_mm": [
+      162.0,
+      162.0,
+      14.0
+    ]
+  },
+  {
+    "name": "base",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/base.stl",
+    "bytes": 210084,
+    "sha256": "bd8957aec84270e0635081c477b635152431b1e35e7aa117f338dffaeb5eab96"
+  },
+  {
+    "name": "mac_cradle",
+    "kind": "printable STEP",
+    "path": "exports/step/mac_cradle.step",
+    "bytes": 477546,
+    "sha256": "36f887d9cb544f225d79dd177524224a935bb9370cc908b7ab4d5b249f34875b",
+    "design_bbox_mm": [
+      152.0,
+      137.0,
+      59.2
+    ]
+  },
+  {
+    "name": "mac_cradle",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/mac_cradle.stl",
+    "bytes": 139284,
+    "sha256": "06156441a3ed883448e1cb7db1672c626ea6d4e9c432ef18ddb384caee7b67aa"
+  },
+  {
+    "name": "lower_shell",
+    "kind": "printable STEP",
+    "path": "exports/step/lower_shell.step",
+    "bytes": 852499,
+    "sha256": "462fd98a1be5a335d9f9a3d36fe394dbe1ed2e2896d1895de897a8a35ff635d3",
+    "design_bbox_mm": [
+      165.0,
+      165.0,
+      97.0
+    ]
+  },
+  {
+    "name": "lower_shell",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/lower_shell.stl",
+    "bytes": 805684,
+    "sha256": "fc03db093b32f2d623177ea568ab3236ba71cef80d538afd0c0b1c09e45e6c3c"
+  },
+  {
+    "name": "upper_shell",
+    "kind": "printable STEP",
+    "path": "exports/step/upper_shell.step",
+    "bytes": 1216072,
+    "sha256": "d459b082496243161b8fe706e5f6d138254e2beb0e568c80d6d6695d2a87f08b",
+    "design_bbox_mm": [
+      165.0,
+      164.9531,
+      162.6
+    ]
+  },
+  {
+    "name": "upper_shell",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/upper_shell.stl",
+    "bytes": 871984,
+    "sha256": "a1db21e05220d16229d82de4b4c42a12f7a1cefe9fb3880a3fb5028cb3fc87d9"
+  },
+  {
+    "name": "router_tray",
+    "kind": "printable STEP",
+    "path": "exports/step/router_tray.step",
+    "bytes": 398599,
+    "sha256": "d75bf588cf737fbc2240d56f8ae04b4563701f5b10f0438998291b7fa73da54b",
+    "design_bbox_mm": [
+      120.0,
+      99.1,
+      38.1
+    ]
+  },
+  {
+    "name": "router_tray",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/router_tray.stl",
+    "bytes": 303084,
+    "sha256": "e9690c9b10bd40057cf06626daff00a4bb29bb3527842d337b213dc246f16c54"
+  },
+  {
+    "name": "power_compartment",
+    "kind": "printable STEP",
+    "path": "exports/step/power_compartment.step",
+    "bytes": 481997,
+    "sha256": "6a2b9ac13ff875f9fbbbc0ddd0c9d45147f17211cf24ab37ef3ff219c7897570",
+    "design_bbox_mm": [
+      72.0,
+      134.5,
+      44.0
+    ]
+  },
+  {
+    "name": "power_compartment",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/power_compartment.stl",
+    "bytes": 493484,
+    "sha256": "2d33b18f7f8c0499d400d681a21e803a751bb92363b0a50a523d7cc3a267cf6a"
+  },
+  {
+    "name": "power_compartment_cover",
+    "kind": "printable STEP",
+    "path": "exports/step/power_compartment_cover.step",
+    "bytes": 122106,
+    "sha256": "765398bd1b0e97a730e3201869f6d1ce1aa668eda4ee52d0e2c7656c9732b1c8",
+    "design_bbox_mm": [
+      72.0,
+      120.0,
+      4.8
+    ]
+  },
+  {
+    "name": "power_compartment_cover",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/power_compartment_cover.stl",
+    "bytes": 193684,
+    "sha256": "a48ef3b120e4e64e055e3be1700f3137f40acc38c162a802525b0e66e1ca3efd"
+  },
+  {
+    "name": "rear_panel",
+    "kind": "printable STEP",
+    "path": "exports/step/rear_panel.step",
+    "bytes": 601273,
+    "sha256": "c3ffc633acbf7aec79e185b2b07432a061f247346af6ffb99b7e37ae947a3b21",
+    "design_bbox_mm": [
+      132.0,
+      3.2,
+      236.0
+    ]
+  },
+  {
+    "name": "rear_panel",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/rear_panel.stl",
+    "bytes": 705184,
+    "sha256": "ccacb2e798a5bce3a913957c813fecffd34bb8611e8c91cd96f8d9b192d7d276"
+  },
+  {
+    "name": "router_interface_bezel",
+    "kind": "printable STEP",
+    "path": "exports/step/router_interface_bezel.step",
+    "bytes": 321182,
+    "sha256": "dee884f6e4e88379fbe28ad664dfeb549fddee3eab569e4486d89c6c173af989",
+    "design_bbox_mm": [
+      119.0,
+      8.8,
+      78.0
+    ]
+  },
+  {
+    "name": "router_interface_bezel",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/router_interface_bezel.stl",
+    "bytes": 205284,
+    "sha256": "14cfa069022f015075a0a99842c3a32e5508118ad7498aad436f3d6d55135e44"
+  },
+  {
+    "name": "upper_cap",
+    "kind": "printable STEP",
+    "path": "exports/step/upper_cap.step",
+    "bytes": 419705,
+    "sha256": "331d88d613ba458c164437c654186cfcff476eaf6a793f5b8e29a798f0af3990",
+    "design_bbox_mm": [
+      165.0,
+      165.0,
+      12.0
+    ]
+  },
+  {
+    "name": "upper_cap",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/upper_cap.stl",
+    "bytes": 264884,
+    "sha256": "8bd38c7aca22926a02c3a6bba6724fa1c67097460be71c78f61d82779f0667e3"
+  },
+  {
+    "name": "removable_handle",
+    "kind": "printable STEP",
+    "path": "exports/step/removable_handle.step",
+    "bytes": 320534,
+    "sha256": "6b4410b489c70a2814ec6033cda4f29217745fd5fb89404b0af85c93fcef4452",
+    "design_bbox_mm": [
+      130.8,
+      26.0,
+      82.0
+    ]
+  },
+  {
+    "name": "removable_handle",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/removable_handle.stl",
+    "bytes": 59084,
+    "sha256": "6bb74b6293e48c7fee214e592b1da063dfa534dcf37c3d3af7e66459d6020373"
+  },
+  {
+    "name": "wifi_dock_left",
+    "kind": "printable STEP",
+    "path": "exports/step/wifi_dock_left.step",
+    "bytes": 217031,
+    "sha256": "7e3ee37c94da8328852c029df6a347a1376b677d7573bd366af991f7818bd94f",
+    "design_bbox_mm": [
+      17.85,
+      36.0,
+      98.0
+    ]
+  },
+  {
+    "name": "wifi_dock_left",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/wifi_dock_left.stl",
+    "bytes": 97084,
+    "sha256": "4d66cc1e3e3b17b3116fc35563a549ccf83ed1fb63ed407243db5229704126dd"
+  },
+  {
+    "name": "wifi_dock_right",
+    "kind": "printable STEP",
+    "path": "exports/step/wifi_dock_right.step",
+    "bytes": 211507,
+    "sha256": "aaea5525ef4f4cbe20a71c0509b251072674843ce0bcaf4149bd25bf77c0e11c",
+    "design_bbox_mm": [
+      17.85,
+      36.0,
+      98.0
+    ]
+  },
+  {
+    "name": "wifi_dock_right",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/wifi_dock_right.stl",
+    "bytes": 97084,
+    "sha256": "11d049ccf62ed8663265d69c592a5e4708b8fc06003484939cc3da4f00fefddf"
+  },
+  {
+    "name": "logo_panel_left",
+    "kind": "printable STEP",
+    "path": "exports/step/logo_panel_left.step",
+    "bytes": 186965,
+    "sha256": "a76738585717d90dfbb8b286f5bb6f715b3f89805433d3c355d46f3ffcb901d5",
+    "design_bbox_mm": [
+      12.9,
+      70.0,
+      70.0
+    ]
+  },
+  {
+    "name": "logo_panel_left",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/logo_panel_left.stl",
+    "bytes": 41084,
+    "sha256": "db3364a48c2c3e3a8ee79c771fd98e322bd0f426bffa9c075a0090751fb6ba63"
+  },
+  {
+    "name": "logo_panel_right",
+    "kind": "printable STEP",
+    "path": "exports/step/logo_panel_right.step",
+    "bytes": 183815,
+    "sha256": "3d145380c0fbcb304b27940f1e3bfe0d82c71dcdb6102ebe95f10b98a404e38d",
+    "design_bbox_mm": [
+      12.9,
+      70.0,
+      70.0
+    ]
+  },
+  {
+    "name": "logo_panel_right",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/logo_panel_right.stl",
+    "bytes": 41084,
+    "sha256": "659d5f74c119657778c0b9f116bb55bf6ec398718a58bcc0200905d452b346b8"
+  },
+  {
+    "name": "logo_panel_blank_template",
+    "kind": "printable STEP",
+    "path": "exports/step/logo_panel_blank_template.step",
+    "bytes": 183815,
+    "sha256": "1d55531b9ae112da931c0882aee45bd5fa9acf90e0d0d56c2fb5387731db9533",
+    "design_bbox_mm": [
+      12.9,
+      70.0,
+      70.0
+    ]
+  },
+  {
+    "name": "logo_panel_blank_template",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/logo_panel_blank_template.stl",
+    "bytes": 41084,
+    "sha256": "659d5f74c119657778c0b9f116bb55bf6ec398718a58bcc0200905d452b346b8"
+  },
+  {
+    "name": "logo_panel_example_embossed",
+    "kind": "printable STEP",
+    "path": "exports/step/logo_panel_example_embossed.step",
+    "bytes": 227155,
+    "sha256": "5822a95a130a517caf0a9ee1ad381b4e77cd69b43596ddc650f935e8dc2d4977",
+    "design_bbox_mm": [
+      13.7,
+      70.0,
+      70.0
+    ]
+  },
+  {
+    "name": "logo_panel_example_embossed",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/logo_panel_example_embossed.stl",
+    "bytes": 43484,
+    "sha256": "b2515e74b8aded55e6826a3d5ed6d5b8b9e0ca59271e4d7e177aa9f40a930c3d"
+  },
+  {
+    "name": "compliant_pad_template",
+    "kind": "printable STEP",
+    "path": "exports/step/compliant_pad_template.step",
+    "bytes": 29595,
+    "sha256": "5e57f338186a2cacaac36f8792bc67be74e01196df24be474f6567cdd6c47fc2",
+    "design_bbox_mm": [
+      14.6,
+      14.6,
+      2.0
+    ]
+  },
+  {
+    "name": "compliant_pad_template",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/compliant_pad_template.stl",
+    "bytes": 22284,
+    "sha256": "4bbfd50d96b67ae6a394d407c6793a213de984750880d662af49f91f9a09c28e"
+  },
+  {
+    "name": "router_compliant_pad_template",
+    "kind": "printable STEP",
+    "path": "exports/step/router_compliant_pad_template.step",
+    "bytes": 29591,
+    "sha256": "6dc1d8ab6ba493516116ddd4edd7ca658c7b18148beb6371671b54765340f5dc",
+    "design_bbox_mm": [
+      8.0,
+      16.0,
+      1.3
+    ]
+  },
+  {
+    "name": "router_compliant_pad_template",
+    "kind": "print-oriented STL",
+    "path": "exports/stl/router_compliant_pad_template.stl",
+    "bytes": 22284,
+    "sha256": "10155a427f11d22d68ba101f25f89ccd5bdacba697553e008df6db189901fd5a"
+  },
+  {
+    "name": "coupon_c8_cutout",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_c8_cutout.step",
+    "bytes": 66844,
+    "sha256": "68648302f6decbadec0691cc076027f0cf2ea3dcf97e1fa38a52635b47d9f2f6"
+  },
+  {
+    "name": "coupon_c8_cutout",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_c8_cutout.stl",
+    "bytes": 87284,
+    "sha256": "2b7aeb8ffc6a55f89db6e710e0d2fa11efff4ab6582c3e1140b13256157778f0"
+  },
+  {
+    "name": "coupon_insert_boss",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_insert_boss.step",
+    "bytes": 55218,
+    "sha256": "277c26f6254b3e544537d23cae5c3d506ba67cea8ee633d4966af24712ab31d1"
+  },
+  {
+    "name": "coupon_insert_boss",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_insert_boss.stl",
+    "bytes": 148284,
+    "sha256": "fbac71b572fd4ea5e126f941c38938a55400a041d1bb5e65f6ad2a968ce96ddc"
+  },
+  {
+    "name": "coupon_rear_panel_fit",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_rear_panel_fit.step",
+    "bytes": 92204,
+    "sha256": "5e7da3c96349949130276386d649faf418c226e26e8d222aebee09898906f9cc"
+  },
+  {
+    "name": "coupon_rear_panel_fit",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_rear_panel_fit.stl",
+    "bytes": 67084,
+    "sha256": "2b6acc37a9267ee5982f3a1de64806ece152bc0b87048f2e515743ec7e6b9be3"
+  },
+  {
+    "name": "coupon_logo_retention",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_logo_retention.step",
+    "bytes": 80725,
+    "sha256": "c2ce745b8f433fdb3e318557ce964390f30ed737718419cf1888fafc190d0002"
+  },
+  {
+    "name": "coupon_logo_retention",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_logo_retention.stl",
+    "bytes": 4084,
+    "sha256": "49c59997cdec23d46c22237a044c80970910c1f485a1435145f4ee02262d8389"
+  },
+  {
+    "name": "coupon_handle_lock",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_handle_lock.step",
+    "bytes": 224211,
+    "sha256": "2695ecbb6ad04d7a652fa9b52820c030af23cd47428fb075e411f031b8d51b6b"
+  },
+  {
+    "name": "coupon_handle_lock",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_handle_lock.stl",
+    "bytes": 32684,
+    "sha256": "8dbf386e6cf816a22d3510851c33cb975e6addd056911102a4707ab409c0a682"
+  },
+  {
+    "name": "coupon_wifi_dock",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_wifi_dock.step",
+    "bytes": 94922,
+    "sha256": "649267bde466b0864f697fc172c185195c8dc78263d8487cbbdcb5ba1641b5f8"
+  },
+  {
+    "name": "coupon_wifi_dock",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_wifi_dock.stl",
+    "bytes": 54684,
+    "sha256": "4aaeabb1e97015302072fc1d2acc49e2a947abc2a2c543fa59627b5074441222"
+  },
+  {
+    "name": "coupon_mac_button_recess",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_mac_button_recess.step",
+    "bytes": 45156,
+    "sha256": "554b29c7c5123ed9cc6e4d6f9b6b060ad5426925b6ae952b350c03bc9ab05b33"
+  },
+  {
+    "name": "coupon_mac_button_recess",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_mac_button_recess.stl",
+    "bytes": 33484,
+    "sha256": "4ed6291839a3ba1f00d7a4f15ec50ed4208c2501b3fbd78cd6767179dbf0965f"
+  },
+  {
+    "name": "coupon_router_rf_access",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_router_rf_access.step",
+    "bytes": 59101,
+    "sha256": "366e658bf4c688fb59e36c12a1618405b3a81ebfd7ca86b9c6a587a8f0b30ce8"
+  },
+  {
+    "name": "coupon_router_rf_access",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_router_rf_access.stl",
+    "bytes": 44884,
+    "sha256": "1f87e3b1c2dc1a8a5b97349cd76f8ccfdcf1f88aefcd684a75141f0e0f834205"
+  },
+  {
+    "name": "complete_assembly",
+    "kind": "assembly STEP",
+    "path": "exports/step/complete_assembly.step",
+    "bytes": 36017716,
+    "sha256": "2af3a1c3fd67fc7fc773f2d822ba213c8bba377298aba187262218b33e38ec22"
+  },
+  {
+    "name": "exploded_assembly",
+    "kind": "assembly STEP",
+    "path": "exports/step/exploded_assembly.step",
+    "bytes": 6194375,
+    "sha256": "d81b106c86f455718efb84c3c1adb01c678c1ef14fd59b369965fb57cdcf2065"
+  },
+  {
+    "name": "packaging_study",
+    "kind": "assembly STEP",
+    "path": "exports/step/packaging_study.step",
+    "bytes": 29745969,
+    "sha256": "0273f93dfc0e535900243d6f620594d1f0410942db7d81911baf687ee9d58ef8"
+  },
+  {
+    "name": "component_envelopes",
+    "kind": "reference STEP",
+    "path": "exports/step/component_envelopes.step",
+    "bytes": 29811761,
+    "sha256": "c0ca095b54f5737b03aa483774213c29e3021a858e02e3f527b88f411e11fc56"
+  },
+  {
+    "name": "assembled_three_quarter",
+    "kind": "render PNG",
+    "path": "renders/assembled_three_quarter.png",
+    "bytes": 38793,
+    "sha256": "849252c9d2a2dad8b32f8ada36b34c671033b3d3e0e982bd55c00fc7a44ce92f"
+  },
+  {
+    "name": "rear_interface",
+    "kind": "render PNG",
+    "path": "renders/rear_interface.png",
+    "bytes": 44299,
+    "sha256": "ecbcb04fa0b11d85d240176ed815b37b0ba433fbe872167cfbfff1bb3115673c"
+  },
+  {
+    "name": "exploded_view",
+    "kind": "render PNG",
+    "path": "renders/exploded_view.png",
+    "bytes": 62907,
+    "sha256": "e8fd14a78adb38803df6ecdd36406f36639c9c4643bfa6576279763b05bf8cdd"
+  },
+  {
+    "name": "packaging_study",
+    "kind": "render PNG",
+    "path": "renders/packaging_study.png",
+    "bytes": 106413,
+    "sha256": "794d00301cf12fbe692635d45f6aee91b80a1798f098cdd0db7cad660c4673f7"
+  }
+]

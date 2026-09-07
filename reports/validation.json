@@ -1,0 +1,1402 @@
+[
+  {
+    "name": "square footprint",
+    "status": "PASS",
+    "detail": "165.0 x 165.0 mm"
+  },
+  {
+    "name": "exterior proportion",
+    "status": "PASS",
+    "detail": "1 : 1 : 1.6970 (target 1.70)"
+  },
+  {
+    "name": "fixed enclosure envelope",
+    "status": "PASS",
+    "detail": "165.00 x 165.00 x 280.00 mm; antennas and removable handle excluded"
+  },
+  {
+    "name": "build volume: base",
+    "status": "PASS",
+    "detail": "bounding box 162.0 x 162.0 x 14.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: base",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: base",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: mac_cradle",
+    "status": "PASS",
+    "detail": "bounding box 152.0 x 137.0 x 59.2 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: mac_cradle",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: mac_cradle",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: lower_shell",
+    "status": "PASS",
+    "detail": "bounding box 165.0 x 165.0 x 97.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: lower_shell",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: lower_shell",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: upper_shell",
+    "status": "PASS",
+    "detail": "bounding box 165.0 x 165.0 x 162.6 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: upper_shell",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: upper_shell",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: router_tray",
+    "status": "PASS",
+    "detail": "bounding box 120.0 x 99.1 x 38.1 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: router_tray",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: router_tray",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: power_compartment",
+    "status": "PASS",
+    "detail": "bounding box 72.0 x 134.5 x 44.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: power_compartment",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: power_compartment",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: power_compartment_cover",
+    "status": "PASS",
+    "detail": "bounding box 72.0 x 120.0 x 4.8 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: power_compartment_cover",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: power_compartment_cover",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: rear_panel",
+    "status": "PASS",
+    "detail": "bounding box 132.0 x 3.2 x 236.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: rear_panel",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: rear_panel",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: router_interface_bezel",
+    "status": "PASS",
+    "detail": "bounding box 119.0 x 8.8 x 78.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: router_interface_bezel",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: router_interface_bezel",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: upper_cap",
+    "status": "PASS",
+    "detail": "bounding box 165.0 x 165.0 x 12.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: upper_cap",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: upper_cap",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: removable_handle",
+    "status": "PASS",
+    "detail": "bounding box 130.8 x 26.0 x 82.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: removable_handle",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: removable_handle",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: wifi_dock_left",
+    "status": "PASS",
+    "detail": "bounding box 17.8 x 36.0 x 98.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: wifi_dock_left",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: wifi_dock_left",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: wifi_dock_right",
+    "status": "PASS",
+    "detail": "bounding box 17.8 x 36.0 x 98.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: wifi_dock_right",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: wifi_dock_right",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: logo_panel_left",
+    "status": "PASS",
+    "detail": "bounding box 12.9 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: logo_panel_left",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: logo_panel_left",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: logo_panel_right",
+    "status": "PASS",
+    "detail": "bounding box 12.9 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: logo_panel_right",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: logo_panel_right",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: logo_panel_blank_template",
+    "status": "PASS",
+    "detail": "bounding box 12.9 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: logo_panel_blank_template",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "build volume: logo_panel_example_embossed",
+    "status": "PASS",
+    "detail": "bounding box 13.7 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: logo_panel_example_embossed",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "build volume: compliant_pad_template",
+    "status": "PASS",
+    "detail": "bounding box 14.6 x 14.6 x 2.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: compliant_pad_template",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "build volume: router_compliant_pad_template",
+    "status": "PASS",
+    "detail": "bounding box 8.0 x 16.0 x 1.3 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: router_compliant_pad_template",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "coupon build volume: coupon_c8_cutout",
+    "status": "PASS",
+    "detail": "bounding box 55.0 x 3.2 x 35.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_c8_cutout",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_insert_boss",
+    "status": "PASS",
+    "detail": "bounding box 46.0 x 28.0 x 14.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_insert_boss",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_rear_panel_fit",
+    "status": "PASS",
+    "detail": "bounding box 54.0 x 9.0 x 34.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_rear_panel_fit",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_logo_retention",
+    "status": "PASS",
+    "detail": "bounding box 25.2 x 20.0 x 24.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_logo_retention",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_handle_lock",
+    "status": "PASS",
+    "detail": "bounding box 66.4 x 48.0 x 23.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_handle_lock",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_wifi_dock",
+    "status": "PASS",
+    "detail": "bounding box 17.9 x 120.0 x 42.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_wifi_dock",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_mac_button_recess",
+    "status": "PASS",
+    "detail": "bounding box 54.0 x 58.0 x 12.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_mac_button_recess",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_router_rf_access",
+    "status": "PASS",
+    "detail": "bounding box 110.0 x 3.2 x 46.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_router_rf_access",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "assembly interference: base / mac_cradle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / lower_shell",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / upper_shell",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / router_tray",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / lower_shell",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / upper_shell",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / router_tray",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / upper_shell",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / router_tray",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / router_tray",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: power_compartment_cover / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: rear_panel / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: rear_panel / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: rear_panel / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: rear_panel / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: rear_panel / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: rear_panel / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: rear_panel / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_interface_bezel / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_interface_bezel / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_interface_bezel / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_interface_bezel / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_interface_bezel / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_interface_bezel / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_cap / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 2.4840 mm^3 <= 4.00 mm^3 allowance (lateral squeeze-pawl preload)"
+  },
+  {
+    "name": "assembly interference: upper_cap / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_cap / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_cap / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_cap / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: removable_handle / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: removable_handle / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: removable_handle / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: removable_handle / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: wifi_dock_left / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: wifi_dock_left / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: wifi_dock_left / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: wifi_dock_right / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: wifi_dock_right / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: logo_panel_left / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "minimum configured walls",
+    "status": "PASS",
+    "detail": "minimum controlled wall is 2.40 mm"
+  },
+  {
+    "name": "equipment vs exterior shell: mac_mini_m4",
+    "status": "PASS",
+    "detail": "no shell intersection (0.0000 mm^3 numerical residue)"
+  },
+  {
+    "name": "equipment vs exterior shell: rutm30",
+    "status": "PASS",
+    "detail": "no shell intersection (0.0000 mm^3 numerical residue)"
+  },
+  {
+    "name": "equipment vs exterior shell: apv_35_36",
+    "status": "PASS",
+    "detail": "no shell intersection (0.0000 mm^3 numerical residue)"
+  },
+  {
+    "name": "equipment/mount interference: mac_mini_m4 / mac_cradle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 tolerance"
+  },
+  {
+    "name": "equipment/mount interference: rutm30 / router_tray",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 tolerance"
+  },
+  {
+    "name": "equipment/mount interference: apv_35_36 / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 tolerance"
+  },
+  {
+    "name": "equipment/mount interference: apv_35_36 / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 tolerance"
+  },
+  {
+    "name": "Mac positive-Z clip retention",
+    "status": "PASS",
+    "detail": "4 cantilevers overhang the Mac by 3.0 mm (57.9, 57.9, 57.9, 57.9 mm^3 witnesses); 1.2 mm top gap is clear and installed intersection is 0.0000 mm^3; four underside cam voids and two linked release rails have clear bottom approaches"
+  },
+  {
+    "name": "Mac three-pad pocket/support-plane stack",
+    "status": "PASS",
+    "detail": "three 15 mm pockets are 1.0 mm deep with solid floors; 2.0 mm pads finish at Z=24.0 mm"
+  },
+  {
+    "name": "RUTM30 four-pad support/counterbore stack",
+    "status": "PASS",
+    "detail": "four 0.6 mm lands plus 1.3 mm pads at 0.4 mm compression finish at router Z=155.5; four 1.8 mm counterbores leave 1.2 mm floor"
+  },
+  {
+    "name": "fastener stack: removable base M3x14",
+    "status": "PASS",
+    "detail": "M3x14: 9.0 mm grip, 5.0 mm pilot penetration, 5.0 mm nominal insert overlap, 6.5 mm tip relief; 4 clear axes with surrounding structural material"
+  },
+  {
+    "name": "fastener stack: Mac cradle M3x10",
+    "status": "PASS",
+    "detail": "M3x10: 4.0 mm grip, 6.0 mm pilot penetration, 5.5 mm nominal insert overlap, 6.5 mm tip relief; 4 clear axes with surrounding structural material"
+  },
+  {
+    "name": "fastener stack: router tray M3x6",
+    "status": "PASS",
+    "detail": "M3x6: 1.2 mm grip, 4.8 mm pilot penetration, 4.8 mm nominal insert overlap, 5.8 mm tip relief; 4 clear axes with surrounding structural material"
+  },
+  {
+    "name": "fastener stack: upper cap M4x18",
+    "status": "PASS",
+    "detail": "M4x18: 12.0 mm grip, 6.0 mm pilot penetration, 5.5 mm nominal insert overlap, 7.0 mm tip relief; 6 clear axes with surrounding structural material"
+  },
+  {
+    "name": "fastener stack: structural shell seam M4x18",
+    "status": "PASS",
+    "detail": "M4x18: 11.4 mm grip, 6.6 mm pilot penetration, 5.5 mm nominal insert overlap, 7.0 mm tip relief; 2 clear axes with surrounding structural material"
+  },
+  {
+    "name": "fastener stack: power-compartment cover M3x8",
+    "status": "PASS",
+    "detail": "M3x8: 2.8 mm grip, 5.2 mm pilot penetration, 5.2 mm nominal insert overlap, 5.5 mm tip relief; 4 clear axes with surrounding structural material"
+  },
+  {
+    "name": "provisional HDMI/USB-C two-fastener extension holes",
+    "status": "PASS",
+    "detail": "four clear M3 axes form two two-fastener patterns; surrounding panel annuli retain >=90% of a 3.0 mm witness"
+  },
+  {
+    "name": "provisional dual-RJ45 two-fastener extension holes",
+    "status": "PASS",
+    "detail": "four clear M3 axes form two two-fastener patterns; surrounding panel annuli retain >=90% of a 2.2 mm witness"
+  },
+  {
+    "name": "C8 terminal tunnel/main-compartment passage",
+    "status": "PASS",
+    "detail": "20.6 x 11.8 mm passage is continuous; obstruction 0.0000 mm^3"
+  },
+  {
+    "name": "sealed-floor raised power tie bridges",
+    "status": "PASS",
+    "detail": "two open strap tunnels have solid crowns and >=98% solid floor witnesses (112.0, 112.0 mm^3)"
+  },
+  {
+    "name": "Mac AC nominal gland aperture",
+    "status": "PASS",
+    "detail": "full diameter-12.0 floor passage remains open; obstruction 0.0000 mm^3"
+  },
+  {
+    "name": "APV top-service blind insert mounts",
+    "status": "PASS",
+    "detail": "two supplier-coordinate diameter-3.6 axes are open from above; 3.0 mm blind pilots retain 2.7 mm sealed floor"
+  },
+  {
+    "name": "power-cover full-height insert columns",
+    "status": "PASS",
+    "detail": "four continuous columns align with open cover axes; provisional M3x8 gives 5.2 mm nominal engagement into 5.5 mm pilots"
+  },
+  {
+    "name": "Mac AC reserved corridor continuity",
+    "status": "PASS",
+    "detail": "one connected 6.0 mm packaging envelope joins the gland and provisional Mac connector without intersecting the Mac, cradle, lower shell, or low-voltage keep-out"
+  },
+  {
+    "name": "Mac annular intake exclusion",
+    "status": "PASS",
+    "detail": "112 mm photo-derived exclusion ring is clear of base and cradle"
+  },
+  {
+    "name": "rear panel+bezel sampled +Y service sweep",
+    "status": "PASS",
+    "detail": "30 sampled positions along +Y from 0 to 80 mm with the four disconnected extension placeholders moving with the panel/bezel; maximum obstruction 0.0000 mm^3"
+  },
+  {
+    "name": "Mac+cradle sampled downward service sweep",
+    "status": "PASS",
+    "detail": "23 sampled positions along -Z from 0 to -80 mm after base removal; Mac and cradle are the moving set; maximum obstruction 0.0000 mm^3"
+  },
+  {
+    "name": "RUTM30 sampled rearward service sweep (retainers released)",
+    "status": "PASS",
+    "detail": "18 sampled positions along +Y from 0 to 112 mm; a conservative 100 x 93.7 x 30 mm router body envelope alone moves, panel/bezel are removed, and both rear retainers are spread; maximum obstruction 0.0000 mm^3"
+  },
+  {
+    "name": "Mac power-button continuous swept path",
+    "status": "PASS",
+    "detail": "continuous \u00d811.0 mm lower-rear probe reaches the button with no printed-part obstruction"
+  },
+  {
+    "name": "mains/SELV modeled keep-out non-overlap",
+    "status": "WARN",
+    "detail": "modeled APV/mains and Mac-AC corridor envelopes overlap the low-voltage keep-out by 0.0000 mm^3; disjoint geometry is packaging evidence only, not proof of a physical barrier, insulation system, conductor restraint, or regulatory separation"
+  },
+  {
+    "name": "RF aperture analytic connector-centre span",
+    "status": "PASS",
+    "detail": "radiused 88.0 mm opening spans all six official connector axes; this does not establish plug, finger, or tool access"
+  },
+  {
+    "name": "square replaceable panel: logo_panel_left",
+    "status": "PASS",
+    "detail": "70.00 x 70.00 mm face; 0.25 mm/side rail clearance"
+  },
+  {
+    "name": "square replaceable panel: logo_panel_right",
+    "status": "PASS",
+    "detail": "70.00 x 70.00 mm face; 0.25 mm/side rail clearance"
+  },
+  {
+    "name": "handle dual-lock bearing interface",
+    "status": "PASS",
+    "detail": "both squeeze pawls engage (1.242, 1.242 mm^3); +0.50 mm virtual lift engages both cap undercuts (10.440, 10.440 mm^3)"
+  },
+  {
+    "name": "RUTM30 reference provenance",
+    "status": "PASS",
+    "detail": "official_teltonika_step"
+  },
+  {
+    "name": "Ethernet topology concurrency",
+    "status": "WARN",
+    "detail": "Two native router ports exist; one is normally occupied by the internal Mac link. Both extension positions are serviceable, but two simultaneous external links plus the Mac require an approved active switch/topology change."
+  },
+  {
+    "name": "physical Mac/button/intake fit coupon",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "Mac vertical-retainer pad/preload, release-force, and shake-cycle test",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "as-built cable/forbidden-geometry routing and bend mock-up",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "APV lead bends and internal branch-hardware packaging",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "physical RF plug/finger/tool access",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "local minimum-wall scan of all generated geometry",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "Wi-Fi dock fit and 20-cycle test",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "logo panel 20-cycle/rattle test",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "Mac AC branch hardware, protected conduit/restraint, and qualified separation proof",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "thermal comparison under representative load",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "2x assembled-mass handle static test",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "qualified mains design and electrical safety review",
+    "status": "PENDING",
+    "detail": "Requires physical hardware/test; CAD does not claim completion."
+  },
+  {
+    "name": "watertight STL: base.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: compliant_pad_template.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_c8_cutout.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_handle_lock.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_insert_boss.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_logo_retention.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_mac_button_recess.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_rear_panel_fit.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_router_rf_access.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_wifi_dock.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: logo_panel_blank_template.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: logo_panel_example_embossed.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: logo_panel_left.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: logo_panel_right.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: lower_shell.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: mac_cradle.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: power_compartment.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: power_compartment_cover.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: rear_panel.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: removable_handle.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: router_compliant_pad_template.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: router_interface_bezel.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: router_tray.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: upper_cap.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: upper_shell.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: wifi_dock_left.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: wifi_dock_right.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "grounded STL components: base.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: compliant_pad_template.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_c8_cutout.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_handle_lock.stl",
+    "status": "PASS",
+    "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_insert_boss.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_logo_retention.stl",
+    "status": "PASS",
+    "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_mac_button_recess.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_rear_panel_fit.stl",
+    "status": "PASS",
+    "detail": "2 independently grounded watertight component(s); Z minima [0.00000, -0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_router_rf_access.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_wifi_dock.stl",
+    "status": "PASS",
+    "detail": "3 independently grounded watertight component(s); Z minima [0.00000, 0.00000, 0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: logo_panel_blank_template.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: logo_panel_example_embossed.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: logo_panel_left.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: logo_panel_right.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: lower_shell.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: mac_cradle.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: power_compartment.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: power_compartment_cover.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: rear_panel.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: removable_handle.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: router_compliant_pad_template.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: router_interface_bezel.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: router_tray.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: upper_cap.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: upper_shell.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: wifi_dock_left.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: wifi_dock_right.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
+  }
+]
