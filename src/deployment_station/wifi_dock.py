@@ -15,8 +15,10 @@ def _vertical_recessed_clip(
     center: tuple[float, float, float],
     side: int,
     exterior_x: float,
+    lip_radius: float = 1.0,
+    lip_intrusion: float = 0.75,
 ) -> cq.Workplane:
-    """Vertical-axis half-annulus with inward-flexing mouth lips."""
+    """Vertical-axis half-annulus with small rounded snap noses."""
 
     cx, cy, cz = center
     outer_radius = radius_inner + wall
@@ -27,10 +29,18 @@ def _vertical_recessed_clip(
     # outside, so neither clip nor backplate exceeds the fixed body datum.
     keep = box_at(50.0, 2.0 * outer_radius + 4.0, width + 2.0, (exterior_x - side * 25.0, cy, cz))
     ring = ring.intersect(keep)
-    # Tangential compliant lips reduce the mouth below the antenna diameter.
+    # Small rounded noses provide a lead-in and controlled retention.  The old
+    # 6 mm rectangular lips reduced a nominal 30 mm mouth to about 22.8 mm and
+    # demanded impossible deflection; these noses intrude only 0.75 mm/side.
     for y_sign in (-1.0, 1.0):
-        lip = box_at(5.0, 6.0, width, (exterior_x - side * 2.5, cy + y_sign * (outer_radius - 3.0), cz))
-        ring = ring.union(lip)
+        nose_center_y = cy + y_sign * (radius_inner - lip_intrusion + lip_radius)
+        nose = cylinder_axis(
+            lip_radius,
+            width,
+            (exterior_x - side * lip_radius, nose_center_y, cz - width / 2.0),
+            (0, 0, 1),
+        )
+        ring = ring.union(nose)
     return ring
 
 
@@ -63,6 +73,8 @@ def wifi_dock(side: str, p: StationParameters = DEFAULT) -> cq.Workplane:
         (clip_center_x, w.dock_center_y, base_z),
         sign,
         clip_center_x,
+        w.clip_lip_radius,
+        w.clip_lip_intrusion,
     )
     stem_clip = _vertical_recessed_clip(
         w.antenna_stem_diameter / 2.0 + p.fits.wifi_clip_radial,
@@ -71,6 +83,8 @@ def wifi_dock(side: str, p: StationParameters = DEFAULT) -> cq.Workplane:
         (clip_center_x, w.dock_center_y, stem_z),
         sign,
         clip_center_x,
+        w.clip_lip_radius,
+        w.clip_lip_intrusion,
     )
     # Shelf carries the Ø30 hub mass; the radial-cable side remains open.
     shelf = box_at(
@@ -119,6 +133,22 @@ def wifi_dock_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
     for index, diameter in enumerate((30.0, 30.5, 31.0)):
         y = (index - 1) * 42.0
         back = box_at(5.0, 36.0, 42.0, (0.0, y, 21.0))
-        clip = _vertical_recessed_clip(diameter / 2.0, w.clip_wall, 10.0, (2.5, y, 23.0), 1, 2.5)
+        clip = _vertical_recessed_clip(
+            diameter / 2.0,
+            w.clip_wall,
+            10.0,
+            (2.5, y, 23.0),
+            1,
+            2.5,
+            w.clip_lip_radius,
+            w.clip_lip_intrusion,
+        )
+        # One/two/three through-markers identify 30.0/30.5/31.0 mm even if the
+        # exporter reorders disconnected solids while packing them on the bed.
+        marker_count = index + 1
+        for marker_index in range(marker_count):
+            marker_y = y + (marker_index - (marker_count - 1) / 2.0) * 5.0
+            marker = cylinder_axis(1.2, 7.0, (-3.5, marker_y, 6.0), (1, 0, 0))
+            back = back.cut(marker)
         coupon = coupon.union(back).union(clip)
     return coupon

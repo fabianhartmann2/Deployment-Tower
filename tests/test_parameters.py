@@ -24,6 +24,8 @@ def test_joint_clearances_are_separate_parameters():
     values = {
         fits.sliding_fit_per_side,
         fits.service_panel_per_side,
+        fits.rear_panel_x_per_side,
+        fits.rear_panel_z_per_side,
         fits.logo_panel_per_side,
         fits.snap_feature_per_side,
         fits.wifi_clip_radial,

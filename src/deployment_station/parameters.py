@@ -59,6 +59,8 @@ class FitParameters:
     equipment_clearance: float = 1.5
     sliding_fit_per_side: float = 0.30
     service_panel_per_side: float = 0.35
+    rear_panel_x_per_side: float = 0.15
+    rear_panel_z_per_side: float = 0.05
     logo_panel_per_side: float = 0.25
     snap_feature_per_side: float = 0.20
     wifi_clip_radial: float = 0.45
@@ -234,7 +236,8 @@ class WifiDockParameters:
     backplate_thickness: float = 3.0
     clip_width: float = 10.0
     clip_wall: float = 2.4
-    clip_opening_angle_deg: float = 74.0
+    clip_lip_radius: float = 1.0
+    clip_lip_intrusion: float = 0.75
     dock_center_y: float = 53.0
     dock_center_z: float = 216.0
 

@@ -35,6 +35,7 @@ from deployment_station.validation import (
     power_cover_column_check,
     power_tie_bridge_floor_check,
     router_support_stack_check,
+    wifi_dock_capture_geometry_check,
 )
 
 
@@ -86,10 +87,10 @@ def test_all_required_coupons_exist_and_are_valid():
     assert set(coupons) == {
         "coupon_c8_cutout",
         "coupon_insert_boss",
-        "coupon_rear_panel_fit",
+        "coupon_rear_panel_fit_v2",
         "coupon_logo_mount",
         "coupon_handle_mount",
-        "coupon_wifi_dock",
+        "coupon_wifi_dock_v2",
         "coupon_mac_button_recess",
         "coupon_router_rf_access",
     }
@@ -216,6 +217,13 @@ def test_logo_mount_check_rejects_a_blocked_panel_hole(validation_parts):
     damaged = dict(validation_parts)
     damaged["logo_panel_right"] = panel.union(blocked)
     assert logo_screw_mount_check(DEFAULT, damaged).status == "FAIL"
+
+
+def test_wifi_dock_capture_requires_small_bounded_arm_movement():
+    result = wifi_dock_capture_geometry_check(DEFAULT)
+    assert result.status == "PASS", result.detail
+    impossible_lips = replace(DEFAULT.wifi, clip_lip_intrusion=4.0)
+    assert wifi_dock_capture_geometry_check(replace(DEFAULT, wifi=impossible_lips)).status == "FAIL"
 
 
 def test_sampled_motion_check_detects_an_intermediate_obstruction():
@@ -345,6 +353,7 @@ def test_full_geometry_validation_has_no_failures():
     assert "Mac power-button continuous swept path" in result_names
     assert "handle four-screw reinforced mounting stack" in result_names
     assert "logo panels four-screw replaceable mounting stack" in result_names
+    assert "Wi-Fi dock rounded-lip insertion geometry" in result_names
     assert "C8 terminal tunnel/main-compartment passage" in result_names
     assert "sealed-floor raised power tie bridges" in result_names
     assert "Mac AC nominal gland aperture" in result_names

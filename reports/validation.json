@@ -300,12 +300,12 @@
     "detail": "valid shape"
   },
   {
-    "name": "coupon build volume: coupon_rear_panel_fit",
+    "name": "coupon build volume: coupon_rear_panel_fit_v2",
     "status": "PASS",
-    "detail": "bounding box 54.0 x 9.0 x 34.0 mm"
+    "detail": "bounding box 120.0 x 22.5 x 37.0 mm"
   },
   {
-    "name": "coupon validity: coupon_rear_panel_fit",
+    "name": "coupon validity: coupon_rear_panel_fit_v2",
     "status": "PASS",
     "detail": "valid shape"
   },
@@ -330,12 +330,12 @@
     "detail": "valid shape"
   },
   {
-    "name": "coupon build volume: coupon_wifi_dock",
+    "name": "coupon build volume: coupon_wifi_dock_v2",
     "status": "PASS",
     "detail": "bounding box 17.9 x 120.0 x 42.0 mm"
   },
   {
-    "name": "coupon validity: coupon_wifi_dock",
+    "name": "coupon validity: coupon_wifi_dock_v2",
     "status": "PASS",
     "detail": "valid shape"
   },
@@ -1075,6 +1075,11 @@
     "detail": "two outward-accessible M3 screws per panel; four clear axes, solid shell-webbed bosses, 5.5 mm nominal insert overlap, and zero installed interference"
   },
   {
+    "name": "Wi-Fi dock rounded-lip insertion geometry",
+    "status": "PASS",
+    "detail": "\u00d830.0 mm hub enters a 29.4 mm rounded mouth with 0.30 mm nominal movement per arm and seats in a 30.9 mm cavity; stem movement is 0.30 mm/arm"
+  },
+  {
     "name": "RUTM30 reference provenance",
     "status": "PASS",
     "detail": "official_teltonika_step"
@@ -1180,7 +1185,7 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
-    "name": "watertight STL: coupon_rear_panel_fit.stl",
+    "name": "watertight STL: coupon_rear_panel_fit_v2.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1190,7 +1195,7 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
-    "name": "watertight STL: coupon_wifi_dock.stl",
+    "name": "watertight STL: coupon_wifi_dock_v2.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1315,9 +1320,9 @@
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
   {
-    "name": "grounded STL components: coupon_rear_panel_fit.stl",
+    "name": "grounded STL components: coupon_rear_panel_fit_v2.stl",
     "status": "PASS",
-    "detail": "2 independently grounded watertight component(s); Z minima [0.00000, -0.00000] mm"
+    "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
   },
   {
     "name": "grounded STL components: coupon_router_rf_access.stl",
@@ -1325,7 +1330,7 @@
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
   {
-    "name": "grounded STL components: coupon_wifi_dock.stl",
+    "name": "grounded STL components: coupon_wifi_dock_v2.stl",
     "status": "PASS",
     "detail": "3 independently grounded watertight component(s); Z minima [0.00000, 0.00000, 0.00000] mm"
   },

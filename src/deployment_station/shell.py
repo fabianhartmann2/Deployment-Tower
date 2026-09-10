@@ -25,12 +25,13 @@ def _rear_opening_cut(p: StationParameters, z0: float, height: float) -> cq.Work
 
 def _rear_panel_seat_cut(p: StationParameters) -> cq.Workplane:
     e = p.enclosure
+    fits = p.fits
     center_z = (e.rear_opening_bottom + e.rear_opening_top) / 2.0
     return rounded_panel_xz(
-        e.rear_panel_width + 0.5,
-        e.rear_panel_height + 0.5,
+        e.rear_panel_width + 2.0 * fits.rear_panel_x_per_side,
+        e.rear_panel_height + 2.0 * fits.rear_panel_z_per_side,
         e.wall + 2.0,
-        e.rear_panel_corner_radius + 0.25,
+        e.rear_panel_corner_radius + fits.rear_panel_x_per_side,
         e.depth / 2.0 - e.wall - 1.0,
         0.0,
         center_z,

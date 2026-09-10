@@ -97,10 +97,10 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | --- | ---: |
 | `coupon_c8_cutout` | 55 x 3.2 x 35 |
 | `coupon_insert_boss` | 46 x 28 x 14 |
-| `coupon_rear_panel_fit` | 54 x 9 x 34 |
+| `coupon_rear_panel_fit_v2` | 120 x 22.5 x 37; upright receiver plus flat insert |
 | `coupon_logo_mount` | 23.2 x 32 x 18 |
 | `coupon_handle_mount` | 100 x 36 x 12 |
-| `coupon_wifi_dock` | 17.9 x 120 x 42 |
+| `coupon_wifi_dock_v2` | 17.9 x 120 x 42 |
 | `coupon_mac_button_recess` | 54 x 58 x 12 |
 | `coupon_router_rf_access` | 110 x 3.2 x 46 |
 
@@ -120,7 +120,8 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `rear_panel_width/height/thickness/radius` | 132/236/3.2/8 | Rear service panel |
 | `equipment_clearance` | 1.5 | Nominal equipment gap |
 | `sliding_fit_per_side` | 0.30 | General sliding/seam-key fit |
-| `service_panel_per_side` | 0.35 | Panel/lip coupon fit |
+| `service_panel_per_side` | 0.35 | Power-cover internal relief; independent of calibrated rear-panel seat |
+| `rear_panel_x_per_side`, `rear_panel_z_per_side` | 0.15, 0.05 | Calibrated rear-panel seat allowances from the first physical coupon; v2 re-test required |
 | `logo_panel_per_side` | 0.25 | Logo receiver clearance |
 | `wifi_clip_radial` | 0.45 | Antenna capture allowance |
 | `snap_feature_per_side`, `insert_pilot_allowance` | 0.20, -0.15 | Reserved references; actual mechanisms/coupon variants have explicit geometry |
@@ -175,7 +176,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Antenna hub/proximal/tip | 18/15/5 | Placeholder reference-solid sections |
 | Dock backplate W/H/T | 36/98/3 | Recessed removable dock |
 | Dock clip width/wall | 10/2.4 | Vertical-axis half-annulus clips |
-| Dock opening angle | 74 degrees | Reserved target; explicit mouth geometry governs current model |
+| Dock rounded lip radius/intrusion | 1.0 / 0.75 per side | Production base mouth 29.4 for measured Ø30.0 hub; 0.30 nominal arm movement per side |
 | Logo size/thickness/radius | 70/2.4/6 | Face geometry |
 | Logo pocket depth/reveal/emboss | 1.6/0.8/0.8 | Appearance parameters |
 | Logo centre Z / finger notch | 156 / diameter 8 | Placement/removal |

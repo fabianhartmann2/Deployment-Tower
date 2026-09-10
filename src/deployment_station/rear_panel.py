@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import cadquery as cq
 
-from .geometry import box_at, cylinder_axis, rounded_panel_xz
+from .geometry import box_at, cylinder_axis, rounded_panel_xz, rounded_rect_prism
 from .layout import packaging_layout
 from .parameters import DEFAULT, StationParameters
 
@@ -202,11 +202,28 @@ def router_interface_bezel(p: StationParameters = DEFAULT) -> cq.Workplane:
 
 
 def rear_panel_fit_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
-    clearance = p.fits.service_panel_per_side
-    frame = rounded_panel_xz(54.0, 34.0, 5.0, 4.0, 0.0, 0.0, 0.0, 1)
-    opening = rounded_panel_xz(42.0 + 2.0 * clearance, 22.0 + 2.0 * clearance, 6.0, 3.0, -0.5, 0.0, 0.0, 1)
-    insert = rounded_panel_xz(42.0, 22.0, 3.0, 3.0, 6.0, 0.0, 0.0, 1)
-    return frame.cut(opening).union(insert)
+    """Production-orientation rear fit: upright shell frame and flat panel insert."""
+
+    fits = p.fits
+    frame_center_z = 20.0
+    frame = rounded_panel_xz(54.0, 34.0, 5.0, 4.0, 0.0, 0.0, frame_center_z, 1)
+    opening = rounded_panel_xz(
+        42.0 + 2.0 * fits.rear_panel_x_per_side,
+        22.0 + 2.0 * fits.rear_panel_z_per_side,
+        6.0,
+        3.0 + fits.rear_panel_x_per_side,
+        -0.5,
+        0.0,
+        frame_center_z,
+        1,
+    )
+    # The foot makes the receiver self-supporting in the same upright Z
+    # orientation as the shell.  The separate insert lies flat like the actual
+    # rear panel, so the coupon captures the two different print directions.
+    foot = box_at(58.0, 18.0, 3.0, (0.0, 2.5, 1.5))
+    frame = frame.cut(opening).union(foot)
+    insert = rounded_rect_prism(42.0, 22.0, 3.0, 3.0).translate((70.0, 0.0, 0.0))
+    return frame.union(insert)
 
 
 def c8_cutout_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:

@@ -28,9 +28,9 @@ The registry contains **19 printable definitions**: the 15 installed rows above 
 | --- | ---: | --- |
 | `coupon_insert_boss` | Per material/orientation | M3 pilot at nominal diameter and +/-0.2 variants |
 | `coupon_c8_cutout` | Per inlet/material candidate | Actual inlet profile, panel, and fixing fit |
-| `coupon_rear_panel_fit` | Per shell/panel process | 0.35 per-side service fit and repeatability |
+| `coupon_rear_panel_fit_v2` | Per shell/panel process | Upright shell receiver plus flat panel insert; X/Z allowances 0.15/0.05 mm per side |
 | `coupon_mac_button_recess` | After Mac measurement | Finger reach and guarding |
-| `coupon_wifi_dock` | 1 minimum | 30.0, 30.5, and 31.0 hub-capture variants |
+| `coupon_wifi_dock_v2` | 1 minimum | Rounded-mouth 30.0, 30.5, and 31.0 hub-capture variants; replaces impossible rectangular lips |
 | `coupon_router_rf_access` | 1 minimum | Full 88 x 30 six-port opening with actual plugs, fingers/tools, liner, and bends |
 | `coupon_logo_mount` | Per panel/shell material pair | Two-screw insert fit, seating, torque, service cycling, and rattle |
 | `coupon_handle_mount` | Per structural material/orientation | Representative two-screw foot/pad insert stack; torque, pull-out, and section inspection |

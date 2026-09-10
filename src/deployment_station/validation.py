@@ -537,6 +537,37 @@ def logo_screw_mount_check(
     )
 
 
+def wifi_dock_capture_geometry_check(p: StationParameters) -> CheckResult:
+    """Bound the rigid hub clearance and elastic movement demanded at each lip."""
+
+    w = p.wifi
+    radial_clearance = p.fits.wifi_clip_radial
+    base_cavity = w.antenna_base_diameter + 2.0 * radial_clearance
+    stem_cavity = w.antenna_stem_diameter + 2.0 * radial_clearance
+    base_mouth = base_cavity - 2.0 * w.clip_lip_intrusion
+    stem_mouth = stem_cavity - 2.0 * w.clip_lip_intrusion
+    base_arm_movement = (w.antenna_base_diameter - base_mouth) / 2.0
+    stem_arm_movement = (w.antenna_stem_diameter - stem_mouth) / 2.0
+    passed = (
+        base_cavity > w.antenna_base_diameter
+        and stem_cavity > w.antenna_stem_diameter
+        and 0.10 <= base_arm_movement <= 0.60
+        and 0.10 <= stem_arm_movement <= 0.60
+        and w.clip_lip_radius > w.clip_lip_intrusion
+        and w.clip_wall >= p.enclosure.minimum_wall
+    )
+    return _check(
+        "Wi-Fi dock rounded-lip insertion geometry",
+        passed,
+        f"Ø{w.antenna_base_diameter:.1f} mm hub enters a {base_mouth:.1f} mm rounded mouth with "
+        f"{base_arm_movement:.2f} mm nominal movement per arm and seats in a {base_cavity:.1f} mm cavity; "
+        f"stem movement is {stem_arm_movement:.2f} mm/arm",
+        f"base cavity={base_cavity:.2f}, base mouth={base_mouth:.2f}, base arm movement={base_arm_movement:.2f}, "
+        f"stem cavity={stem_cavity:.2f}, stem mouth={stem_mouth:.2f}, stem arm movement={stem_arm_movement:.2f}, "
+        f"lip radius/intrusion={w.clip_lip_radius:.2f}/{w.clip_lip_intrusion:.2f}",
+    )
+
+
 def c8_terminal_passage_check(
     p: StationParameters,
     compartment: cq.Workplane,
@@ -1813,6 +1844,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
 
     results.append(handle_structural_mount_check(p, parts))
     results.append(logo_screw_mount_check(p, parts))
+    results.append(wifi_dock_capture_geometry_check(p))
 
     results.append(
         CheckResult(
