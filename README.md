@@ -129,7 +129,7 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 - [requirements_traceability.md](reports/requirements_traceability.md) — handoff IDs mapped to modules, tests, and closure evidence.
 - [known_limitations.md](reports/known_limitations.md) — release blockers and explicit electrical boundary.
 - [validation_results.md](reports/validation_results.md) — generated computational record.
-- [coupon_results_2026-09-10.md](reports/coupon_results_2026-09-10.md) — first physical coupon observations and required v2 retests.
+- [coupon_results_2026-09-10.md](reports/coupon_results_2026-09-10.md) — physical coupon observations, revisions, and selected v2 fits.
 
 ## Release boundary
 

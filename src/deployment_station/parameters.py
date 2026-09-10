@@ -63,7 +63,9 @@ class FitParameters:
     rear_panel_z_per_side: float = 0.05
     logo_panel_per_side: float = 0.25
     snap_feature_per_side: float = 0.20
-    wifi_clip_radial: float = 0.45
+    # Three-marker physical coupon selected: 31.0 mm cavity for the measured
+    # 30.0 mm antenna hub, hence 0.50 mm radial allowance.
+    wifi_clip_radial: float = 0.50
     insert_pilot_allowance: float = -0.15
 
 

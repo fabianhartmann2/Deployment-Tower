@@ -39,6 +39,11 @@ def test_non_default_clearance_builds_independent_configuration():
     assert DEFAULT.fits.logo_panel_per_side == 0.25
 
 
+def test_wifi_hub_clearance_matches_selected_three_marker_coupon():
+    cavity_diameter = DEFAULT.wifi.antenna_base_diameter + 2.0 * DEFAULT.fits.wifi_clip_radial
+    assert cavity_diameter == pytest.approx(31.0)
+
+
 def test_service_joint_lengths_are_distinct_by_grip_stack():
     fasteners = DEFAULT.fasteners
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)

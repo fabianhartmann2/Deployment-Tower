@@ -1867,7 +1867,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         "APV lead bends and internal branch-hardware packaging",
         "physical RF plug/finger/tool access",
         "local minimum-wall scan of all generated geometry",
-        "Wi-Fi dock fit and 20-cycle test",
+        "Wi-Fi dock carry/shake/cable-load and 20-cycle test",
         "logo panel M3 joint torque/rattle/service-cycle test",
         "Mac AC branch hardware, protected conduit/restraint, and qualified separation proof",
         "thermal comparison under representative load",

@@ -182,7 +182,7 @@
   {
     "name": "build volume: wifi_dock_left",
     "status": "PASS",
-    "detail": "bounding box 17.8 x 36.0 x 98.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 17.9 x 36.0 x 98.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: wifi_dock_left",
@@ -197,7 +197,7 @@
   {
     "name": "build volume: wifi_dock_right",
     "status": "PASS",
-    "detail": "bounding box 17.8 x 36.0 x 98.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 17.9 x 36.0 x 98.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: wifi_dock_right",
@@ -1077,7 +1077,7 @@
   {
     "name": "Wi-Fi dock rounded-lip insertion geometry",
     "status": "PASS",
-    "detail": "\u00d830.0 mm hub enters a 29.4 mm rounded mouth with 0.30 mm nominal movement per arm and seats in a 30.9 mm cavity; stem movement is 0.30 mm/arm"
+    "detail": "\u00d830.0 mm hub enters a 29.5 mm rounded mouth with 0.25 mm nominal movement per arm and seats in a 31.0 mm cavity; stem movement is 0.25 mm/arm"
   },
   {
     "name": "RUTM30 reference provenance",
@@ -1120,7 +1120,7 @@
     "detail": "Requires physical hardware/test; CAD does not claim completion."
   },
   {
-    "name": "Wi-Fi dock fit and 20-cycle test",
+    "name": "Wi-Fi dock carry/shake/cable-load and 20-cycle test",
     "status": "PENDING",
     "detail": "Requires physical hardware/test; CAD does not claim completion."
   },

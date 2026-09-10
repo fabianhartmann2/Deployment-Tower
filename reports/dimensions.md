@@ -121,9 +121,9 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `equipment_clearance` | 1.5 | Nominal equipment gap |
 | `sliding_fit_per_side` | 0.30 | General sliding/seam-key fit |
 | `service_panel_per_side` | 0.35 | Power-cover internal relief; independent of calibrated rear-panel seat |
-| `rear_panel_x_per_side`, `rear_panel_z_per_side` | 0.15, 0.05 | Calibrated rear-panel seat allowances from the first physical coupon; v2 re-test required |
+| `rear_panel_x_per_side`, `rear_panel_z_per_side` | 0.15, 0.05 | Calibrated rear-panel seat allowances; v2 physical fit reported passed |
 | `logo_panel_per_side` | 0.25 | Logo receiver clearance |
-| `wifi_clip_radial` | 0.45 | Antenna capture allowance |
+| `wifi_clip_radial` | 0.50 | Antenna capture allowance selected by the three-marker physical coupon |
 | `snap_feature_per_side`, `insert_pilot_allowance` | 0.20, -0.15 | Reserved references; actual mechanisms/coupon variants have explicit geometry |
 
 ### Equipment and cable references
@@ -176,7 +176,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Antenna hub/proximal/tip | 18/15/5 | Placeholder reference-solid sections |
 | Dock backplate W/H/T | 36/98/3 | Recessed removable dock |
 | Dock clip width/wall | 10/2.4 | Vertical-axis half-annulus clips |
-| Dock rounded lip radius/intrusion | 1.0 / 0.75 per side | Production base mouth 29.4 for measured Ø30.0 hub; 0.30 nominal arm movement per side |
+| Dock rounded lip radius/intrusion | 1.0 / 0.75 per side | Selected production cavity/mouth 31.0/29.5 for measured Ø30.0 hub; 0.25 nominal arm movement per side |
 | Logo size/thickness/radius | 70/2.4/6 | Face geometry |
 | Logo pocket depth/reveal/emboss | 1.6/0.8/0.8 | Appearance parameters |
 | Logo centre Z / finger notch | 156 / diameter 8 | Placement/removal |

@@ -42,10 +42,10 @@ Summary: 270 PASS, 2 WARN, 12 PENDING, 0 FAIL.
 | build volume: removable_handle | PASS | bounding box 150.0 x 32.0 x 76.0 mm fits 256 mm cube after orientation |
 | valid solid: removable_handle | PASS | OpenCascade shape is valid |
 | connected printable part: removable_handle | PASS | one connected solid |
-| build volume: wifi_dock_left | PASS | bounding box 17.8 x 36.0 x 98.0 mm fits 256 mm cube after orientation |
+| build volume: wifi_dock_left | PASS | bounding box 17.9 x 36.0 x 98.0 mm fits 256 mm cube after orientation |
 | valid solid: wifi_dock_left | PASS | OpenCascade shape is valid |
 | connected printable part: wifi_dock_left | PASS | one connected solid |
-| build volume: wifi_dock_right | PASS | bounding box 17.8 x 36.0 x 98.0 mm fits 256 mm cube after orientation |
+| build volume: wifi_dock_right | PASS | bounding box 17.9 x 36.0 x 98.0 mm fits 256 mm cube after orientation |
 | valid solid: wifi_dock_right | PASS | OpenCascade shape is valid |
 | connected printable part: wifi_dock_right | PASS | one connected solid |
 | build volume: logo_panel_left | PASS | bounding box 2.4 x 70.0 x 70.0 mm fits 256 mm cube after orientation |
@@ -221,7 +221,7 @@ Summary: 270 PASS, 2 WARN, 12 PENDING, 0 FAIL.
 | square replaceable panel: logo_panel_right | PASS | 70.00 x 70.00 mm face; 0.25 mm/side rail clearance |
 | handle four-screw reinforced mounting stack | PASS | four clear M3 axes, two 42 x 32 x 5 mm feet, full-depth cap bosses/pads, and 5.0 mm nominal engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass |
 | logo panels four-screw replaceable mounting stack | PASS | two outward-accessible M3 screws per panel; four clear axes, solid shell-webbed bosses, 5.5 mm nominal insert overlap, and zero installed interference |
-| Wi-Fi dock rounded-lip insertion geometry | PASS | Ø30.0 mm hub enters a 29.4 mm rounded mouth with 0.30 mm nominal movement per arm and seats in a 30.9 mm cavity; stem movement is 0.30 mm/arm |
+| Wi-Fi dock rounded-lip insertion geometry | PASS | Ø30.0 mm hub enters a 29.5 mm rounded mouth with 0.25 mm nominal movement per arm and seats in a 31.0 mm cavity; stem movement is 0.25 mm/arm |
 | RUTM30 reference provenance | PASS | official_teltonika_step |
 | Ethernet topology concurrency | WARN | Two native router ports exist; one is normally occupied by the internal Mac link. Both extension positions are serviceable, but two simultaneous external links plus the Mac require an approved active switch/topology change. |
 | physical Mac/button/intake fit coupon | PENDING | Requires physical hardware/test; CAD does not claim completion. |
@@ -230,7 +230,7 @@ Summary: 270 PASS, 2 WARN, 12 PENDING, 0 FAIL.
 | APV lead bends and internal branch-hardware packaging | PENDING | Requires physical hardware/test; CAD does not claim completion. |
 | physical RF plug/finger/tool access | PENDING | Requires physical hardware/test; CAD does not claim completion. |
 | local minimum-wall scan of all generated geometry | PENDING | Requires physical hardware/test; CAD does not claim completion. |
-| Wi-Fi dock fit and 20-cycle test | PENDING | Requires physical hardware/test; CAD does not claim completion. |
+| Wi-Fi dock carry/shake/cable-load and 20-cycle test | PENDING | Requires physical hardware/test; CAD does not claim completion. |
 | logo panel M3 joint torque/rattle/service-cycle test | PENDING | Requires physical hardware/test; CAD does not claim completion. |
 | Mac AC branch hardware, protected conduit/restraint, and qualified separation proof | PENDING | Requires physical hardware/test; CAD does not claim completion. |
 | thermal comparison under representative load | PENDING | Requires physical hardware/test; CAD does not claim completion. |
