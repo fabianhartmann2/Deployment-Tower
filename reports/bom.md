@@ -7,7 +7,7 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | Part | Qty | Baseline material | Function / boundary |
 | --- | ---: | --- | --- |
 | `base` | 1 | Dark ASA | Feet, 116 mm intake, continuous button approach, four screw clearances |
-| `mac_cradle` | 1 | ASA | Open intake ring, three 1 mm pad seats, keepers, four positive-Z clip/cams, two linked bottom release rails, four shell-fastened ears |
+| `mac_cradle` | 1 | ASA | Physically calibrated Ø112 opening, 0.30 mm side gap, three 1 mm pad seats, four 8 mm-lowered positive-Z clip/cams, two extended bottom release rails, four shell-fastened ears |
 | `lower_shell` | 1 | Matte white ASA | Base/cradle/power supports, rear bosses, seam keys, two structural seam inserts |
 | `upper_shell` | 1 | Matte white ASA | Router supports, rear bosses, logo/dock receivers, cap inserts, handle ribs/spines |
 | `router_tray` | 1 | ASA | Vented plate, four compliant-pad lands, guides, ledges, front stop, rear latch nibs, four recessed low-head shell fasteners |
@@ -39,7 +39,7 @@ The registry contains **19 printable definitions**: the 15 installed rows above 
 
 | Item | Qty | Known nominal data | CAD treatment |
 | --- | ---: | --- | --- |
-| Apple Mac mini M4 (2024, non-Pro) | 1 | 127 x 127 x 50; about 0.67 kg | Controlled placeholder; physical unit required |
+| Apple Mac mini M4 (2024, non-Pro) | 1 | 127 x 127 x 50; about 0.67 kg | Outer dimensions official; cradle datums revised from physical fit, but no validated scan/STEP |
 | Teltonika RUTM30 | 1 | 100 x 93.7 x 30; about 0.319 kg | Official AP214 STEP imported from `reference/0112_RUTM30AMBKX_02.STEP` |
 | Mean Well APV-35-36 | 1 | 36 V, 1 A, 36 W; 84 x 57 x 29.5; 150 +/-10 mm attached 18 AWG leads | Datasheet-based placeholder; actual fit/temperature/wiring pending |
 | Schurter 6160.0021 C8 inlet | 1 | Controlled 28 pitch / diameter-3.2 pattern; exact current drawing governs | Parametric placeholder and coupon; **phase-out/lifecycle and availability risk must be resolved before order** |

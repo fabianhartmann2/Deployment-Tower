@@ -12,7 +12,7 @@ Summary: 270 PASS, 2 WARN, 12 PENDING, 0 FAIL.
 | build volume: base | PASS | bounding box 162.0 x 162.0 x 14.0 mm fits 256 mm cube after orientation |
 | valid solid: base | PASS | OpenCascade shape is valid |
 | connected printable part: base | PASS | one connected solid |
-| build volume: mac_cradle | PASS | bounding box 152.0 x 137.0 x 59.2 mm fits 256 mm cube after orientation |
+| build volume: mac_cradle | PASS | bounding box 152.0 x 137.0 x 51.2 mm fits 256 mm cube after orientation |
 | valid solid: mac_cradle | PASS | OpenCascade shape is valid |
 | connected printable part: mac_cradle | PASS | one connected solid |
 | build volume: lower_shell | PASS | bounding box 165.0 x 165.0 x 97.0 mm fits 256 mm cube after orientation |

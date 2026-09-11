@@ -24,7 +24,7 @@ def mac_vertical_retainer_centres(
 
     c = p.components
     r = p.mac_retention
-    stem_inner_x = c.mac_width / 2.0 + p.fits.equipment_clearance
+    stem_inner_x = c.mac_width / 2.0 + r.side_clearance
     return tuple(
         (
             side,
@@ -48,7 +48,7 @@ def mac_vertical_retainer_lead_in(
     c = p.components
     retention = p.mac_retention
     mac_half_width = c.mac_width / 2.0
-    tab_bottom_z = c.mac_support_plane_z + c.mac_height + retention.top_gap
+    tab_bottom_z = c.mac_support_plane_z + c.mac_retained_body_height + retention.top_gap
     inner_tip_x = side * (mac_half_width - retention.overhang)
     mac_side_x = side * mac_half_width
     return (
@@ -79,7 +79,7 @@ def mac_release_rail_datums(
         raise ValueError("at least two clip stations are required for linked release rails")
     outer_stem_face = (
         c.mac_width / 2.0
-        + p.fits.equipment_clearance
+        + retention.side_clearance
         + retention.stem_thickness
     )
     rail_width = retention.release_rail_outreach + retention.release_rail_root_overlap
@@ -109,7 +109,10 @@ def mac_cradle(p: StationParameters = DEFAULT) -> cq.Workplane:
     z0 = c.mac_support_plane_z - 5.0
     cradle_top_z = z0 + 4.0
     outer = rounded_rect_prism(c.mac_width + 10.0, c.mac_depth + 10.0, 4.0, c.mac_corner_radius + 3.0, z0).translate((0.0, c.mac_center_y, 0.0))
-    opening = cq.Workplane("XY").circle((c.mac_intake_outer_diameter + 4.0) / 2.0).extrude(6.0).translate((0, c.mac_center_y, z0 - 1.0))
+    # Physical trial found the previous Ø116 opening 4 mm too large.  Match the
+    # measured/photo-derived Ø112 underside ring while leaving the base opening
+    # independently larger for airflow.
+    opening = cq.Workplane("XY").circle(c.mac_intake_outer_diameter / 2.0).extrude(6.0).translate((0, c.mac_center_y, z0 - 1.0))
     cradle = outer.cut(opening)
 
     # Four corner pad seats lie outside the annular intake.  The configured
@@ -118,7 +121,7 @@ def mac_cradle(p: StationParameters = DEFAULT) -> cq.Workplane:
     pad_xy = c.mac_width / 2.0 - 10.0
     for x in (-pad_xy, pad_xy):
         for y in (-pad_xy, pad_xy):
-            if x > 0 and y > 0:
+            if x * c.mac_button_x_side > 0 and y > 0:
                 # Button corner remains clear; support is shifted to the other
                 # three corners pending physical underside-relief measurement.
                 continue
@@ -141,11 +144,11 @@ def mac_cradle(p: StationParameters = DEFAULT) -> cq.Workplane:
     # Low mid-side keepers restrain lateral motion while staying out of the shell
     # corner radii and the photo-derived button/connector regions.
     keeper_z = c.mac_support_plane_z + 2.0
-    side_offset = c.mac_width / 2.0 + p.fits.equipment_clearance + 1.5
+    side_offset = c.mac_width / 2.0 + p.mac_retention.side_clearance + 1.5
     for x in (-side_offset, side_offset):
         cradle = cradle.union(box_at(3.0, 44.0, 6.0, (x, c.mac_center_y - 5.0, keeper_z)))
-    front_y = c.mac_center_y - c.mac_depth / 2.0 - p.fits.equipment_clearance - 1.5
-    rear_y = c.mac_center_y + c.mac_depth / 2.0 + p.fits.equipment_clearance + 1.5
+    front_y = c.mac_center_y - c.mac_depth / 2.0 - p.mac_retention.side_clearance - 1.5
+    rear_y = c.mac_center_y + c.mac_depth / 2.0 + p.mac_retention.side_clearance + 1.5
     cradle = cradle.union(box_at(48.0, 3.0, 6.0, (0.0, front_y, keeper_z)))
     cradle = cradle.union(box_at(22.0, 3.0, 6.0, (-43.0, rear_y, keeper_z)))
 
@@ -160,7 +163,7 @@ def mac_cradle(p: StationParameters = DEFAULT) -> cq.Workplane:
     # Continuous rear/underside finger corridor to the provisional native power
     # button.  The matching base, lower-shell, and rear-panel notches are checked
     # together by the swept-path validation.
-    bx = c.mac_width / 2.0 - c.mac_button_edge_offset_x
+    bx = c.mac_button_x_side * (c.mac_width / 2.0 - c.mac_button_edge_offset_x)
     by = c.mac_center_y + c.mac_depth / 2.0 - c.mac_button_edge_offset_y
     rear_edge = p.enclosure.depth / 2.0 + 2.0
     corridor_start_y = by - c.mac_button_diameter / 2.0 - c.mac_button_free_clearance
@@ -192,13 +195,13 @@ def mac_cradle(p: StationParameters = DEFAULT) -> cq.Workplane:
     # physical fit, shake, and cycle tests have been completed.
     retention = p.mac_retention
     mac_half_width = c.mac_width / 2.0
-    mac_top_z = c.mac_support_plane_z + c.mac_height
+    mac_top_z = c.mac_support_plane_z + c.mac_retained_body_height
     stem_bottom_z = c.mac_support_plane_z - 1.0
     tab_bottom_z = mac_top_z + retention.top_gap
     tab_top_z = tab_bottom_z + retention.tab_thickness
-    tab_width = p.fits.equipment_clearance + retention.stem_thickness + retention.overhang
+    tab_width = retention.side_clearance + retention.stem_thickness + retention.overhang
     tab_center_from_origin = mac_half_width + (
-        p.fits.equipment_clearance + retention.stem_thickness - retention.overhang
+        retention.side_clearance + retention.stem_thickness - retention.overhang
     ) / 2.0
     lead_in_angle = atan2(retention.lead_in_height, retention.overhang)
 

@@ -44,6 +44,15 @@ def test_wifi_hub_clearance_matches_selected_three_marker_coupon():
     assert cavity_diameter == pytest.approx(31.0)
 
 
+def test_mac_cradle_matches_physical_fit_corrections():
+    components = DEFAULT.components
+    assert components.mac_button_x_side == -1.0
+    assert components.mac_underside_drop == 8.0
+    assert components.mac_retained_body_height == 42.0
+    assert DEFAULT.mac_retention.side_clearance == 0.30
+    assert components.mac_intake_outer_diameter == 112.0
+
+
 def test_service_joint_lengths_are_distinct_by_grip_stack():
     fasteners = DEFAULT.fasteners
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)

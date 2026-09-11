@@ -9,7 +9,7 @@ Parametric CadQuery concept for an FDM-printed station containing a Mac mini M4,
 The stack from bottom to top is:
 
 1. a removable dark base with 5 mm feet, a 116 mm intake opening, and a continuous lower-rear Mac-button path;
-2. a horizontal Mac mini on an open-ring, three-pad cradle with four positive-Z clip/cam retainers and two bottom-operated release rails;
+2. a horizontal Mac mini on a physically calibrated Ø112 open-ring, three-pad cradle with 0.30 mm side clearance, four lowered positive-Z clip/cam retainers, and two bottom-operated release rails;
 3. a shell-supported, separately covered APV/mains compartment, a distinct low-voltage/data lane, and a provisional reserved Mac-AC route;
 4. a horizontal RUTM30 on four replaceable compliant support pads and a shell-supported removable tray at `Z=151`; and
 5. a reinforced upper shell and cap with a removable handle carried by four externally accessible M3 screws, broad feet, full-depth cap bosses, and shell-tied load paths.
@@ -31,7 +31,7 @@ All dimensions are millimetres.
 - Fixed body: approximately `X=-82.5..82.5`, `Y=-82.5..82.5`, `Z=0..280`.
 - Equipment positions in `layout.py` are reference-envelope centres.
 
-The principal centres are Mac `(0,-8,49)`, APV `(-35,8,103.55)`, and RUTM30 `(0,28,170.5)`. Full datums, packaging ranges, and parameter defaults are in [dimensions.md](reports/dimensions.md).
+The principal centres are Mac `(0,-8,41)`, APV `(-35,8,103.55)`, and RUTM30 `(0,28,170.5)`. The Mac reference preserves 50 mm overall height while representing the physically observed 8 mm underside drop below its retained square body. Full datums, packaging ranges, and parameter defaults are in [dimensions.md](reports/dimensions.md).
 
 ## Build, test, and export
 
@@ -98,7 +98,7 @@ This convenience visualization is generated separately from the fail-gated STEP/
 | One Mac USB-C | Replaceable extension | Rear-panel position at `(16,57)` with a provisional two-hole M3 flange pattern | Exact native coordinate/overmould, extension capability, and vendor hole pattern pending |
 | Mac AC | Internal only | Diameter-12 gland and continuous stepped 6 mm reserved envelope from the covered zone toward the provisional Mac connector | This is packaging space, not a selected conduit or completed branch architecture; qualified design remains PENDING |
 | Schurter 6160.0021 C8 | Direct component | Fixed inlet island at `(-38,108)`, integral with the closed compartment | Actual part, supplier revision/status, mounting, shroud, wiring, and electrical review pending |
-| Mac power button | Direct mechanical reach | Continuous lower-rear/underside finger path; no Mac modification | Photo-derived location and physical ergonomics/guarding pending |
+| Mac power button | Direct mechanical reach | Continuous rear-left/underside finger path; no Mac modification | Handedness corrected by full-cradle trial; physical ergonomics/guarding cycles pending |
 
 The two-port router cannot simultaneously provide both external Ethernet links and the required internal Mac link. Both extension positions exist mechanically, but three simultaneous links require an approved topology change (for example, an appropriately integrated active switch). See [interface_decisions.md](reports/interface_decisions.md).
 

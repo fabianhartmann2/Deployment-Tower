@@ -28,11 +28,20 @@ class ReferenceModel:
 
 def mac_reference(p: StationParameters = DEFAULT) -> cq.Workplane:
     c = p.components
-    layout = packaging_layout(p)
-    z0 = layout.mac_center[2] - c.mac_height / 2.0
-    return rounded_rect_prism(c.mac_width, c.mac_depth, c.mac_height, c.mac_corner_radius, z0).translate(
-        (layout.mac_center[0], layout.mac_center[1], 0.0)
+    body = rounded_rect_prism(
+        c.mac_width,
+        c.mac_depth,
+        c.mac_retained_body_height,
+        c.mac_corner_radius,
+        c.mac_support_plane_z,
+    ).translate((0.0, c.mac_center_y, 0.0))
+    underside = (
+        cq.Workplane("XY")
+        .circle(c.mac_intake_outer_diameter / 2.0)
+        .extrude(c.mac_underside_drop)
+        .translate((0.0, c.mac_center_y, c.mac_support_plane_z - c.mac_underside_drop))
     )
+    return body.union(underside)
 
 
 def mac_intake_exclusion(p: StationParameters = DEFAULT) -> cq.Workplane:
@@ -45,7 +54,7 @@ def mac_intake_exclusion(p: StationParameters = DEFAULT) -> cq.Workplane:
 
 def mac_button_reference(p: StationParameters = DEFAULT) -> cq.Workplane:
     c = p.components
-    x = c.mac_width / 2.0 - c.mac_button_edge_offset_x
+    x = c.mac_button_x_side * (c.mac_width / 2.0 - c.mac_button_edge_offset_x)
     y = c.mac_center_y + c.mac_depth / 2.0 - c.mac_button_edge_offset_y
     return cq.Workplane("XY").center(x, y).circle(c.mac_button_diameter / 2.0).extrude(1.5).translate(
         (0, 0, c.mac_support_plane_z - 1.5)
@@ -216,7 +225,12 @@ def mac_ac_branch_corridor(p: StationParameters = DEFAULT) -> cq.Workplane:
     target_z = layout.mac_center[2]
     # Run just above the linked Mac-retainer release rail and the shell's rear
     # cradle boss; the half-width clearance is explicit in this datum.
-    side_run_z = target_z + width / 4.0
+    release_rail_top = (
+        c.mac_support_plane_z
+        + p.mac_retention.release_rail_bottom_offset
+        + p.mac_retention.release_rail_height
+    )
+    side_run_z = max(target_z + width / 4.0, release_rail_top + width / 2.0 + 0.5)
     points = (
         (exit_x, exit_y, overhead_z),
         (side_x, exit_y, overhead_z),

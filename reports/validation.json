@@ -32,7 +32,7 @@
   {
     "name": "build volume: mac_cradle",
     "status": "PASS",
-    "detail": "bounding box 152.0 x 137.0 x 59.2 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 152.0 x 137.0 x 51.2 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: mac_cradle",

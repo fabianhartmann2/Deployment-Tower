@@ -21,7 +21,7 @@ class PackagingLayout:
 def packaging_layout(p: StationParameters = DEFAULT) -> PackagingLayout:
     c = p.components
     pw = p.power
-    mac_z = c.mac_support_plane_z + c.mac_height / 2.0
+    mac_z = c.mac_support_plane_z + c.mac_retained_body_height - c.mac_height / 2.0
     psu_z = pw.bottom_z + pw.bottom + 3.0 + c.psu_case_height / 2.0
     router_z = c.router_tray_z + 3.0 + p.fits.equipment_clearance + c.router_height / 2.0
     return PackagingLayout(

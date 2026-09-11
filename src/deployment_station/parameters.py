@@ -77,7 +77,12 @@ class ComponentParameters:
     mac_corner_radius: float = 12.0
     mac_mass_kg: float = 0.67
     mac_support_plane_z: float = 24.0
+    # Physical cradle trial: the central underside section hangs below the
+    # retained 127 mm square body, placing the body top 8 mm below the earlier
+    # full-height rectangular placeholder while preserving 50 mm overall.
+    mac_underside_drop: float = 8.0
     mac_center_y: float = -8.0
+    mac_button_x_side: float = -1.0
     mac_button_edge_offset_x: float = 13.5
     mac_button_edge_offset_y: float = 13.5
     mac_button_diameter: float = 11.0
@@ -114,6 +119,10 @@ class ComponentParameters:
     cable_min_bend_radius: float = 18.0
     coax_min_bend_radius_provisional: float = 20.0
 
+    @property
+    def mac_retained_body_height(self) -> float:
+        return self.mac_height - self.mac_underside_drop
+
 
 @dataclass(frozen=True)
 class MacRetentionParameters:
@@ -121,6 +130,7 @@ class MacRetentionParameters:
 
     base_pad_seat_depth: float = 1.0
     base_pad_thickness: float = 2.0
+    side_clearance: float = 0.30
     y_offsets: tuple[float, float] = (-17.0, 17.0)
     stem_thickness: float = 3.0
     clip_depth: float = 10.0
@@ -131,7 +141,9 @@ class MacRetentionParameters:
     pad_seat_width: float = 2.0
     pad_seat_length: float = 6.0
     pad_seat_recess: float = 0.8
-    release_rail_outreach: float = 5.0
+    # Narrowing the Mac fit moves the clip stems inward; the release rails keep
+    # enough outward reach to remain accessible beyond the cradle plate.
+    release_rail_outreach: float = 7.5
     release_rail_root_overlap: float = 0.6
     release_rail_height: float = 9.0
     release_rail_bottom_offset: float = 14.0

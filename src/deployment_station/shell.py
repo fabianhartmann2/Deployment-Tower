@@ -65,7 +65,7 @@ def lower_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     # The rear/bottom power-button path must remain open through every stationary
     # printed part, not merely through the base skin.
     c = p.components
-    bx = c.mac_width / 2.0 - c.mac_button_edge_offset_x
+    bx = c.mac_button_x_side * (c.mac_width / 2.0 - c.mac_button_edge_offset_x)
     button_entry = box_at(28.0, 10.0, 20.0, (bx, e.depth / 2.0 - 3.0, 22.0))
     part = part.cut(button_entry)
 

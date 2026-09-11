@@ -115,7 +115,7 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
     # Open lower-edge notch completes the external finger path to the underside
     # Mac power button without lifting or tilting the enclosure.
     c = p.components
-    bx = c.mac_width / 2.0 - c.mac_button_edge_offset_x
+    bx = c.mac_button_x_side * (c.mac_width / 2.0 - c.mac_button_edge_offset_x)
     button_notch = _rounded_cutout_xz(i.finger_well_width + 1.0, 22.0, 4.0, bx, 20.0, cut_y, cut_d)
     part = part.cut(button_notch)
 

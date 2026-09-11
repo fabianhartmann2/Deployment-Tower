@@ -173,7 +173,7 @@ def test_mac_cradle_has_clear_positive_vertical_retention():
 
     # Removing all material above the Mac recreates the former unretained
     # condition.  This guards against a clearance-only test becoming tautological.
-    mac_top_z = DEFAULT.components.mac_support_plane_z + DEFAULT.components.mac_height
+    mac_top_z = DEFAULT.components.mac_support_plane_z + DEFAULT.components.mac_retained_body_height
     top_cut = box_at(180.0, 180.0, 20.0, (0.0, DEFAULT.components.mac_center_y, mac_top_z + 10.0))
     assert mac_vertical_retention_check(DEFAULT, cradle.cut(top_cut), mac_reference()).status == "FAIL"
 

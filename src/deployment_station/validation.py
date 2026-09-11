@@ -271,7 +271,7 @@ def mac_vertical_retention_check(
     c = p.components
     retention = p.mac_retention
     mac_half_width = c.mac_width / 2.0
-    mac_top_z = c.mac_support_plane_z + c.mac_height
+    mac_top_z = c.mac_support_plane_z + c.mac_retained_body_height
     installed_collision = _intersection_volume(mac, cradle)
     overhang_volumes: list[float] = []
     gap_obstructions: list[float] = []
@@ -308,7 +308,7 @@ def mac_vertical_retention_check(
     release_access_obstructions: list[float] = []
     outer_stem_face = (
         mac_half_width
-        + p.fits.equipment_clearance
+        + retention.side_clearance
         + retention.stem_thickness
     )
     bridge_depth = max(retention.y_offsets) - min(retention.y_offsets) - retention.clip_depth - 1.0
@@ -1426,7 +1426,7 @@ def mac_base_pad_stack_check(
         (x, y + c.mac_center_y)
         for x in (-pad_xy, pad_xy)
         for y in (-pad_xy, pad_xy)
-        if not (x > 0.0 and y > 0.0)
+        if not (x * c.mac_button_x_side > 0.0 and y > 0.0)
     )
     pocket_obstructions: list[float] = []
     floor_witnesses: list[float] = []

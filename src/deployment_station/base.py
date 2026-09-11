@@ -37,7 +37,7 @@ def base(p: StationParameters = DEFAULT) -> cq.Workplane:
 
     # A rear/underside tunnel terminates below the photo-derived button centre.
     c = p.components
-    bx = c.mac_width / 2.0 - c.mac_button_edge_offset_x
+    bx = c.mac_button_x_side * (c.mac_width / 2.0 - c.mac_button_edge_offset_x)
     by = c.mac_center_y + c.mac_depth / 2.0 - c.mac_button_edge_offset_y
     reach = e.depth / 2.0 + 2.0 - by
     well = box_at(i.finger_well_width, reach, e.base_height + 2.0, (bx, by + reach / 2.0, e.base_height / 2.0))

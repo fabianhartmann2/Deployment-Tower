@@ -31,12 +31,12 @@ The generated fixed-envelope result is `165.00 x 165.00 x 280.00`. Non-default p
 
 | Item | Centre `(X,Y,Z)` / datum | Controlled envelope | Approximate range |
 | --- | ---: | ---: | --- |
-| Mac mini placeholder | `(0,-8,49)` | 127 x 127 x 50 | X `-63.5..63.5`; Y `-71.5..55.5`; Z `24..74` |
+| Mac mini placeholder | `(0,-8,41)` | 127 x 127 x 50 overall | X `-63.5..63.5`; Y `-71.5..55.5`; Z `16..66`; 42 mm retained square body above support plane plus 8 mm central underside drop |
 | Mac support plane | `Z=24` | — | 10 above nominal base top `Z=14` |
 | APV case placeholder | `(-35,8,103.55)` | 57 X x 84 Y x 29.5 Z | X `-63.5..-6.5`; Y `-34..50`; Z `88.8..118.3` |
 | APV/mains box | centre `(-35,8,105)` | nominal 72 x 120 x 44 | X `-71..1`; Y `-52..68`; Z `83..127`; fixed rear island/tunnel extends overall design bbox depth to 134.5 |
 | Low-voltage lane | `(48,0,116)` | 34 x 122 x 76 | X `31..65`; Y `-61..61`; Z `78..154` |
-| Mac-AC reserved corridor | gland datum `(-55,-33.5,83)` toward provisional Mac AC | stepped 6 wide packaging solid | Approximate bbox X `-75.3..42`; Y `-36.5..68.5`; Z `46..83`; no physical conduit or electrical release implied |
+| Mac-AC reserved corridor | gland datum `(-55,-33.5,83)` toward provisional Mac AC | stepped 6 wide packaging solid | Approximate bbox X `-75.3..42`; Y `-36.5..68.5`; Z `38..83`; side run remains above the extended cradle-release rail; no physical conduit or electrical release implied |
 | Router tray datum | `Z=151` | 3 thick plate | Shell-supported fasteners; guide/retainer geometry extends above the plate |
 | RUTM30 official STEP | `(0,28,170.5)` | 100 x 93.7 x 30 | X `-50..50`; Y `-18.85..74.85`; Z `155.5..185.5` |
 | Handle anchor reference | `Z=260` | centres at X `+/-54`, Y `-42` | Cap lock geometry near fixed-body top |
@@ -75,7 +75,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Part | Design bbox X x Y x Z |
 | --- | ---: |
 | `base` | 162 x 162 x 14 |
-| `mac_cradle` | 152 x 137 x 59.2, including four Z-retention clips and two release rails |
+| `mac_cradle` | 152 x 137 x 51.2, including four lowered Z-retention clips and two extended release rails |
 | `lower_shell` | 165 x 165 x 97 |
 | `upper_shell` | 165 x 164.9531 x 162.6 |
 | `router_tray` | 120 x 99.1 x 38.1 |
@@ -131,12 +131,13 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Parameter group | Defaults | Meaning / evidence boundary |
 | --- | --- | --- |
 | Mac `width/depth/height/radius/mass` | 127/127/50/12; 0.67 kg | Controlled placeholder |
-| Mac `support_plane_z`, `center_y` | 24, -8 | Placement |
-| Mac button edge offsets/diameter/free gap | 13.5/13.5/11/0.75 | Photo-derived |
+| Mac `support_plane_z`, `center_y`, underside drop/retained-body height | 24, -8, 8/42 | Placement revised from the full-cradle physical trial while preserving 50 mm overall height |
+| Mac button side/edge offsets/diameter/free gap | rear-left; 13.5/13.5/11/0.75 | Handedness physically corrected; exact centre remains photo-derived |
 | Mac intake inner/outer diameters | 100/112 | Photo-derived exclusion annulus |
+| Mac cradle side clearance / central opening | 0.30 per side / diameter 112 | Selected from the first full-cradle physical trial; opening reduced 4 mm |
 | Mac plug depth/clearance height | 34/24 | Provisional volumes |
 | Mac base pad seat/pad thickness | 1 / 2 | Three active seats; actual pad compression/contact pending |
-| Mac Z-retention stations | Y offsets -17/+17 on both X sides | Four clip/cams; 1.2 nominal top gap; two linked bottom-release rails |
+| Mac Z-retention stations | Y offsets -17/+17 on both X sides | Four clip/cams lowered 8 mm to the 42 mm retained body; 1.2 nominal top gap; two linked bottom-release rails with 7.5 mm outreach |
 | Router `width/depth/height/mass` | 100/93.7/30; 0.319 kg | Official body envelope / published mass |
 | Router centre X/Y and tray Z | 0/28; 151 | Rear-biased packaging |
 | RF connector depth/pitch/access diameter | 36/14.8/14 | Official centres; provisional connected access volume |
