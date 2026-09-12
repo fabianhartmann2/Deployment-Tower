@@ -31,6 +31,13 @@ class EnclosureParameters:
     lower_shell_top: float = 105.0
     shell_top: float = 268.0
     shadow_gap: float = 0.8
+    seam_fastener_y: tuple[float, ...] = (-50.0, 10.0, 50.0)
+    seam_axis_x: float = 76.8
+    seam_boss_diameter: float = 10.4
+    seam_lug_height: float = 11.0
+    seam_head_clearance_diameter: float = 7.6
+    seam_head_clearance_height: float = 3.2
+    seam_driver_clearance_diameter: float = 5.5
     rear_opening_width: float = 120.0
     rear_opening_bottom: float = 18.0
     rear_opening_top: float = 252.0

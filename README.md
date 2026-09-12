@@ -14,7 +14,7 @@ The stack from bottom to top is:
 4. a horizontal RUTM30 on four replaceable compliant support pads and a shell-supported removable tray at `Z=151`; and
 5. a reinforced upper shell and cap with a removable handle carried by four externally accessible M3 screws, broad feet, full-depth cap bosses, and shell-tied load paths.
 
-The lower and upper shell modules fit the Bambu Lab X1 Carbon's 256 mm build cube. The upper shell also carries two 70 x 70 mm logo panels retained by two outward-accessible M3 screws each and two screw-fastened, vertically oriented recessed Wi-Fi antenna transport docks. The C8 inlet island and closed terminal tunnel are integral to the power compartment: the surrounding rear service panel removes around the island, leaving that mechanical mains boundary in place. Inside the box, raised cable-tie bridges preserve a solid floor, the two APV fixing axes use top-service blind insert pilots, and four wall-tied columns reach the removable cover. These are mechanical provisions only and do not authorize wiring or energization.
+The lower and upper shell modules fit the Bambu Lab X1 Carbon's 256 mm build cube. Their load-bearing split uses six hidden M4 joints, an internal U-shaped belt in each shell, and three locating keys; all screw heads, tool corridors, and insert openings remain inside the closed exterior skin. The formerly unsupported 4 mm rear sill is tied into the lower shell by an internal angle beam. The upper shell also carries two 70 x 70 mm logo panels retained by two outward-accessible M3 screws each and two screw-fastened, vertically oriented recessed Wi-Fi antenna transport docks. The C8 inlet island and closed terminal tunnel are integral to the power compartment: the surrounding rear service panel removes around the island, leaving that mechanical mains boundary in place. Inside the box, raised cable-tie bridges preserve a solid floor, the two APV fixing axes use top-service blind insert pilots, and four short wall-tied upper bosses support the removable cover. These are mechanical provisions only and do not authorize wiring or energization.
 
 The current joint labels deliberately distinguish **M3x14 base**, **M3x10 Mac-cradle**, **M3x10 handle**, recessed low-head **M3x6 router-tray**, **M3x8 logo/service/cover**, and **M4x18 cap/seam** stacks. The handle screws seat on the full 5 mm feet rather than in deep counterbores. All screw heads, inserts, engagement, torque, and final lengths remain provisional until coupon and joint-stack tests pass.
 
@@ -66,7 +66,7 @@ The source checks are fail-gated, but aggregate counts and artifact hashes are i
 The current source registry expects **19 printable definitions**: 15 installed assembly parts plus four reusable/non-installed templates. Regeneration writes:
 
 - one printable-part STEP and one print-oriented STL for each registered definition;
-- 8 coupon STEP files and 8 coupon STL files;
+- 9 coupon STEP files and 9 coupon STL files;
 - `complete_assembly.step`, `exploded_assembly.step`, and `packaging_study.step`;
 - `component_envelopes.step`, containing non-printable references and keep-outs;
 - four deterministic PNG renders; and
@@ -109,12 +109,12 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 | `parameters.py`, `layout.py` | Defaults, datums, and packaging locations |
 | `components.py` | Official router import; controlled equipment, hardware, cable, and removal placeholders |
 | `base.py`, `mac_mount.py` | Base, intake/button path, three 2 mm pad positions in 1 mm seats, four clip/cam retainers, two bottom release rails, and shell-fastened cradle ears |
-| `shell.py` | Split shell, rear seat, seam keys/bolts, logo/dock receivers, equipment supports, and cap load path |
+| `shell.py` | Split shell, reinforced rear sill, three seam keys, six hidden internal seam joints/belts, logo/dock receivers, equipment supports, and cap load path |
 | `router_tray.py`, `rear_panel.py` | Router retention, four compliant support lands/pad template, recessed low-head tray screws, rear panel, replaceable bezel, RF window, and provisional two-hole extension flanges |
 | `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, wall-tied upper cover bosses, four verified shell-mount access corridors, exits, and cover |
 | `handle.py` | Six-fastener cap, structural beams, four-screw handle feet/bosses, and mounting coupon |
 | `wifi_dock.py`, `logo_panel.py` | Screw-fastened antenna docks and two-screw replaceable logo panels |
-| `coupons.py` | Eight high-risk physical-fit articles |
+| `coupons.py` | Nine high-risk physical-fit articles, including a vertical M4 seam-insert calibration coupon |
 | `assembly.py`, `render.py` | Part registry, assemblies, non-printable references, and views |
 | `validation.py`, `export.py` | Fail-closed computational checks and reproducible outputs |
 

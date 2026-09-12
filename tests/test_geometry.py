@@ -20,7 +20,7 @@ from deployment_station.power_compartment import (
 )
 from deployment_station.rear_panel import mac_extension_mount_positions
 from deployment_station.router_tray import router_support_pad_positions
-from deployment_station.shell import lower_shell
+from deployment_station.shell import lower_shell, shell_seam_fastener_positions
 from deployment_station.validation import (
     ASSEMBLY_INTERFERENCE_ALLOWLIST,
     _intersection_volume,
@@ -39,7 +39,9 @@ from deployment_station.validation import (
     power_cover_column_check,
     power_shell_mount_access_check,
     power_tie_bridge_floor_check,
+    rear_sill_reinforcement_check,
     router_support_stack_check,
+    shell_seam_access_check,
     wifi_dock_capture_geometry_check,
 )
 
@@ -92,6 +94,7 @@ def test_all_required_coupons_exist_and_are_valid():
     assert set(coupons) == {
         "coupon_c8_cutout",
         "coupon_insert_boss",
+        "coupon_m4_seam_insert",
         "coupon_rear_panel_fit_v2",
         "coupon_logo_mount",
         "coupon_handle_mount",
@@ -221,6 +224,23 @@ def test_handle_mount_check_is_not_satisfied_by_two_unmated_solids():
     }
     assert all(len(part.solids().vals()) == 1 for part in disconnected_interface.values())
     assert handle_structural_mount_check(DEFAULT, disconnected_interface).status == "FAIL"
+
+
+def test_six_hidden_shell_seam_screws_have_head_and_driver_access(validation_parts):
+    assert len(shell_seam_fastener_positions(DEFAULT)) == 6
+    result = shell_seam_access_check(DEFAULT, validation_parts)
+    assert result.status == "PASS", result.detail
+
+    x, y = shell_seam_fastener_positions(DEFAULT)[0]
+    blocked_driver = cylinder_axis(2.0, 8.0, (x, y, 150.0), (0, 0, 1))
+    damaged = dict(validation_parts)
+    damaged["upper_shell"] = validation_parts["upper_shell"].union(blocked_driver)
+    assert shell_seam_access_check(DEFAULT, damaged).status == "FAIL"
+
+
+def test_lower_shell_rear_sill_is_tied_to_internal_angle_beam(validation_parts):
+    result = rear_sill_reinforcement_check(DEFAULT, validation_parts["lower_shell"])
+    assert result.status == "PASS", result.detail
 
 
 def test_logo_mount_check_rejects_a_blocked_panel_hole(validation_parts):
@@ -370,6 +390,8 @@ def test_full_geometry_validation_has_no_failures():
     assert len(pairwise_results) == installed_count * (installed_count - 1) // 2
     assert "Mac power-button continuous swept path" in result_names
     assert "handle four-screw reinforced mounting stack" in result_names
+    assert "six-M4 hidden structural shell seam access" in result_names
+    assert "rear-panel lower sill angle-beam reinforcement" in result_names
     assert "logo panels four-screw replaceable mounting stack" in result_names
     assert "Wi-Fi dock rounded-lip insertion geometry" in result_names
     assert "C8 terminal tunnel/main-compartment passage" in result_names

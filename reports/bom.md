@@ -8,8 +8,8 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | --- | ---: | --- | --- |
 | `base` | 1 | Dark ASA | Feet, 116 mm intake, continuous button approach, four screw clearances |
 | `mac_cradle` | 1 | ASA | Physically calibrated Ø112 opening, 0.30 mm side gap, three 1 mm pad seats, four 8 mm-lowered positive-Z clip/cams, two extended bottom release rails, four shell-fastened ears |
-| `lower_shell` | 1 | Matte white ASA | Base/cradle/power supports, rear bosses, seam keys, two structural seam inserts |
-| `upper_shell` | 1 | Matte white ASA | Router supports, rear bosses, logo/dock receivers, cap inserts, handle ribs/spines |
+| `lower_shell` | 1 | Matte white ASA | Base/cradle/power supports, rear bosses, angle-reinforced rear sill, three seam keys, internal U-belt, six hidden structural seam inserts |
+| `upper_shell` | 1 | Matte white ASA | Router supports, rear bosses, logo/dock receivers, cap inserts, handle ribs/spines, internal U-belt, six hidden screw lugs/tool corridors |
 | `router_tray` | 1 | ASA | Vented plate, four compliant-pad lands, guides, ledges, front stop, rear latch nibs, four recessed low-head shell fasteners |
 | `power_compartment` | 1 | Reviewed flame-/temperature-suitable engineering material | Mechanical APV/mains box, fixed C8 island/tunnel, raised sealed-floor tie bridges, two top-service blind APV pilots, four open lower-shell mounting corridors, four upper wall-tied cover bosses, and exits; not an approved electrical enclosure |
 | `power_compartment_cover` | 1 | Same reviewed material | Separate deliberate-access cover with four column-aligned M3 clearance axes |
@@ -27,6 +27,7 @@ The registry contains **19 printable definitions**: the 15 installed rows above 
 | Coupon | Qty / variants | Purpose |
 | --- | ---: | --- |
 | `coupon_insert_boss` | Per material/orientation | M3 pilot at nominal diameter and +/-0.2 variants |
+| `coupon_m4_seam_insert` | Before either revised shell | Three vertical production-orientation M4 seam pilots: Ø5.4/5.6/5.8, marked by one/two/three edge notches |
 | `coupon_c8_cutout` | Per inlet/material candidate | Actual inlet profile, panel, and fixing fit |
 | `coupon_rear_panel_fit_v2` | Per shell/panel process | Upright shell receiver plus flat panel insert; X/Z allowances 0.15/0.05 mm per side |
 | `coupon_mac_button_recess` | After Mac measurement | Finger reach and guarding |
@@ -72,13 +73,13 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | Base to lower shell | 4 M3 | 4 provisional M3x14 screws + 4 M3 inserts | Paired through-holes and webbed shell bosses; longer stack is distinct from service screws |
 | Mac cradle to lower shell | 4 M3 | 4 provisional M3x10 screws + 4 M3 inserts | Downward-access holes and shell-tied bosses; nominal stack avoids marginal M3x8 engagement |
 | Power compartment to lower shell | 4 M3 | 4 provisional low-head M3x8 screws + 4 M3 inserts | Unchanged lower-shell axes; diameter-3.4 floor bores with verified diameter-6.2 head and diameter-4.5 driver access, two support rails, four shell bosses |
-| Power-compartment cover | 4 M3 | 4 provisional M3x8 screws + 4 M3 inserts | Full-height wall-tied columns and aligned cover clearances; 5.2 mm nominal engagement into 5.5 mm pilots |
+| Power-compartment cover | 4 M3 | 4 provisional M3x8 screws + 4 M3 inserts | Short upper wall-tied bosses and aligned cover clearances; 5.2 mm nominal engagement into 5.5 mm pilots |
 | Router tray to upper shell | 4 M3 | 4 provisional low-head M3x6 screws + 4 M3 inserts | Diameter-6.2 x 1.8 head recesses; shorter stack avoids blind-pilot bottoming; accessible after +Y router removal |
 | Rear panel to shells | 8 M3 | 8 provisional M3x8 screws + 8 M3 inserts | Counterbores and paired lower/upper rear bosses |
 | Wi-Fi docks to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outside-accessible positions per dock; webbed pocket bosses |
 | Logo panels to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outward-accessible positions per panel; shell-webbed blind bosses; 5.5 mm nominal insert overlap |
 | Removable handle to upper cap | 4 M3 | 4 provisional low-head M3x10 screws + 4 M3 inserts | Two screws per broad 5 mm foot into full-depth cap bosses/pads; 5.0 mm nominal engagement |
-| Lower-to-upper shell structural seam | 2 M4 | 2 provisional M4x18 screws + 2 M4 inserts | Upper lugs into lower front-spine inserts |
+| Lower-to-upper shell structural seam | 6 M4 | 6 provisional low-head M4x18 screws + 6 M4 inserts | Three per side at X ±76.8 and Y -50/10/50; internal heads and top tool corridors, paired U-belts, no exterior openings |
 | Upper cap to upper shell | 6 M4 | 6 provisional M4x18 screws + 6 M4 inserts | Four perimeter plus two handle-spine positions |
 | APV fixing | 2 diameter-3.6 axes | Exact screw/insert/washer or approved alternative TBD | Supplier-coordinate axes over 3 mm blind diameter-4.2 pilots with 2.7 mm sealed floor; top service after shell mounting |
 | C8 fixing | 2 diameter-3.2 positions | Supplier-approved screws/nuts/locking TBD | Fixed island pattern; terminal access/shroud review required |
@@ -86,7 +87,7 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | Mac HDMI/USB-C flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional vertical-20 pattern in removable rear panel; exact extension governs |
 | Router LAN/WAN flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional horizontal-27 pattern in replaceable bezel; exact extension governs |
 
-The modeled shell service/structural patterns total **40 M3 screw/insert positions** and **8 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
+The modeled shell service/structural patterns total **40 M3 screw/insert positions** and **12 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. The six seam screws specifically require a low head no larger than the provisional Ø7.6 x 3.2 envelope and a long hex driver through the open top. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
 
 ## Compliant and finishing items
 

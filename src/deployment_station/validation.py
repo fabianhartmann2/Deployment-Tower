@@ -35,6 +35,7 @@ from .power_compartment import (
 )
 from .rear_panel import mac_extension_mount_positions, router_extension_mount_positions
 from .router_tray import router_support_pad_positions, router_tray_fastener_positions
+from .shell import shell_seam_fastener_positions
 
 
 # OCC boolean operations can leave microscopic numerical residue at nominally
@@ -475,6 +476,158 @@ def handle_structural_mount_check(
     )
 
 
+def shell_seam_access_check(
+    p: StationParameters,
+    parts: Mapping[str, cq.Workplane],
+) -> CheckResult:
+    """Verify six hidden seam screws, their head seats, and tool access."""
+
+    e = p.enclosure
+    f = p.fasteners
+    lower = parts["lower_shell"]
+    upper = parts["upper_shell"]
+    upper_z0 = e.lower_shell_top + e.shadow_gap / 2.0
+    lug_top = upper_z0 + e.seam_lug_height
+    axes = shell_seam_fastener_positions(p)
+    axis_obstructions: list[float] = []
+    head_obstructions: list[float] = []
+    driver_obstructions: list[float] = []
+    lateral_obstructions: list[float] = []
+    insert_obstructions: list[float] = []
+    lower_boss_witnesses: list[float] = []
+    upper_bearing_witnesses: list[float] = []
+    exterior_skin_witnesses: list[float] = []
+    lower_outer = e.seam_boss_diameter / 2.0 - 0.1
+    lower_inner = f.m4_insert_hole_diameter / 2.0 + 0.1
+    expected_lower_ring = pi * (lower_outer**2 - lower_inner**2)
+    bearing_outer = e.seam_head_clearance_diameter / 2.0 - 0.1
+    bearing_inner = f.m4_clearance_diameter / 2.0 + 0.1
+    expected_bearing_ring = pi * (bearing_outer**2 - bearing_inner**2) * 0.5
+    expected_skin = 0.5 * (e.seam_head_clearance_diameter - 0.2) * (e.seam_head_clearance_height - 0.2)
+
+    for x, y in axes:
+        side = 1.0 if x > 0.0 else -1.0
+        axis = cylinder_axis(
+            f.m4_clearance_diameter / 2.0 - 0.05,
+            e.seam_lug_height + 0.2,
+            (x, y, upper_z0 - 0.1),
+            (0, 0, 1),
+        )
+        head = cylinder_axis(
+            e.seam_head_clearance_diameter / 2.0 - 0.05,
+            e.seam_head_clearance_height - 0.1,
+            (x, y, lug_top + 0.05),
+            (0, 0, 1),
+        )
+        driver_start = lug_top + e.seam_head_clearance_height + 0.05
+        driver = cylinder_axis(
+            e.seam_driver_clearance_diameter / 2.0 - 0.05,
+            e.shell_top - driver_start + 0.5,
+            (x, y, driver_start),
+            (0, 0, 1),
+        )
+        lateral_start_x = side * 60.0
+        lateral = box_at(
+            abs(x) - 60.0,
+            e.seam_head_clearance_diameter - 0.1,
+            e.seam_head_clearance_height - 0.1,
+            (
+                (lateral_start_x + x) / 2.0,
+                y,
+                lug_top + e.seam_head_clearance_height / 2.0,
+            ),
+        )
+        insert = cylinder_axis(
+            f.m4_insert_hole_diameter / 2.0 - 0.05,
+            f.insert_depth - 0.2,
+            (x, y, e.lower_shell_top - f.insert_depth + 0.1),
+            (0, 0, 1),
+        )
+        lower_ring = _annular_axis_witness(
+            lower_outer,
+            lower_inner,
+            1.0,
+            (x, y, e.lower_shell_top - 2.0),
+            (0, 0, 1),
+        )
+        upper_ring = _annular_axis_witness(
+            bearing_outer,
+            bearing_inner,
+            0.5,
+            (x, y, lug_top - 0.55),
+            (0, 0, 1),
+        )
+        skin = box_at(
+            0.5,
+            e.seam_head_clearance_diameter - 0.2,
+            e.seam_head_clearance_height - 0.2,
+            (side * (e.width / 2.0 - 0.25), y, lug_top + e.seam_head_clearance_height / 2.0),
+        )
+        axis_obstructions.append(_intersection_volume(axis, upper))
+        head_obstructions.append(_intersection_volume(head, upper))
+        driver_obstructions.append(_intersection_volume(driver, upper))
+        lateral_obstructions.append(_intersection_volume(lateral, upper))
+        insert_obstructions.append(_intersection_volume(insert, lower))
+        lower_boss_witnesses.append(_intersection_volume(lower_ring, lower))
+        upper_bearing_witnesses.append(_intersection_volume(upper_ring, upper))
+        exterior_skin_witnesses.append(_intersection_volume(skin, upper))
+
+    passed = (
+        len(axes) == 6
+        and _intersection_volume(lower, upper) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(head_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(driver_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(lateral_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(insert_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(lower_boss_witnesses) >= 0.95 * expected_lower_ring
+        and min(upper_bearing_witnesses) >= 0.90 * expected_bearing_ring
+        and min(exterior_skin_witnesses) >= 0.95 * expected_skin
+    )
+    return _check(
+        "six-M4 hidden structural shell seam access",
+        passed,
+        "six internal M4x18 axes have open head pockets, lateral screw insertion, top driver corridors, "
+        "lower insert pilots, bearing rings, and closed exterior skins",
+        f"axes={len(axes)}, axis={axis_obstructions}, head={head_obstructions}, driver={driver_obstructions}, "
+        f"lateral={lateral_obstructions}, insert={insert_obstructions}, lower bosses={lower_boss_witnesses}, "
+        f"upper bearings={upper_bearing_witnesses}, exterior skins={exterior_skin_witnesses}",
+    )
+
+
+def rear_sill_reinforcement_check(
+    p: StationParameters,
+    lower_shell: cq.Workplane,
+) -> CheckResult:
+    """Verify the rear-panel sill has an internal angle beam and boss ties."""
+
+    e = p.enclosure
+    rear_y = e.depth / 2.0
+    flange = box_at(1.0, 6.2, 3.8, (0.0, rear_y - 8.0, e.base_height + 2.0))
+    web = box_at(1.0, 3.8, 9.8, (0.0, rear_y - 9.0, e.base_height + 5.0))
+    expected_flange = 1.0 * 6.2 * 3.8
+    expected_web = 1.0 * 3.8 * 9.8
+    flange_volume = _intersection_volume(flange, lower_shell)
+    web_volume = _intersection_volume(web, lower_shell)
+    tie_volumes: list[float] = []
+    rear_boss_y = e.width / 2.0 - 13.0
+    for x in (-rear_boss_y, rear_boss_y):
+        tie = box_at(2.0, 2.0, 3.0, (x, rear_y - 10.0, e.base_height + 1.5))
+        tie_volumes.append(_intersection_volume(tie, lower_shell))
+    expected_tie = 2.0 * 2.0 * 3.0
+    passed = (
+        flange_volume >= 0.98 * expected_flange
+        and web_volume >= 0.98 * expected_web
+        and min(tie_volumes) >= 0.90 * expected_tie
+    )
+    return _check(
+        "rear-panel lower sill angle-beam reinforcement",
+        passed,
+        "the 4 mm sill has an internal flange/web beam tied into both rear base-boss regions; "
+        "the separate Mac-button swept-path check remains authoritative for the local notch",
+        f"flange={flange_volume:.2f}/{expected_flange:.2f}, web={web_volume:.2f}/{expected_web:.2f}, "
+        f"boss ties={tie_volumes}/{expected_tie:.2f} mm^3",
+    )
 def logo_screw_mount_check(
     p: StationParameters,
     parts: Mapping[str, cq.Workplane],
@@ -1368,12 +1521,15 @@ def fastener_stack_checks(
         )
     )
 
-    seam_positions = ((-61.0, -76.0), (61.0, -76.0))
+    seam_positions = shell_seam_fastener_positions(p)
     seam_axis_obstructions: list[float] = []
     seam_boss_witnesses: list[float] = []
     seam_lug_bottom = e.lower_shell_top + e.shadow_gap / 2.0
-    seam_lug_height = 11.0
+    seam_lug_height = e.seam_lug_height
     seam_grip = seam_lug_bottom + seam_lug_height - e.lower_shell_top
+    seam_outer_radius = e.seam_boss_diameter / 2.0 - 0.1
+    seam_inner_radius = f.m4_insert_hole_diameter / 2.0 + 0.1
+    seam_expected_ring = pi * (seam_outer_radius**2 - seam_inner_radius**2)
     for x, y in seam_positions:
         clearance_axis = cylinder_axis(
             f.m4_clearance_diameter / 2.0 - 0.05,
@@ -1388,8 +1544,8 @@ def fastener_stack_checks(
             (0, 0, 1),
         )
         boss_ring = _annular_axis_witness(
-            m4_outer_radius,
-            m4_inner_radius,
+            seam_outer_radius,
+            seam_inner_radius,
             1.0,
             (x, y, e.lower_shell_top - 2.0),
             (0, 0, 1),
@@ -1410,7 +1566,7 @@ def fastener_stack_checks(
             7.0,
             seam_axis_obstructions,
             seam_boss_witnesses,
-            m4_expected_ring,
+            seam_expected_ring,
         )
     )
 
@@ -1898,6 +2054,8 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         )
 
     results.append(handle_structural_mount_check(p, parts))
+    results.append(shell_seam_access_check(p, parts))
+    results.append(rear_sill_reinforcement_check(p, parts["lower_shell"]))
     results.append(logo_screw_mount_check(p, parts))
     results.append(wifi_dock_capture_geometry_check(p))
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import cadquery as cq
 
-from .geometry import box_at, cylinder_axis, rounded_panel_xz, rounded_rect_ring
+from .geometry import box_at, cylinder_axis, rounded_panel_xz, rounded_rect_prism, rounded_rect_ring
 from .handle import cap_fastener_positions
 from .logo_panel import logo_mount_positions
 from .mac_mount import mac_cradle_fastener_positions
@@ -39,6 +39,68 @@ def _rear_panel_seat_cut(p: StationParameters) -> cq.Workplane:
     )
 
 
+def shell_seam_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
+    """Six hidden vertical M4 axes, three along each side wall."""
+
+    e = p.enclosure
+    return tuple((side * e.seam_axis_x, y) for side in (-1.0, 1.0) for y in e.seam_fastener_y)
+
+
+def m4_seam_insert_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """Vertical M4 seam insert pilots at -0.2/0/+0.2 mm."""
+
+    e = p.enclosure
+    f = p.fasteners
+    coupon = rounded_rect_prism(54.0, 24.0, 4.0, 3.0)
+    for index, (x, allowance) in enumerate(zip((-18.0, 0.0, 18.0), (-0.2, 0.0, 0.2)), start=1):
+        boss = (
+            cq.Workplane("XY")
+            .center(x, 0.0)
+            .circle(e.seam_boss_diameter / 2.0)
+            .extrude(12.0)
+            .translate((0.0, 0.0, 4.0))
+        )
+        pilot = (
+            cq.Workplane("XY")
+            .center(x, 0.0)
+            .circle((f.m4_insert_hole_diameter + allowance) / 2.0)
+            .extrude(7.2)
+            .translate((0.0, 0.0, 8.9))
+        )
+        coupon = coupon.union(boss).cut(pilot)
+        # One, two, or three edge notches identify 5.4, 5.6, and 5.8 mm.
+        for notch_index in range(index):
+            notch = box_at(1.2, 1.2, 2.0, (x - 1.8 + 1.8 * notch_index, -11.7, 3.2))
+            coupon = coupon.cut(notch)
+    return coupon
+
+
+def _lower_seam_belt(p: StationParameters) -> cq.Workplane:
+    """U-shaped internal lower belt that distributes seam loads into the shell."""
+
+    e = p.enclosure
+    z0 = e.lower_shell_top - 12.0
+    side_x = e.width / 2.0 - 2.5
+    side_depth = e.depth - 33.0
+    belt = box_at(5.0, side_depth, 12.0, (-side_x, 0.0, z0 + 6.0))
+    belt = belt.union(box_at(5.0, side_depth, 12.0, (side_x, 0.0, z0 + 6.0)))
+    belt = belt.union(box_at(e.width - 33.0, 5.0, 12.0, (0.0, -side_x, z0 + 6.0)))
+    return belt
+
+
+def _upper_seam_belt(p: StationParameters) -> cq.Workplane:
+    """Matching U-shaped upper belt around the six hidden screw lugs."""
+
+    e = p.enclosure
+    z0 = e.lower_shell_top + e.shadow_gap / 2.0
+    side_x = e.width / 2.0 - 2.5
+    side_depth = e.depth - 33.0
+    belt = box_at(5.0, side_depth, 12.0, (-side_x, 0.0, z0 + 6.0))
+    belt = belt.union(box_at(5.0, side_depth, 12.0, (side_x, 0.0, z0 + 6.0)))
+    belt = belt.union(box_at(e.width - 33.0, 5.0, 12.0, (0.0, -side_x, z0 + 6.0)))
+    return belt
+
+
 def _rear_bosses(part: cq.Workplane, p: StationParameters, z_min: float, z_max: float) -> cq.Workplane:
     e = p.enclosure
     i = p.interfaces
@@ -66,7 +128,13 @@ def lower_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     # printed part, not merely through the base skin.
     c = p.components
     bx = c.mac_button_x_side * (c.mac_width / 2.0 - c.mac_button_edge_offset_x)
-    button_entry = box_at(28.0, 10.0, 20.0, (bx, e.depth / 2.0 - 3.0, 22.0))
+    button_entry_depth = 25.0
+    button_entry = box_at(
+        28.0,
+        button_entry_depth,
+        20.0,
+        (bx, e.depth / 2.0 + 2.0 - button_entry_depth / 2.0, 22.0),
+    )
     part = part.cut(button_entry)
 
     # Base insert bosses transfer the removable-bottom fasteners into substantial
@@ -105,22 +173,69 @@ def lower_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
         insert = cq.Workplane("XY").center(x, y).circle(f.m3_insert_hole_diameter / 2.0).extrude(6.5).translate((0, 0, pw.bottom_z - 5.8))
         part = part.union(boss).cut(insert)
 
-    # Reinforced front spines carry handle loads through a positively bolted
-    # lower/upper seam and continue to the base-fastened lower shell.
+    # Reinforced front spines carry handle loads into a U-shaped lower seam belt.
     seam_z0 = e.lower_shell_top - 12.0
+    part = part.union(_lower_seam_belt(p))
     for x in (-61.0, 61.0):
         spine = box_at(8.0, 8.0, e.lower_shell_top - z0, (x, -76.0, (z0 + e.lower_shell_top) / 2.0))
-        seam_boss = cq.Workplane("XY").center(x, -76.0).circle(f.m4_boss_diameter / 2.0).extrude(12.0).translate((0, 0, seam_z0))
-        seam_insert = cq.Workplane("XY").center(x, -76.0).circle(f.m4_insert_hole_diameter / 2.0).extrude(7.0).translate((0, 0, e.lower_shell_top - 7.0))
-        part = part.union(spine).union(seam_boss).cut(seam_insert)
+        part = part.union(spine)
+
+    # Six vertical insert bosses sit inside the clean exterior and distribute
+    # separation load along both side walls.  They retain 0.6 mm nominal
+    # clearance to the already calibrated power-compartment envelope.
+    for x, y in shell_seam_fastener_positions(p):
+        seam_boss = (
+            cq.Workplane("XY")
+            .center(x, y)
+            .circle(e.seam_boss_diameter / 2.0)
+            .extrude(12.0)
+            .translate((0, 0, seam_z0))
+        )
+        seam_insert = (
+            cq.Workplane("XY")
+            .center(x, y)
+            .circle(f.m4_insert_hole_diameter / 2.0)
+            .extrude(7.0)
+            .translate((0, 0, e.lower_shell_top - 7.0))
+        )
+        part = part.union(seam_boss).cut(seam_insert)
 
     # Three male alignment keys bridge the deliberate shadow seam.  The upper
     # shell contains clearance pockets for the same features.
     inner_face = e.width / 2.0 - e.wall - 1.5
-    keys = [(-45.0, -inner_face, 14.0, 5.0), (inner_face, -42.0, 5.0, 14.0), (-inner_face, -42.0, 5.0, 14.0)]
+    keys = [(0.0, -inner_face, 18.0, 5.0), (inner_face, 25.0, 5.0, 14.0), (-inner_face, 25.0, 5.0, 14.0)]
     for x, y, sx, sy in keys:
         part = part.union(box_at(sx, sy, 8.0, (x, y, e.lower_shell_top + 2.0)))
-    return _rear_bosses(part, p, z0, e.lower_shell_top)
+
+    # Stiffen the formerly free 4 mm rear sill with an internal angle beam tied
+    # into both side walls and the two rear base bosses.  Recut the extended Mac
+    # button corridor last so the reinforcement cannot close that access path.
+    rear_y = e.depth / 2.0
+    sill_flange = box_at(e.rear_panel_width + 13.0, 11.0, 4.0, (0.0, rear_y - 5.5, e.base_height + 2.0))
+    sill_web = box_at(e.rear_panel_width + 13.0, 4.0, 10.0, (0.0, rear_y - 9.0, e.base_height + 5.0))
+    part = part.union(sill_flange).union(sill_web).cut(_rear_panel_seat_cut(p)).cut(button_entry)
+    part = _rear_bosses(part, p, z0, e.lower_shell_top)
+    # Cut the insert pilots last so no later reinforcement can refill them.
+    for x, y in shell_seam_fastener_positions(p):
+        seam_insert = (
+            cq.Workplane("XY")
+            .center(x, y)
+            .circle(f.m4_insert_hole_diameter / 2.0)
+            .extrude(7.0)
+            .translate((0, 0, e.lower_shell_top - 7.0))
+        )
+        part = part.cut(seam_insert)
+    for x in (-boss_xy, boss_xy):
+        for y in (-boss_xy, boss_xy):
+            base_insert = (
+                cq.Workplane("XY")
+                .center(x, y)
+                .circle(f.m3_insert_hole_diameter / 2.0)
+                .extrude(7.0)
+                .translate((0, 0, z0 - 0.5))
+            )
+            part = part.cut(base_insert)
+    return part
 
 
 def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
@@ -227,18 +342,49 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     # Matching seam-key pockets.
     clearance = p.fits.sliding_fit_per_side
     inner_face = e.width / 2.0 - e.wall - 1.5
-    keys = [(-45.0, -inner_face, 14.0, 5.0), (inner_face, -42.0, 5.0, 14.0), (-inner_face, -42.0, 5.0, 14.0)]
+    keys = [(0.0, -inner_face, 18.0, 5.0), (inner_face, 25.0, 5.0, 14.0), (-inner_face, 25.0, 5.0, 14.0)]
     for x, y, sx, sy in keys:
         pocket = box_at(sx + 2.0 * clearance, sy + 2.0 * clearance, 9.0, (x, y, e.lower_shell_top + 2.0))
         part = part.cut(pocket)
 
-    # Matching upper seam lugs accept M4 screws from above into lower-shell
-    # inserts.  Continuous 8 mm front spines carry the load to the cap zone.
+    # Continuous front spines carry the handle load down into a U-shaped upper
+    # seam belt.  The six screw axes are deliberately offset from these spines.
+    part = part.union(_upper_seam_belt(p))
     for x in (-61.0, 61.0):
         spine = box_at(8.0, 8.0, height, (x, -76.0, z0 + height / 2.0))
-        seam_lug = cq.Workplane("XY").center(x, -76.0).circle(f.m4_boss_diameter / 2.0).extrude(11.0).translate((0, 0, z0))
-        seam_clear = cq.Workplane("XY").center(x, -76.0).circle(f.m4_clearance_diameter / 2.0).extrude(13.0).translate((0, 0, z0 - 1.0))
-        part = part.union(spine).union(seam_lug).cut(seam_clear)
+        part = part.union(spine)
+
+    # Six hidden vertical M4 lugs.  Each head sits in a local internal pocket;
+    # a long hex driver reaches it from the open top without any printed feature
+    # crossing the tool corridor.  The outer skin remains closed and clean.
+    lug_top = z0 + e.seam_lug_height
+    for x, y in shell_seam_fastener_positions(p):
+        seam_lug = (
+            cq.Workplane("XY")
+            .center(x, y)
+            .circle(e.seam_boss_diameter / 2.0)
+            .extrude(e.seam_lug_height)
+            .translate((0, 0, z0))
+        )
+        seam_clear = cylinder_axis(
+            f.m4_clearance_diameter / 2.0,
+            e.seam_lug_height + 2.0,
+            (x, y, z0 - 1.0),
+            (0, 0, 1),
+        )
+        head_clear = cylinder_axis(
+            e.seam_head_clearance_diameter / 2.0,
+            e.seam_head_clearance_height + 0.2,
+            (x, y, lug_top),
+            (0, 0, 1),
+        )
+        driver_clear = cylinder_axis(
+            e.seam_driver_clearance_diameter / 2.0,
+            e.shell_top - lug_top - e.seam_head_clearance_height + 1.0,
+            (x, y, lug_top + e.seam_head_clearance_height),
+            (0, 0, 1),
+        )
+        part = part.union(seam_lug).cut(seam_clear).cut(head_clear).cut(driver_clear)
 
     # Shell-tied router cross rails and top-loaded M3 insert bosses.
     tray_positions = router_tray_fastener_positions(p)
@@ -276,4 +422,32 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
         if y <= 0.0:
             part = part.union(tie_x)
         part = part.cut(insert)
-    return _rear_bosses(part, p, z0, e.shell_top)
+    part = _rear_bosses(part, p, z0, e.shell_top)
+
+    # Recut every seam fastener volume after all rails, receivers, cap bosses,
+    # and rear bosses have been added.  This makes screw-head and driver access
+    # fail-safe against the same late-union defect found in the power box.
+    for x, y in shell_seam_fastener_positions(p):
+        seam_clear = cylinder_axis(
+            f.m4_clearance_diameter / 2.0,
+            e.seam_lug_height + 2.0,
+            (x, y, z0 - 1.0),
+            (0, 0, 1),
+        )
+        head_clear = cylinder_axis(
+            e.seam_head_clearance_diameter / 2.0,
+            e.seam_head_clearance_height + 0.2,
+            (x, y, lug_top),
+            (0, 0, 1),
+        )
+        driver_clear = cylinder_axis(
+            e.seam_driver_clearance_diameter / 2.0,
+            e.shell_top - lug_top - e.seam_head_clearance_height + 1.0,
+            (x, y, lug_top + e.seam_head_clearance_height),
+            (0, 0, 1),
+        )
+        part = part.cut(seam_clear).cut(head_clear).cut(driver_clear)
+    for x, y, sx, sy in keys:
+        pocket = box_at(sx + 2.0 * clearance, sy + 2.0 * clearance, 9.0, (x, y, e.lower_shell_top + 2.0))
+        part = part.cut(pocket)
+    return part

@@ -49,6 +49,8 @@ The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled p
 | --- | ---: |
 | Base | 14 high total; 5 high feet; visible skin inset 1.5 per side |
 | Shell split | lower nominal top `Z=105`; 0.8 shadow gap; upper shell to `Z=268` |
+| Structural shell seam | Six hidden vertical M4 axes: X `±76.8`, Y `-50/10/50`; Ø10.4 local bosses/lugs, Ø7.6 x 3.2 internal low-head pockets, Ø5.5 top-driver corridors; no exterior openings |
+| Rear lower sill | Existing 4 mm sill reinforced internally by a 145 x 11 x 4 flange and 145 x 4 x 10 web; rear-panel seat and Mac-button path recut clear |
 | Cap | `Z=268..280`, 12 high; six M4 clearance positions |
 | Rear shell opening | 120 wide, `Z=18..252` |
 | Rear service panel | 132 x 236 x 3.2; radius 8; eight M3 positions |
@@ -97,6 +99,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | --- | ---: |
 | `coupon_c8_cutout` | 55 x 3.2 x 35 |
 | `coupon_insert_boss` | 46 x 28 x 14 |
+| `coupon_m4_seam_insert` | 54 x 24 x 16; three vertical Ø5.4/5.6/5.8 pilot bosses |
 | `coupon_rear_panel_fit_v2` | 120 x 22.5 x 37; upright receiver plus flat insert |
 | `coupon_logo_mount` | 23.2 x 32 x 18 |
 | `coupon_handle_mount` | 100 x 36 x 12 |
@@ -116,6 +119,8 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `outer_corner_radius`, `inner_corner_radius` | 24, 20.8 | Main radii |
 | `base_height`, `foot_height`, `cap_height` | 14, 5, 12 | Vertical modules |
 | `lower_shell_top`, `shell_top`, `shadow_gap` | 105, 268, 0.8 | Split/cap datums |
+| Seam axes / boss / lug | X ±76.8; Y -50/10/50; Ø10.4; 11 high | Six hidden internal M4 joints distributed along the side walls |
+| Seam head pocket / driver corridor | Ø7.6 x 3.2 / Ø5.5 | Internal low-head M4 envelope and top tool access; exterior skin remains closed |
 | `rear_opening_width`, `rear_opening_bottom/top` | 120, 18/252 | Shell service opening |
 | `rear_panel_width/height/thickness/radius` | 132/236/3.2/8 | Rear service panel |
 | `equipment_clearance` | 1.5 | Nominal equipment gap |
@@ -192,7 +197,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Structural screw stack | M4x18 | Cap and shell-seam joints; provisional pending joint tests |
 | M3/M4 clearance holes | diameter 3.4 / 4.5 | Modeled clearances |
 | M3/M4 insert pilots | diameter 4.2 / 5.6 | Provisional heat-set holes |
-| M3/M4 bosses | diameter 9 / 12 | Modeled support values |
+| M3/M4 bosses | diameter 9 / 12 general; seam M4 diameter 10.4 | Modeled support values; seam rings are integrated into paired U-belts |
 | Insert depth | 5.5 | Provisional; supplier and coupon govern |
 | Low-head M3 recess | diameter 6.2 x 1.8 deep | Four router-tray positions; exact screw head and seating pending |
 | Printer build X/Y/Z | 256/256/256 | Bounding-cube check |

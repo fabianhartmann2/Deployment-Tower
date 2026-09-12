@@ -300,6 +300,16 @@
     "detail": "valid shape"
   },
   {
+    "name": "coupon build volume: coupon_m4_seam_insert",
+    "status": "PASS",
+    "detail": "bounding box 54.0 x 24.0 x 16.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_m4_seam_insert",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
     "name": "coupon build volume: coupon_rear_panel_fit_v2",
     "status": "PASS",
     "detail": "bounding box 120.0 x 22.5 x 37.0 mm"
@@ -972,7 +982,7 @@
   {
     "name": "fastener stack: structural shell seam M4x18",
     "status": "PASS",
-    "detail": "M4x18: 11.4 mm grip, 6.6 mm pilot penetration, 5.5 mm nominal insert overlap, 7.0 mm tip relief; 2 clear axes with surrounding structural material"
+    "detail": "M4x18: 11.4 mm grip, 6.6 mm pilot penetration, 5.5 mm nominal insert overlap, 7.0 mm tip relief; 6 clear axes with surrounding structural material"
   },
   {
     "name": "fastener stack: power-compartment cover M3x8",
@@ -1073,6 +1083,16 @@
     "name": "handle four-screw reinforced mounting stack",
     "status": "PASS",
     "detail": "four clear M3 axes, two 42 x 32 x 5 mm feet, full-depth cap bosses/pads, and 5.0 mm nominal engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass"
+  },
+  {
+    "name": "six-M4 hidden structural shell seam access",
+    "status": "PASS",
+    "detail": "six internal M4x18 axes have open head pockets, lateral screw insertion, top driver corridors, lower insert pilots, bearing rings, and closed exterior skins"
+  },
+  {
+    "name": "rear-panel lower sill angle-beam reinforcement",
+    "status": "PASS",
+    "detail": "the 4 mm sill has an internal flange/web beam tied into both rear base-boss regions; the separate Mac-button swept-path check remains authoritative for the local notch"
   },
   {
     "name": "logo panels four-screw replaceable mounting stack",
@@ -1181,6 +1201,11 @@
   },
   {
     "name": "watertight STL: coupon_logo_mount.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_m4_seam_insert.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1318,6 +1343,11 @@
     "name": "grounded STL components: coupon_logo_mount.stl",
     "status": "PASS",
     "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_m4_seam_insert.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
   {
     "name": "grounded STL components: coupon_mac_button_recess.stl",
