@@ -47,12 +47,11 @@ def shell_seam_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple
 
 
 def m4_seam_insert_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
-    """Vertical M4 seam insert pilots at -0.2/0/+0.2 mm."""
+    """Reproduce the tested vertical M4 pilots: 5.4, 5.6, and 5.8 mm."""
 
     e = p.enclosure
-    f = p.fasteners
     coupon = rounded_rect_prism(54.0, 24.0, 4.0, 3.0)
-    for index, (x, allowance) in enumerate(zip((-18.0, 0.0, 18.0), (-0.2, 0.0, 0.2)), start=1):
+    for index, (x, pilot_diameter) in enumerate(zip((-18.0, 0.0, 18.0), (5.4, 5.6, 5.8)), start=1):
         boss = (
             cq.Workplane("XY")
             .center(x, 0.0)
@@ -63,7 +62,7 @@ def m4_seam_insert_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
         pilot = (
             cq.Workplane("XY")
             .center(x, 0.0)
-            .circle((f.m4_insert_hole_diameter + allowance) / 2.0)
+            .circle(pilot_diameter / 2.0)
             .extrude(7.2)
             .translate((0.0, 0.0, 8.9))
         )

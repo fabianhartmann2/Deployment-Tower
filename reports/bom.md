@@ -66,7 +66,7 @@ Do not freeze these parts until the actual-cable mock-up and Ethernet-topology d
 
 ## Mechanical fasteners and inserts
 
-Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradle and handle**, **low-head M3x6 for the recessed router tray**, **M3x8 for logo/service/cover joints**, and **M4x18 for the cap and shell seam**, with diameter-4.2 M3 pilots, diameter-5.6 M4 pilots, and 5.5 mm general insert depth. Handle screw heads remain above the feet so the full 5 mm thickness is in the grip stack. These are geometry inputs, not released purchase specifications; verify head form, bottoming, engagement, material, torque, and pull-out physically.
+Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradle and handle**, **low-head M3x6 for the recessed router tray**, **M3x8 for logo/service/cover joints**, and **M4x18 for the cap and shell seam**, with the physically selected diameter-4.2 M3 and diameter-5.4 M4 pilots and 5.5 mm general insert depth. Handle screw heads remain above the feet so the full 5 mm thickness is in the grip stack. These are geometry inputs, not released purchase specifications; verify head form, bottoming, engagement, material, torque, and pull-out physically.
 
 | Joint | Modeled positions | Provisional hardware | Current mating geometry |
 | --- | ---: | --- | --- |

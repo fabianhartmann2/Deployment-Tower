@@ -300,7 +300,8 @@ class FastenerParameters:
     m3_clearance_diameter: float = 3.4
     m4_clearance_diameter: float = 4.5
     m3_insert_hole_diameter: float = 4.2
-    m4_insert_hole_diameter: float = 5.6
+    # Physical vertical M4 coupon: one-notch Ø5.4 mm variant selected.
+    m4_insert_hole_diameter: float = 5.4
     m3_boss_diameter: float = 9.0
     m4_boss_diameter: float = 12.0
     insert_depth: float = 5.5

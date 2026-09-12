@@ -196,7 +196,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | M3 screw stacks | M3x14 base; M3x10 cradle/handle; low-head M3x6 router tray; M3x8 logo/service/cover | Separate lengths prevent marginal engagement or blind-pilot bottoming; all provisional pending joint tests |
 | Structural screw stack | M4x18 | Cap and shell-seam joints; provisional pending joint tests |
 | M3/M4 clearance holes | diameter 3.4 / 4.5 | Modeled clearances |
-| M3/M4 insert pilots | diameter 4.2 / 5.6 | Provisional heat-set holes |
+| M3/M4 insert pilots | diameter 4.2 / 5.4 | Physically selected heat-set holes; M4 one-notch vertical coupon reported best fit |
 | M3/M4 bosses | diameter 9 / 12 general; seam M4 diameter 10.4 | Modeled support values; seam rings are integrated into paired U-belts |
 | Insert depth | 5.5 | Provisional; supplier and coupon govern |
 | Low-head M3 recess | diameter 6.2 x 1.8 deep | Four router-tray positions; exact screw head and seating pending |

@@ -53,6 +53,10 @@ def test_mac_cradle_matches_physical_fit_corrections():
     assert components.mac_intake_outer_diameter == 112.0
 
 
+def test_m4_insert_pilot_matches_selected_one_notch_coupon():
+    assert DEFAULT.fasteners.m4_insert_hole_diameter == 5.4
+
+
 def test_service_joint_lengths_are_distinct_by_grip_stack():
     fasteners = DEFAULT.fasteners
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)

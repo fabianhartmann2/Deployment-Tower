@@ -7,6 +7,7 @@ The Mac-cradle follow-up was reported on 2026-09-11.
 | Coupon/interface | Reported result | Disposition |
 | --- | --- | --- |
 | M3 insert boss | Ø4.2 mm selected | Retain the 4.2 mm M3 pilot default; repeat in every final structural material/orientation. |
+| M4 seam insert boss | One-notch Ø5.4 mm selected | Set all M4 insert pilots, including the six hidden shell-seam and six cap positions, to Ø5.4 mm. Torque, pull-out, cracking, and final-material confirmation remain required. |
 | Handle mount | Pass | Geometry retained. Complete torque, pull-out, 24-hour clamp/creep, full load-path, and 4x measured-weight proof tests remain required. |
 | Logo mount | Pass | Geometry retained. Confirm documented torque and 20 service cycles on final material. |
 | Rear-panel fit | Original loose; opening measured 42.5 x 22.9 mm, insert measured 41.9 x 22.0 mm. Revised coupon subsequently reported **pass**. | Original coupon withdrawn. Retain separate X/Z allowances of 0.15/0.05 mm per side. `coupon_rear_panel_fit_v2` reproduces upright-shell and flat-panel print orientations. Repeated-removal and conditioned-fit observations remain useful. |
