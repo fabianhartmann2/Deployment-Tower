@@ -28,7 +28,9 @@ from .layout import packaging_layout
 from .parameters import DEFAULT, StationParameters
 from .power_compartment import (
     apv_mount_fastener_positions,
+    power_cover_boss_height,
     power_cover_fastener_positions,
+    power_mount_fastener_positions,
     power_tie_bridge_centres,
 )
 from .rear_panel import mac_extension_mount_positions, router_extension_mount_positions
@@ -755,7 +757,7 @@ def power_cover_column_check(
     compartment: cq.Workplane,
     cover: cq.Workplane,
 ) -> CheckResult:
-    """Verify wall-tied columns reach and align with four cover clearance holes."""
+    """Verify wall-tied upper bosses align with four cover clearance holes."""
 
     pw = p.power
     f = p.fasteners
@@ -765,6 +767,7 @@ def power_cover_column_check(
     column_witnesses: list[float] = []
     witness_radius = f.m3_boss_diameter / 2.0 - 0.1
     expected_column = 3.141592653589793 * witness_radius**2
+    boss_height = power_cover_boss_height(p)
     for x, y in power_cover_fastener_positions(p):
         pilot = cylinder_axis(
             f.m3_insert_hole_diameter / 2.0 - 0.05,
@@ -781,7 +784,7 @@ def power_cover_column_check(
         mid_column = cylinder_axis(
             witness_radius,
             1.0,
-            (x, y, (pw.bottom_z + pw.bottom + cover_underside) / 2.0),
+            (x, y, cover_underside - boss_height + 0.5),
             (0, 0, 1),
         )
         pilot_obstructions.append(_intersection_volume(pilot, compartment))
@@ -798,12 +801,63 @@ def power_cover_column_check(
         and _intersection_volume(compartment, cover) <= INTERSECTION_VOLUME_TOLERANCE_MM3
     )
     return _check(
-        "power-cover full-height insert columns",
+        "power-cover wall-tied upper insert bosses",
         passed,
-        f"four continuous columns align with open cover axes; provisional M3x{pw.cover_screw_length:.0f} gives "
+        f"four {boss_height:.1f} mm upper bosses align with open cover axes; provisional M3x{pw.cover_screw_length:.0f} gives "
         f"{engagement:.1f} mm nominal engagement into {f.insert_depth:.1f} mm pilots",
         f"column witnesses {column_witnesses}, pilot obstructions {pilot_obstructions}, "
         f"cover-axis obstructions {cover_obstructions}, nominal engagement {engagement:.2f} mm",
+    )
+
+
+def power_shell_mount_access_check(
+    p: StationParameters,
+    compartment: cq.Workplane,
+) -> CheckResult:
+    """Prove all four floor screws have an open bore, head seat, and driver path."""
+
+    pw = p.power
+    f = p.fasteners
+    floor_top = pw.bottom_z + pw.bottom
+    cover_underside = pw.bottom_z + pw.outer_height
+    axis_obstructions: list[float] = []
+    head_obstructions: list[float] = []
+    driver_obstructions: list[float] = []
+    for x, y in power_mount_fastener_positions(p):
+        axis = cylinder_axis(
+            f.m3_clearance_diameter / 2.0 - 0.05,
+            pw.bottom + 1.8,
+            (x, y, pw.bottom_z - 0.9),
+            (0, 0, 1),
+        )
+        head = cylinder_axis(
+            f.m3_low_head_recess_diameter / 2.0,
+            3.2,
+            (x, y, floor_top + 0.05),
+            (0, 0, 1),
+        )
+        driver = cylinder_axis(
+            2.25,
+            cover_underside - floor_top - 3.25,
+            (x, y, floor_top + 3.25),
+            (0, 0, 1),
+        )
+        axis_obstructions.append(_intersection_volume(axis, compartment))
+        head_obstructions.append(_intersection_volume(head, compartment))
+        driver_obstructions.append(_intersection_volume(driver, compartment))
+
+    passed = (
+        len(axis_obstructions) == 4
+        and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(head_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(driver_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+    )
+    return _check(
+        "power-compartment four-screw shell-mount access",
+        passed,
+        "four diameter-3.4 floor bores plus diameter-6.2 head and diameter-4.5 driver corridors are open from above",
+        f"axis obstructions {axis_obstructions}, head obstructions {head_obstructions}, "
+        f"driver obstructions {driver_obstructions}",
     )
 
 
@@ -1366,7 +1420,7 @@ def fastener_stack_checks(
     m3_inner_radius = f.m3_insert_hole_diameter / 2.0 + 0.1
     m3_expected_ring = pi * (m3_outer_radius**2 - m3_inner_radius**2)
     cover_underside = pw.bottom_z + pw.outer_height
-    column_mid_z = (pw.bottom_z + pw.bottom + cover_underside) / 2.0
+    column_mid_z = cover_underside - power_cover_boss_height(p) / 2.0
     for x, y in power_cover_fastener_positions(p):
         clearance_axis = cylinder_axis(
             f.m3_clearance_diameter / 2.0 - 0.05,
@@ -1762,6 +1816,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
     results.append(power_tie_bridge_floor_check(p, parts["power_compartment"]))
     results.append(mac_ac_gland_passage_check(p, parts["power_compartment"]))
     results.append(apv_top_service_mount_check(p, parts["power_compartment"]))
+    results.append(power_shell_mount_access_check(p, parts["power_compartment"]))
     results.append(
         power_cover_column_check(
             p,

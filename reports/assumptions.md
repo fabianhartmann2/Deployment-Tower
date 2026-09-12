@@ -59,7 +59,7 @@ Reference solids are non-printable. Only the RUTM30 is backed by the supplied of
 | Logo retaining concept (`LOGO-06`) | Two outward-accessible M3x8 screws and webbed blind inserts per panel | Unambiguous assembly path and independently replaceable panels | Geometry/length stack pass computationally; torque/insert/cycle/rattle tests pending |
 | Handle (`HDL-07`, `HDL-08`) | Four externally accessible low-head M3x10 screws, two per 5 mm foot, into full-depth cap bosses/pads | Direct redundant load path with no unreachable snap motion; screw heads retain full foot bearing thickness | Geometry/length stack and 4x target pass computationally; insert/material/creep/proof tests pending |
 | Routine rear service (`SVC-03`) | Fixed C8 island/tunnel belongs to power box; panel removes around it | Keeps mechanical mains boundary in place during cable service | Geometry implemented; touch-safe/electrical proof pending |
-| APV and cover service | Two blind top-service insert pilots and four wall-tied full-height cover columns | APV/cover screws are accessible from above after routine shell mounting; no dependence on lower-shell rail access | Geometry implemented; exact insert, screw, washer, torque, pull-out, material, and electrical acceptance pending |
+| APV and cover service | Two blind top-service insert pilots and four wall-tied 12 mm upper cover bosses | APV/cover screws are accessible from above after routine shell mounting; the upper bosses do not obstruct the four floor fasteners | Geometry implemented; exact insert, screw, washer, torque, pull-out, material, and electrical acceptance pending |
 | Power-cable restraint | Two raised internal bridges replace floor-through tie slots | Preserves a continuous nominal floor beneath the strap tunnels | Geometry implemented; final conductor restraint, abrasion, spacing, and electrical suitability pending |
 | Mac-AC routing | Continuous stepped 6 mm reserved envelope from the relocated diameter-12 gland toward the provisional Mac connector | Records a collision-free packaging route without pretending the branch architecture is solved | Geometry-only reservation; conduit/barrier, branch hardware/topology, protection, and qualified proof pending |
 | Refined exterior and labels | White/dark palette and restrained openings modeled; final labels absent | Functional packaging precedes graphic/process freeze | Owner appearance and labeling review pending |
@@ -69,7 +69,7 @@ No departure from the square 165 x 165 footprint or approximately 1:1:1.70 fixed
 
 ## Explicit 230 V review boundary
 
-The CAD creates a closed mechanical box/cover, fixed inlet island/tunnel, raised tie bridges over a nominally sealed floor, top-service APV pilots, full-height cover columns, nominal openings, and modeled routing reservations. It does **not** define or validate:
+The CAD creates a closed mechanical box/cover, fixed inlet island/tunnel, raised tie bridges over a nominally sealed floor, top-service APV pilots, wall-tied upper cover bosses, open shell-mount screw corridors, nominal openings, and modeled routing reservations. It does **not** define or validate:
 
 - the complete single-inlet branch topology to the Mac and APV, or the junction/protection volume needed to implement it;
 - over-current/branch protection, fuse selection/location, switching, or fault behavior;

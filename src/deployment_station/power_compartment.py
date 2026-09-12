@@ -53,14 +53,22 @@ def power_tie_bridge_centres(p: StationParameters = DEFAULT) -> tuple[tuple[floa
     y = inner_front_y + pw.tie_bridge_depth / 2.0 + 0.6
     # The bridges remain in the front floor strip but are separated from the
     # relocated diameter-12 gland, APV fixing pods, and cover columns.
-    return ((pw.center_x - 19.0, y), (pw.center_x - 1.0, y))
+    # The left bridge is kept inboard of the front-left shell-mount screw head.
+    return ((pw.center_x - 16.0, y), (pw.center_x - 1.0, y))
 
 
 def power_cover_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
     pw = p.power
-    dx = pw.outer_width / 2.0 - 7.0
-    dy = pw.outer_depth / 2.0 - 7.0
+    # Keep the cover columns clear of the four shell-mount screw axes.  The
+    # former 7 mm edge offset placed each column only sqrt(10) mm from a floor
+    # screw, which refilled the through-hole and blocked its head/driver path.
+    dx = pw.outer_width / 2.0 - 15.0
+    dy = pw.outer_depth / 2.0 - 5.0
     return tuple((x, y) for x in (pw.center_x - dx, pw.center_x + dx) for y in (pw.center_y - dy, pw.center_y + dy))
+
+
+def power_cover_boss_height(p: StationParameters = DEFAULT) -> float:
+    return p.fasteners.insert_depth + 6.5
 
 
 def power_compartment(p: StationParameters = DEFAULT) -> cq.Workplane:
@@ -178,36 +186,21 @@ def power_compartment(p: StationParameters = DEFAULT) -> cq.Workplane:
         )
         box = box.union(bridge.cut(strap_tunnel))
 
-    # Four floor screws attach the compartment to shell-tied support rails.
-    for x, y in power_mount_fastener_positions(p):
-        mount_hole = cq.Workplane("XY").center(x, y).circle(f.m3_clearance_diameter / 2.0).extrude(pw.bottom + 2.0).translate((0, 0, z0 - 1.0))
-        box = box.cut(mount_hole)
-
-    # Wall-tied full-height columns carry the four cover inserts directly under
-    # the matching cover holes.  Insert pilots open from above; no underside or
-    # lower-shell-rail access is required during routine cover service.
-    column_height = z0 + pw.outer_height - floor_top
+    # Short upper bosses carry the four cover inserts directly under the matching
+    # cover holes.  Each boss overlaps an end wall, so it is positively tied to
+    # the enclosure without occupying the floor-screw head/driver corridor.
+    # Keeping these bosses near the top also avoids the cable-restraint bridges
+    # and the already-printed lower-shell mounting pattern.
+    cover_underside = z0 + pw.outer_height
+    column_height = power_cover_boss_height(p)
+    column_bottom = cover_underside - column_height
     for x, y in power_cover_fastener_positions(p):
         column = (
             cq.Workplane("XY")
             .center(x, y)
             .circle(f.m3_boss_diameter / 2.0)
             .extrude(column_height)
-            .translate((0, 0, floor_top))
-        )
-        nearest_x_wall = pw.center_x + (-1.0 if x < pw.center_x else 1.0) * pw.outer_width / 2.0
-        nearest_y_wall = pw.center_y + (-1.0 if y < pw.center_y else 1.0) * pw.outer_depth / 2.0
-        x_web = box_at(
-            abs(nearest_x_wall - x),
-            3.0,
-            column_height,
-            ((nearest_x_wall + x) / 2.0, y, floor_top + column_height / 2.0),
-        )
-        y_web = box_at(
-            3.0,
-            abs(nearest_y_wall - y),
-            column_height,
-            (x, (nearest_y_wall + y) / 2.0, floor_top + column_height / 2.0),
+            .translate((0, 0, column_bottom))
         )
         insert = cylinder_axis(
             f.m3_insert_hole_diameter / 2.0,
@@ -215,7 +208,21 @@ def power_compartment(p: StationParameters = DEFAULT) -> cq.Workplane:
             (x, y, z0 + pw.outer_height - f.insert_depth),
             (0, 0, 1),
         )
-        box = box.union(column).union(x_web).union(y_web).cut(insert)
+        box = box.union(column).cut(insert)
+
+    # Four floor screws attach the compartment to shell-tied support rails.
+    # Cut these last so later unions can never refill a through-axis.  Their
+    # relocated neighbouring cover columns leave room for an M3 low head and
+    # its driver while preserving the already-printed lower-shell insert axes.
+    for x, y in power_mount_fastener_positions(p):
+        mount_hole = (
+            cq.Workplane("XY")
+            .center(x, y)
+            .circle(f.m3_clearance_diameter / 2.0)
+            .extrude(pw.bottom + 2.0)
+            .translate((0, 0, z0 - 1.0))
+        )
+        box = box.cut(mount_hole)
     return box
 
 

@@ -46,7 +46,7 @@ Until the approved choice is implemented and functionally tested, combined compl
 
 ## Fixed C8 service boundary
 
-The inlet is not mounted to the routine rear service panel. `power_compartment.py` creates the inlet island and a closed tunnel back to the separately covered power box; `rear_panel.py` removes a clearance island around that fixed structure. Removing the eight rear-panel screws therefore leaves the inlet and its mechanical terminal boundary in place. The compartment also has two raised tie bridges over a continuous nominal floor, two blind top-service APV insert pilots, and four wall-tied columns reaching the cover.
+The inlet is not mounted to the routine rear service panel. `power_compartment.py` creates the inlet island and a closed tunnel back to the separately covered power box; `rear_panel.py` removes a clearance island around that fixed structure. Removing the eight rear-panel screws therefore leaves the inlet and its mechanical terminal boundary in place. The compartment also has two raised tie bridges over a continuous nominal floor, two blind top-service APV insert pilots, four wall-tied upper cover bosses, and four unobstructed lower-shell fastening corridors.
 
 This is a mechanical service concept only. The stepped Mac-AC solid is a reserved envelope rather than a selected protective conduit. None of these features establishes touch safety, required clearances, insulating properties, terminal coverage, branch topology, conductor restraint, protection, temperature rating, or regulatory compliance. Rear-panel service is de-energized work, opening the inner power cover is a separate qualified operation, and no built unit may be energized before competent architecture and qualified inspection/tests are complete.
 

@@ -11,7 +11,7 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `lower_shell` | 1 | Matte white ASA | Base/cradle/power supports, rear bosses, seam keys, two structural seam inserts |
 | `upper_shell` | 1 | Matte white ASA | Router supports, rear bosses, logo/dock receivers, cap inserts, handle ribs/spines |
 | `router_tray` | 1 | ASA | Vented plate, four compliant-pad lands, guides, ledges, front stop, rear latch nibs, four recessed low-head shell fasteners |
-| `power_compartment` | 1 | Reviewed flame-/temperature-suitable engineering material | Mechanical APV/mains box, fixed C8 island/tunnel, raised sealed-floor tie bridges, two top-service blind APV pilots, four full-height cover columns, and exits; not an approved electrical enclosure |
+| `power_compartment` | 1 | Reviewed flame-/temperature-suitable engineering material | Mechanical APV/mains box, fixed C8 island/tunnel, raised sealed-floor tie bridges, two top-service blind APV pilots, four open lower-shell mounting corridors, four upper wall-tied cover bosses, and exits; not an approved electrical enclosure |
 | `power_compartment_cover` | 1 | Same reviewed material | Separate deliberate-access cover with four column-aligned M3 clearance axes |
 | `rear_panel` | 1 | Dark ASA | Eight-fastener service face; removes around fixed C8 island |
 | `router_interface_bezel` | 1 | Dark ASA | Replaceable RF/Ethernet insert with four integral cantilever hooks |
@@ -71,7 +71,7 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | --- | ---: | --- | --- |
 | Base to lower shell | 4 M3 | 4 provisional M3x14 screws + 4 M3 inserts | Paired through-holes and webbed shell bosses; longer stack is distinct from service screws |
 | Mac cradle to lower shell | 4 M3 | 4 provisional M3x10 screws + 4 M3 inserts | Downward-access holes and shell-tied bosses; nominal stack avoids marginal M3x8 engagement |
-| Power compartment to lower shell | 4 M3 | 4 provisional M3x8 screws + 4 M3 inserts | Floor holes, two support rails, four bosses |
+| Power compartment to lower shell | 4 M3 | 4 provisional low-head M3x8 screws + 4 M3 inserts | Unchanged lower-shell axes; diameter-3.4 floor bores with verified diameter-6.2 head and diameter-4.5 driver access, two support rails, four shell bosses |
 | Power-compartment cover | 4 M3 | 4 provisional M3x8 screws + 4 M3 inserts | Full-height wall-tied columns and aligned cover clearances; 5.2 mm nominal engagement into 5.5 mm pilots |
 | Router tray to upper shell | 4 M3 | 4 provisional low-head M3x6 screws + 4 M3 inserts | Diameter-6.2 x 1.8 head recesses; shorter stack avoids blind-pilot bottoming; accessible after +Y router removal |
 | Rear panel to shells | 8 M3 | 8 provisional M3x8 screws + 8 M3 inserts | Counterbores and paired lower/upper rear bosses |

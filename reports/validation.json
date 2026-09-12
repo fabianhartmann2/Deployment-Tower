@@ -1010,9 +1010,14 @@
     "detail": "two supplier-coordinate diameter-3.6 axes are open from above; 3.0 mm blind pilots retain 2.7 mm sealed floor"
   },
   {
-    "name": "power-cover full-height insert columns",
+    "name": "power-compartment four-screw shell-mount access",
     "status": "PASS",
-    "detail": "four continuous columns align with open cover axes; provisional M3x8 gives 5.2 mm nominal engagement into 5.5 mm pilots"
+    "detail": "four diameter-3.4 floor bores plus diameter-6.2 head and diameter-4.5 driver corridors are open from above"
+  },
+  {
+    "name": "power-cover wall-tied upper insert bosses",
+    "status": "PASS",
+    "detail": "four 12.0 mm upper bosses align with open cover axes; provisional M3x8 gives 5.2 mm nominal engagement into 5.5 mm pilots"
   },
   {
     "name": "Mac AC reserved corridor continuity",

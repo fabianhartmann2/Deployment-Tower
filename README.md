@@ -111,7 +111,7 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 | `base.py`, `mac_mount.py` | Base, intake/button path, three 2 mm pad positions in 1 mm seats, four clip/cam retainers, two bottom release rails, and shell-fastened cradle ears |
 | `shell.py` | Split shell, rear seat, seam keys/bolts, logo/dock receivers, equipment supports, and cap load path |
 | `router_tray.py`, `rear_panel.py` | Router retention, four compliant support lands/pad template, recessed low-head tray screws, rear panel, replaceable bezel, RF window, and provisional two-hole extension flanges |
-| `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, full-height cover columns, exits, and cover |
+| `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, wall-tied upper cover bosses, four verified shell-mount access corridors, exits, and cover |
 | `handle.py` | Six-fastener cap, structural beams, four-screw handle feet/bosses, and mounting coupon |
 | `wifi_dock.py`, `logo_panel.py` | Screw-fastened antenna docks and two-screw replaceable logo panels |
 | `coupons.py` | Eight high-risk physical-fit articles |

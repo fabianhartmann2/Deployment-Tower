@@ -159,7 +159,8 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Mac AC gland datum / reserved route | X -55, Y -33.5 / 6 wide stepped solid | Packaging reservation only; no selected conduit, branch hardware, protection, or electrical acceptance |
 | Raised tie bridges | 14 x 7 x 5 outer; 8 x 3 strap tunnel | Two internal bridges over continuous nominal floor; physical restraint/electrical suitability pending |
 | APV blind mounting pilots | 2 axes; diameter 4.2 x 3 deep | Aligned to supplier diameter-3.6 lug axes; 2.7 residual sealed floor; exact insert/fastener pending |
-| Cover columns / screw | 4 full-height wall-tied columns; M3x8 provisional | Diameter-4.2 x 5.5 pilots; 5.2 nominal engagement through 2.8 cover |
+| Cover bosses / screw | 4 wall-tied upper bosses, 12.0 high; M3x8 provisional | Diameter-4.2 x 5.5 pilots; 5.2 nominal engagement through 2.8 cover |
+| Lower-shell mounting access | 4 floor bores at the unchanged lower-shell axes | Diameter-3.4 through bores; diameter-6.2 screw-head and diameter-4.5 driver corridors verified open |
 | `mains_keepout_extra` | 4 | Packaging keep-out expansion, not an electrical clearance |
 
 ### Handle, Wi-Fi docks, and logo panels

@@ -13,7 +13,11 @@ from deployment_station.mac_mount import (
     mac_vertical_retainer_lead_in,
 )
 from deployment_station.parameters import DEFAULT
-from deployment_station.power_compartment import power_compartment, power_compartment_cover
+from deployment_station.power_compartment import (
+    power_compartment,
+    power_compartment_cover,
+    power_mount_fastener_positions,
+)
 from deployment_station.rear_panel import mac_extension_mount_positions
 from deployment_station.router_tray import router_support_pad_positions
 from deployment_station.shell import lower_shell
@@ -33,6 +37,7 @@ from deployment_station.validation import (
     mac_ac_gland_passage_check,
     mac_vertical_retention_check,
     power_cover_column_check,
+    power_shell_mount_access_check,
     power_tie_bridge_floor_check,
     router_support_stack_check,
     wifi_dock_capture_geometry_check,
@@ -151,11 +156,24 @@ def test_power_compartment_has_sealed_ties_top_service_mounts_and_cover_columns(
         power_tie_bridge_floor_check(DEFAULT, compartment),
         mac_ac_gland_passage_check(DEFAULT, compartment),
         apv_top_service_mount_check(DEFAULT, compartment),
+        power_shell_mount_access_check(DEFAULT, compartment),
         power_cover_column_check(DEFAULT, compartment, cover),
     )
     assert all(result.status == "PASS" for result in checks), "\n".join(
         f"{result.name}: {result.detail}" for result in checks
     )
+
+
+def test_power_compartment_shell_mount_check_rejects_a_refilled_floor_hole():
+    compartment = power_compartment()
+    x, y = power_mount_fastener_positions(DEFAULT)[0]
+    plug = cylinder_axis(
+        DEFAULT.fasteners.m3_clearance_diameter / 2.0,
+        DEFAULT.power.bottom + 0.4,
+        (x, y, DEFAULT.power.bottom_z - 0.2),
+        (0, 0, 1),
+    )
+    assert power_shell_mount_access_check(DEFAULT, compartment.union(plug)).status == "FAIL"
 
 
 def test_mac_ac_reserved_corridor_is_continuous_but_not_a_release_claim():
@@ -358,7 +376,8 @@ def test_full_geometry_validation_has_no_failures():
     assert "sealed-floor raised power tie bridges" in result_names
     assert "Mac AC nominal gland aperture" in result_names
     assert "APV top-service blind insert mounts" in result_names
-    assert "power-cover full-height insert columns" in result_names
+    assert "power-compartment four-screw shell-mount access" in result_names
+    assert "power-cover wall-tied upper insert bosses" in result_names
     assert "Mac AC reserved corridor continuity" in result_names
     assert "mains/SELV modeled keep-out non-overlap" in result_names
     assert "Mac AC branch hardware, protected conduit/restraint, and qualified separation proof" in result_names

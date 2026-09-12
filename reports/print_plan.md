@@ -61,7 +61,7 @@ After coupon closure, a risk-efficient print order is router bezel, rear panel, 
 | Mac cradle | Three 1 mm pad seats with 2 mm pads, diameter-112 opening, 0.30 side clearance, four lowered clip/cams and wear pockets, two extended bottom release rails, four ears, rear-left button corridor |
 | Router tray | Four compliant lands/pads, guide spacing, top ledges, latch-flexure layers, front stop, vents, four low-head M3x6 recesses, -Y insertion/+Y removal |
 | Rear panel/bezel | Flatness, eight counterbores, fixed-island clearance, extension openings and provisional two-hole M3 flange patterns, four bezel hooks, smooth RF edge |
-| Power box/cover | Only reviewed material/process; APV/cable clearance, sealed-floor raised tie bridges, blind top-service APV pilots, four shell mounts, four full-height cover columns/M3x8 joints, C8 tunnel/island, gland/exit edges; stepped Mac-AC envelope is not a printable conduit |
+| Power box/cover | Only reviewed material/process; APV/cable clearance, sealed-floor raised tie bridges, blind top-service APV pilots, four open shell-mount bore/head/driver corridors, four upper wall-tied cover bosses/M3x8 joints, C8 tunnel/island, gland/exit edges; stepped Mac-AC envelope is not a printable conduit |
 | Wi-Fi docks | Vertical clip axes, hub shelf, cable notch, flexure layers, two screw holes each |
 | Logo panels | Correct handed transform, matte face, two clean M3 bores, thumbnail scallop, reveal, and flat seating; embossed example edge-printed |
 | Cap/handle | Continuous perimeter/crossmember/tie paths, six provisional M4x18 cap joints, four full-depth M3 bosses/pads, two broad feet, four screw bores, gussets, and support removal without damage |
