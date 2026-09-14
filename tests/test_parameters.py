@@ -63,6 +63,15 @@ def test_seam_head_has_physical_trial_clearance():
     assert enclosure.seam_head_clearance_diameter - enclosure.seam_screw_head_diameter == pytest.approx(1.2)
 
 
+def test_router_tray_matches_physical_retention_feedback():
+    components = DEFAULT.components
+    assert components.router_side_guide_inset == 1.0
+    assert components.router_top_ledge_inset == 0.6
+    assert components.router_rear_retainer_adjustment == 1.0
+    assert components.router_tray_screw_head_height == 3.0
+    assert DEFAULT.fasteners.m3_low_head_recess_depth == 2.2
+
+
 def test_service_joint_lengths_are_distinct_by_grip_stack():
     fasteners = DEFAULT.fasteners
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)

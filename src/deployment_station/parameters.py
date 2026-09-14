@@ -120,6 +120,20 @@ class ComponentParameters:
     router_pad_depth: float = 16.0
     router_pad_thickness: float = 1.3
     router_pad_nominal_compression: float = 0.4
+    # Physical tray trial: about 1.3 mm side play per side and the brittle rear
+    # clips sat 5 mm behind the router chassis.  Move the rigid guides inward
+    # and replace those clips with screw-mounted corner retainers.
+    router_side_guide_inset: float = 1.0
+    router_top_ledge_inset: float = 0.6
+    router_rear_chassis_correction: float = 3.3
+    router_rear_retainer_clearance: float = 0.30
+    router_rear_retainer_adjustment: float = 1.0
+    router_rear_retainer_height: float = 10.0
+    router_rear_retainer_thickness: float = 4.0
+    router_rear_retainer_screw_x: float = 55.0
+    router_rear_retainer_screw_y: float = 72.5
+    router_rear_retainer_screw_length: float = 8.0
+    router_tray_screw_head_height: float = 3.0
     psu_case_length: float = 84.0
     psu_case_width: float = 57.0
     psu_case_height: float = 29.5
@@ -311,7 +325,7 @@ class FastenerParameters:
     m4_boss_diameter: float = 12.0
     insert_depth: float = 5.5
     m3_low_head_recess_diameter: float = 6.2
-    m3_low_head_recess_depth: float = 1.8
+    m3_low_head_recess_depth: float = 2.2
 
 
 @dataclass(frozen=True)

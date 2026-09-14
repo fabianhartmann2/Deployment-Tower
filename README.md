@@ -11,7 +11,7 @@ The stack from bottom to top is:
 1. a removable dark base with 5 mm feet, a 116 mm intake opening, and a continuous lower-rear Mac-button path;
 2. a horizontal Mac mini on a physically calibrated Ø112 open-ring, three-pad cradle with 0.30 mm side clearance, four lowered positive-Z clip/cam retainers, and two bottom-operated release rails;
 3. a shell-supported, separately covered APV/mains compartment, a distinct low-voltage/data lane, and a provisional reserved Mac-AC route;
-4. a horizontal RUTM30 on four replaceable compliant support pads and a shell-supported removable tray at `Z=151`; and
+4. a horizontal RUTM30 on four replaceable compliant support pads and a shell-supported removable tray at `Z=151`, retained at the rear corners by two adjustable M3-screwed stops rather than brittle flexure clips; and
 5. a reinforced upper shell and cap with a removable handle carried by four externally accessible M3 screws, broad feet, full-depth cap bosses, and shell-tied load paths.
 
 The lower and upper shell modules fit the Bambu Lab X1 Carbon's 256 mm build cube. Their load-bearing split uses six hidden M4 joints, an internal U-shaped belt in each shell, and three locating keys; all screw heads, tool corridors, and insert openings remain inside the closed exterior skin. A physical v3 assembly found the original Ø7.6 head pockets tight for measured Ø7.0 heads, so the current source uses Ø8.2 pockets plus 8.4 mm internal-only entry slots. The formerly unsupported 4 mm rear sill is tied into the lower shell by an internal angle beam. The upper shell also carries two 70 x 70 mm logo panels retained by two outward-accessible M3 screws each and two screw-fastened, vertically oriented recessed Wi-Fi antenna transport docks. The C8 inlet island and closed terminal tunnel are integral to the power compartment: the surrounding rear service panel removes around the island, leaving that mechanical mains boundary in place. Inside the box, raised cable-tie bridges preserve a solid floor, the two APV fixing axes use top-service blind insert pilots, and four short wall-tied upper bosses support the removable cover. These are mechanical provisions only and do not authorize wiring or energization.
@@ -63,7 +63,7 @@ The source checks are fail-gated, but aggregate counts and artifact hashes are i
 
 ## Generated outputs
 
-The current source registry expects **19 printable definitions**: 15 installed assembly parts plus four reusable/non-installed templates. Regeneration writes:
+The current source registry expects **21 printable definitions**: 17 installed assembly parts plus four reusable/non-installed templates. Regeneration writes:
 
 - one printable-part STEP and one print-oriented STL for each registered definition;
 - 9 coupon STEP files and 9 coupon STL files;
@@ -76,7 +76,7 @@ STEP files remain in assembly coordinates. STL files receive the documented prin
 
 ### macOS Finder model
 
-`exports/interactive/complete_assembly_finder.usdz` is a color, interactive Quick Look model containing all 15 installed printed parts, the three equipment references, and seven interface-hardware references. Select it in Finder and press Space, or open it directly, to orbit, pan, and zoom. It uses metres-per-unit metadata corresponding to the millimetre CAD model and passes Apple's strict RealityKit USDZ validation.
+`exports/interactive/complete_assembly_finder.usdz` is a color, interactive Quick Look model containing all 17 installed printed parts, the three equipment references, and seven interface-hardware references. Select it in Finder and press Space, or open it directly, to orbit, pan, and zoom. It uses metres-per-unit metadata corresponding to the millimetre CAD model and passes Apple's strict RealityKit USDZ validation.
 
 On macOS with the Apple USD command-line tools available, regenerate it with:
 
@@ -110,7 +110,7 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 | `components.py` | Official router import; controlled equipment, hardware, cable, and removal placeholders |
 | `base.py`, `mac_mount.py` | Base, intake/button path, three 2 mm pad positions in 1 mm seats, four clip/cam retainers, two bottom release rails, and shell-fastened cradle ears |
 | `shell.py` | Split shell, reinforced rear sill, three seam keys, six hidden internal seam joints/belts, logo/dock receivers, equipment supports, and cap load path |
-| `router_tray.py`, `rear_panel.py` | Router retention, four compliant support lands/pad template, recessed low-head tray screws, rear panel, replaceable bezel, RF window, and provisional two-hole extension flanges |
+| `router_tray.py`, `rear_panel.py` | Router support, physically corrected side/top fit, four compliant pads, deepened tray-screw recesses, two adjustable screw-mounted rear corner stops, rear panel, replaceable bezel, RF window, and provisional extension flanges |
 | `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, wall-tied upper cover bosses, four verified shell-mount access corridors, exits, and cover |
 | `handle.py` | Six-fastener cap, structural beams, four-screw handle feet/bosses, and mounting coupon |
 | `wifi_dock.py`, `logo_panel.py` | Screw-fastened antenna docks and two-screw replaceable logo panels |

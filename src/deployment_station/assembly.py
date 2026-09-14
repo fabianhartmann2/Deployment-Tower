@@ -16,7 +16,7 @@ from .mac_mount import compliant_pad_template, mac_cradle
 from .parameters import DEFAULT, StationParameters
 from .power_compartment import power_compartment, power_compartment_cover
 from .rear_panel import rear_panel, router_interface_bezel
-from .router_tray import router_compliant_pad_template, router_tray
+from .router_tray import router_compliant_pad_template, router_rear_retainer, router_tray
 from .shell import lower_shell, upper_shell
 from .wifi_dock import wifi_dock
 
@@ -49,6 +49,8 @@ def part_definitions() -> OrderedDict[str, PartDefinition]:
             PartDefinition("lower_shell", lower_shell, "ASA, matte white", white),
             PartDefinition("upper_shell", upper_shell, "ASA, matte white", white),
             PartDefinition("router_tray", router_tray, "ASA", internal),
+            PartDefinition("router_rear_retainer_left", lambda p: router_rear_retainer("left", p), "ASA", internal),
+            PartDefinition("router_rear_retainer_right", lambda p: router_rear_retainer("right", p), "ASA", internal),
             PartDefinition("power_compartment", power_compartment, "FR engineering filament after review", (0.40, 0.42, 0.44)),
             PartDefinition("power_compartment_cover", power_compartment_cover, "FR engineering filament after review", (0.28, 0.30, 0.32)),
             PartDefinition("rear_panel", rear_panel, "ASA, dark", dark),
@@ -125,6 +127,8 @@ def exploded_assembly(p: StationParameters = DEFAULT) -> cq.Assembly:
         "power_compartment": (-88.0, 0.0, 10.0),
         "power_compartment_cover": (-88.0, 0.0, 32.0),
         "router_tray": (0.0, 0.0, 28.0),
+        "router_rear_retainer_left": (-18.0, 42.0, 28.0),
+        "router_rear_retainer_right": (18.0, 42.0, 28.0),
         "upper_shell": (0.0, 0.0, 36.0),
         "rear_panel": (0.0, 90.0, 0.0),
         "router_interface_bezel": (0.0, 116.0, 0.0),

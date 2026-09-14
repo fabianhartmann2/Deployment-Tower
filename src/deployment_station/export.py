@@ -68,7 +68,14 @@ def _print_oriented(name: str, obj: cq.Workplane) -> cq.Workplane:
         # Put the broad upper skin on the plate; assembly orientation would
         # suspend it 5 mm above the bed on four small feet.
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 180.0)
-    elif name in {"rear_panel", "router_interface_bezel", "coupon_c8_cutout", "coupon_router_rf_access"}:
+    elif name in {
+        "rear_panel",
+        "router_interface_bezel",
+        "router_rear_retainer_left",
+        "router_rear_retainer_right",
+        "coupon_c8_cutout",
+        "coupon_router_rf_access",
+    }:
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 90.0)
     elif name in {"logo_panel_left", "wifi_dock_left"}:
         obj = obj.rotate((0, 0, 0), (0, 1, 0), -90.0)

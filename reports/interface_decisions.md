@@ -30,7 +30,7 @@ The centres are at 14.8 mm pitch and 12 mm above the housing base. With the rout
 
 The generated check proves that the analytic window spans all six official centres. It does not prove clearance for real coupling nuts, fingers or tools, coax bends, an edge liner, or simultaneous cabling. `coupon_router_rf_access` reproduces the full 88 x 30 section and must be tested before the bezel/shell are committed.
 
-The router is installed through the rear opening from +Y toward the front (-Y), where the front stop arrests travel and the rear latches recover. Service removal is the reverse motion along +Y. Direction and removal remain subject to a fully wired physical trial.
+The router is installed through the rear opening from +Y toward the front (-Y), where the front stop arrests travel. The original printed rear flexures broke and sat about 5 mm behind the physical chassis, so they are withdrawn. Two rigid slotted corner stops are fitted afterward and secured to tray insert towers with M3x8 screws. Service removal is the reverse motion along +Y after both stops are unscrewed. Direction and removal remain subject to a fully wired physical trial.
 
 ## Ethernet concurrency warning
 

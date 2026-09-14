@@ -43,7 +43,7 @@ def export_quicklook_usdz(
     tolerance: float = 0.55,
     angular_tolerance: float = 0.20,
 ) -> Path:
-    """Export all 15 installed parts and 10 equipment/interface references."""
+    """Export all 17 installed parts and 10 equipment/interface references."""
 
     usdcat = _required_tool("usdcat")
     usdzip = _required_tool("usdzip")

@@ -19,7 +19,10 @@ from deployment_station.power_compartment import (
     power_mount_fastener_positions,
 )
 from deployment_station.rear_panel import mac_extension_mount_positions
-from deployment_station.router_tray import router_support_pad_positions
+from deployment_station.router_tray import (
+    router_rear_retainer_screw_positions,
+    router_support_pad_positions,
+)
 from deployment_station.shell import lower_shell, shell_seam_fastener_positions
 from deployment_station.validation import (
     ASSEMBLY_INTERFERENCE_ALLOWLIST,
@@ -40,6 +43,7 @@ from deployment_station.validation import (
     power_shell_mount_access_check,
     power_tie_bridge_floor_check,
     rear_sill_reinforcement_check,
+    router_screw_retainer_check,
     router_support_stack_check,
     shell_seam_access_check,
     wifi_dock_capture_geometry_check,
@@ -58,6 +62,8 @@ def test_required_printable_part_breakdown_exists():
         "lower_shell",
         "upper_shell",
         "router_tray",
+        "router_rear_retainer_left",
+        "router_rear_retainer_right",
         "power_compartment",
         "power_compartment_cover",
         "rear_panel",
@@ -111,6 +117,17 @@ def test_official_router_step_and_connector_count():
     assert len([name for name in clearances if name.startswith("cellular")]) == 4
     assert len([name for name in clearances if name.startswith("wifi")]) == 2
     assert len([name for name in clearances if name.startswith("router_rj45")]) == 2
+
+
+def test_router_rear_retention_uses_two_screw_mounted_parts():
+    assert len(router_rear_retainer_screw_positions(DEFAULT)) == 2
+    parts = printable_parts()
+    assert parts["router_rear_retainer_left"].val().isValid()
+    assert parts["router_rear_retainer_right"].val().isValid()
+    assert len(parts["router_rear_retainer_left"].solids().vals()) == 1
+    assert len(parts["router_rear_retainer_right"].solids().vals()) == 1
+    result = router_screw_retainer_check(DEFAULT, parts)
+    assert result.status == "PASS", result.detail
 
 
 def test_collision_check_detects_shallow_broad_intersection():
@@ -421,7 +438,7 @@ def test_full_geometry_validation_has_no_failures():
         "provisional dual-RJ45 two-fastener extension holes",
         "rear panel+bezel sampled +Y service sweep",
         "Mac+cradle sampled downward service sweep",
-        "RUTM30 sampled rearward service sweep (retainers released)",
+        "RUTM30 sampled rearward service sweep (screw retainers removed)",
         "RF aperture analytic connector-centre span",
         "as-built cable/forbidden-geometry routing and bend mock-up",
         "physical RF plug/finger/tool access",
@@ -429,6 +446,7 @@ def test_full_geometry_validation_has_no_failures():
     } <= result_names
     assert "Mac three-pad pocket/support-plane stack" in result_names
     assert "RUTM30 four-pad support/counterbore stack" in result_names
+    assert "RUTM30 rigid two-screw adjustable rear retention" in result_names
     assert {
         "fastener stack: removable base M3x14",
         "fastener stack: Mac cradle M3x10",
@@ -445,7 +463,7 @@ def test_full_geometry_validation_has_no_failures():
     } <= result_names
     assert "rear panel+bezel sampled +Y service sweep" in result_names
     assert "Mac+cradle sampled downward service sweep" in result_names
-    assert "RUTM30 sampled rearward service sweep (retainers released)" in result_names
+    assert "RUTM30 sampled rearward service sweep (screw retainers removed)" in result_names
     assert "RF aperture analytic connector-centre span" in result_names
     assert "physical RF plug/finger/tool access" in result_names
     assert "local minimum-wall scan of all generated geometry" in result_names

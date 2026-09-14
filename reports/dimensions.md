@@ -80,7 +80,8 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `mac_cradle` | 152 x 137 x 51.2, including four lowered Z-retention clips and two extended release rails |
 | `lower_shell` | 165 x 165 x 97 |
 | `upper_shell` | 165 x 164.9531 x 162.6 |
-| `router_tray` | 120 x 99.1 x 38.1 |
+| `router_tray` | approximately 120 x 98.9 x 37.5, including the two rear insert towers |
+| each `router_rear_retainer_*` | approximately 15 x 8.7 x 10.5; separate slotted rear corner stop |
 | `power_compartment` | 72 x 134.5 x 44 |
 | `power_compartment_cover` | 72 x 120 x 4.8 |
 | `rear_panel` | 132 x 3.2 x 236 |
@@ -148,6 +149,8 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | RF connector depth/pitch/access diameter | 36/14.8/14 | Official centres; provisional connected access volume |
 | RJ45 clearance W/H/depth | 18/16/40 | Provisional extension/plug volume |
 | Router support pad W/D/T/compression | 8/16/1.3/0.4 | Four provisional compliant pads/lands; underside and preload unverified |
+| Router physical fit corrections | side guides inward 1.0; top ledges down 0.6 | Responds to measured 1.3 mm side play per side and 1.0 mm top play; predicts about 0.3 mm physical side clearance |
+| Router rear stops | two separate 4 mm-thick corner stops; ±1.0 adjustment | Screw-retained after router insertion; rear contact datum corrected about 4.2 mm forward from the broken flexure centre while preserving 0.3 mm clearance to the official chassis |
 | APV case L/W/H | 84/57/29.5 | Datasheet placeholder |
 | APV longitudinal mounting delta / fixing hole | 98.6 / diameter 3.6 | Supplier drawing coordinates; actual unit check required |
 | APV leads | 150 +/-10 long; 3.5 controlled diameter | Datasheet length; simplified clearance solids |
@@ -193,13 +196,13 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 
 | Parameter group | Defaults | Meaning |
 | --- | --- | --- |
-| M3 screw stacks | M3x14 base; M3x10 cradle/handle; low-head M3x6 router tray; M3x8 logo/service/cover | Separate lengths prevent marginal engagement or blind-pilot bottoming; all provisional pending joint tests |
+| M3 screw stacks | M3x14 base; M3x10 cradle/handle; low-head M3x6 router tray; M3x8 router stops/logo/service/cover | Separate lengths prevent marginal engagement or blind-pilot bottoming; all provisional pending joint tests |
 | Structural screw stack | M4x18 | Cap and shell-seam joints; provisional pending joint tests |
 | M3/M4 clearance holes | diameter 3.4 / 4.5 | Modeled clearances |
 | M3/M4 insert pilots | diameter 4.2 / 5.4 | Physically selected heat-set holes; M4 one-notch vertical coupon reported best fit |
 | M3/M4 bosses | diameter 9 / 12 general; seam M4 diameter 10.4 | Modeled support values; seam rings are integrated into paired U-belts |
 | Insert depth | 5.5 | Provisional; supplier and coupon govern |
-| Low-head M3 recess | diameter 6.2 x 1.8 deep | Four router-tray positions; exact screw head and seating pending |
+| Low-head M3 recess | diameter 6.2 x 2.2 deep | Four router-tray positions; leaves 0.8 mm floor and about 0.7 mm under-router clearance for the measured 3.0 mm-high heads |
 | Printer build X/Y/Z | 256/256/256 | Bounding-cube check |
 | Nozzle / line width / layer | 0.4/0.45/0.20 | Starting process |
 | Body wall lines / prototype material | 7 / ASA | Starting point only; thermal/electrical review governs final materials |

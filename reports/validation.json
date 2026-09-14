@@ -77,7 +77,7 @@
   {
     "name": "build volume: router_tray",
     "status": "PASS",
-    "detail": "bounding box 120.0 x 99.1 x 38.1 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 120.0 x 98.8 x 37.5 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: router_tray",
@@ -86,6 +86,36 @@
   },
   {
     "name": "connected printable part: router_tray",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "bounding box 15.0 x 8.7 x 10.5 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "one connected solid"
+  },
+  {
+    "name": "build volume: router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "bounding box 15.0 x 8.7 x 10.5 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
+    "name": "connected printable part: router_rear_retainer_right",
     "status": "PASS",
     "detail": "one connected solid"
   },
@@ -390,6 +420,16 @@
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
   },
   {
+    "name": "assembly interference: base / router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: base / router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
     "name": "assembly interference: base / power_compartment",
     "status": "PASS",
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
@@ -455,6 +495,16 @@
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
   },
   {
+    "name": "assembly interference: mac_cradle / router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: mac_cradle / router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
     "name": "assembly interference: mac_cradle / power_compartment",
     "status": "PASS",
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
@@ -515,6 +565,16 @@
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
   },
   {
+    "name": "assembly interference: lower_shell / router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: lower_shell / router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
     "name": "assembly interference: lower_shell / power_compartment",
     "status": "PASS",
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
@@ -570,6 +630,16 @@
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
   },
   {
+    "name": "assembly interference: upper_shell / router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: upper_shell / router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
     "name": "assembly interference: upper_shell / power_compartment",
     "status": "PASS",
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
@@ -620,6 +690,16 @@
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
   },
   {
+    "name": "assembly interference: router_tray / router_rear_retainer_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_tray / router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
     "name": "assembly interference: router_tray / power_compartment",
     "status": "PASS",
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
@@ -666,6 +746,111 @@
   },
   {
     "name": "assembly interference: router_tray / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / router_rear_retainer_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_left / logo_panel_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / power_compartment",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / power_compartment_cover",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / rear_panel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / router_interface_bezel",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / upper_cap",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / removable_handle",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / wifi_dock_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / wifi_dock_right",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / logo_panel_left",
+    "status": "PASS",
+    "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
+  },
+  {
+    "name": "assembly interference: router_rear_retainer_right / logo_panel_right",
     "status": "PASS",
     "detail": "intersection 0.0000 mm^3 <= 0.10 mm^3 allowance (no intended material overlap)"
   },
@@ -947,7 +1132,12 @@
   {
     "name": "RUTM30 four-pad support/counterbore stack",
     "status": "PASS",
-    "detail": "four 0.6 mm lands plus 1.3 mm pads at 0.4 mm compression finish at router Z=155.5; four 1.8 mm counterbores leave 1.2 mm floor"
+    "detail": "four 0.6 mm lands plus 1.3 mm pads at 0.4 mm compression finish at router Z=155.5; four 2.2 mm counterbores leave 0.8 mm floor and 0.7 mm below the measured 3.0 mm heads"
+  },
+  {
+    "name": "RUTM30 rigid two-screw adjustable rear retention",
+    "status": "PASS",
+    "detail": "two connected corner stops use M3x8 screws, \u00d84.2 insert towers, \u00b11.0 mm slots, a physically corrected rear datum, and 0.5 mm nominal side clearance without entering the official router solid"
   },
   {
     "name": "fastener stack: removable base M3x14",
@@ -962,7 +1152,7 @@
   {
     "name": "fastener stack: router tray M3x6",
     "status": "PASS",
-    "detail": "M3x6: 1.2 mm grip, 4.8 mm pilot penetration, 4.8 mm nominal insert overlap, 5.8 mm tip relief; 4 clear axes with surrounding structural material"
+    "detail": "M3x6: 0.8 mm grip, 5.2 mm pilot penetration, 5.2 mm nominal insert overlap, 5.8 mm tip relief; 4 clear axes with surrounding structural material"
   },
   {
     "name": "fastener stack: reinforced handle M3x10",
@@ -1050,9 +1240,9 @@
     "detail": "23 sampled positions along -Z from 0 to -80 mm after base removal; Mac and cradle are the moving set; maximum obstruction 0.0000 mm^3"
   },
   {
-    "name": "RUTM30 sampled rearward service sweep (retainers released)",
+    "name": "RUTM30 sampled rearward service sweep (screw retainers removed)",
     "status": "PASS",
-    "detail": "18 sampled positions along +Y from 0 to 112 mm; a conservative 100 x 93.7 x 30 mm router body envelope alone moves, panel/bezel are removed, and both rear retainers are spread; maximum obstruction 0.0000 mm^3"
+    "detail": "18 sampled positions along +Y from 0 to 112 mm; a conservative 100 x 93.7 x 30 mm router body envelope alone moves, panel/bezel and both screw-mounted rear corner retainers are removed; maximum obstruction 0.0000 mm^3"
   },
   {
     "name": "Mac power-button continuous swept path",
@@ -1290,6 +1480,16 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
+    "name": "watertight STL: router_rear_retainer_left.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: router_rear_retainer_right.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
     "name": "watertight STL: router_tray.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
@@ -1426,6 +1626,16 @@
   },
   {
     "name": "grounded STL components: router_interface_bezel.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: router_rear_retainer_left.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: router_rear_retainer_right.stl",
     "status": "PASS",
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },

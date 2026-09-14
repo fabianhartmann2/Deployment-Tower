@@ -10,7 +10,8 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `mac_cradle` | 1 | ASA | Physically calibrated Ø112 opening, 0.30 mm side gap, three 1 mm pad seats, four 8 mm-lowered positive-Z clip/cams, two extended bottom release rails, four shell-fastened ears |
 | `lower_shell` | 1 | Matte white ASA | Base/cradle/power supports, rear bosses, angle-reinforced rear sill, three seam keys, internal U-belt, six hidden structural seam inserts |
 | `upper_shell` | 1 | Matte white ASA | Router supports, rear bosses, logo/dock receivers, cap inserts, handle ribs/spines, internal U-belt, six hidden screw lugs/tool corridors |
-| `router_tray` | 1 | ASA | Vented plate, four compliant-pad lands, guides, ledges, front stop, rear latch nibs, four recessed low-head shell fasteners |
+| `router_tray` | 1 | ASA | Vented plate, four compliant-pad lands, inward-corrected guides, lowered ledges, front stop, two M3 insert towers, and four deeply recessed shell fasteners; brittle rear clips removed |
+| `router_rear_retainer_left`, `router_rear_retainer_right` | 1 each | ASA | Rigid slotted rear-corner stops, installed after the router with one M3x8 screw each; remain outside the SMA envelopes |
 | `power_compartment` | 1 | Reviewed flame-/temperature-suitable engineering material | Mechanical APV/mains box, fixed C8 island/tunnel, raised sealed-floor tie bridges, two top-service blind APV pilots, four open lower-shell mounting corridors, four upper wall-tied cover bosses, and exits; not an approved electrical enclosure |
 | `power_compartment_cover` | 1 | Same reviewed material | Separate deliberate-access cover with four column-aligned M3 clearance axes |
 | `rear_panel` | 1 | Dark ASA | Eight-fastener service face; removes around fixed C8 island |
@@ -20,7 +21,7 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `wifi_dock_left`, `wifi_dock_right` | 1 each | ASA or PA candidate | Recessed vertical clips, hub shelves, cable notches, two M3 holes each |
 | `logo_panel_left`, `logo_panel_right` | 1 each | ASA or approved variant | 70 mm faces with two outward-accessible M3 holes each |
 
-The registry contains **19 printable definitions**: the 15 installed rows above plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
+The registry contains **21 printable definitions**: the 17 installed parts above plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
 
 ## Fit coupons
 
@@ -74,7 +75,8 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | Mac cradle to lower shell | 4 M3 | 4 provisional M3x10 screws + 4 M3 inserts | Downward-access holes and shell-tied bosses; nominal stack avoids marginal M3x8 engagement |
 | Power compartment to lower shell | 4 M3 | 4 provisional low-head M3x8 screws + 4 M3 inserts | Unchanged lower-shell axes; diameter-3.4 floor bores with verified diameter-6.2 head and diameter-4.5 driver access, two support rails, four shell bosses |
 | Power-compartment cover | 4 M3 | 4 provisional M3x8 screws + 4 M3 inserts | Short upper wall-tied bosses and aligned cover clearances; 5.2 mm nominal engagement into 5.5 mm pilots |
-| Router tray to upper shell | 4 M3 | 4 provisional low-head M3x6 screws + 4 M3 inserts | Diameter-6.2 x 1.8 head recesses; shorter stack avoids blind-pilot bottoming; accessible after +Y router removal |
+| Router tray to upper shell | 4 M3 | 4 M3x6 screws, measured heads no larger than Ø6.2 x 3.0, + 4 M3 inserts | Diameter-6.2 x 2.2 recesses leave 0.8 mm floor and about 0.7 mm nominal router clearance; accessible after +Y router removal |
+| Router rear corner stops to tray | 2 M3 | 2 M3x8 screws + washers + 2 M3 inserts | Two top-access adjustable slots into rigid tray towers; replaces broken rear flexures and stays outside SMA envelopes |
 | Rear panel to shells | 8 M3 | 8 provisional M3x8 screws + 8 M3 inserts | Counterbores and paired lower/upper rear bosses |
 | Wi-Fi docks to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outside-accessible positions per dock; webbed pocket bosses |
 | Logo panels to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outward-accessible positions per panel; shell-webbed blind bosses; 5.5 mm nominal insert overlap |
@@ -87,7 +89,7 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | Mac HDMI/USB-C flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional vertical-20 pattern in removable rear panel; exact extension governs |
 | Router LAN/WAN flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional horizontal-27 pattern in replaceable bezel; exact extension governs |
 
-The modeled shell service/structural patterns total **40 M3 screw/insert positions** and **12 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. The six seam screws use physically measured Ø7.0 heads in Ø8.2 x 3.2 pockets and require a long hex driver through the open top. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
+The modeled service/structural patterns total **42 M3 screw/insert positions** and **12 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. The six seam screws use physically measured Ø7.0 heads in Ø8.2 x 3.2 pockets and require a long hex driver through the open top. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
 
 ## Compliant and finishing items
 

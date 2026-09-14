@@ -34,7 +34,11 @@ from .power_compartment import (
     power_tie_bridge_centres,
 )
 from .rear_panel import mac_extension_mount_positions, router_extension_mount_positions
-from .router_tray import router_support_pad_positions, router_tray_fastener_positions
+from .router_tray import (
+    router_rear_retainer_screw_positions,
+    router_support_pad_positions,
+    router_tray_fastener_positions,
+)
 from .shell import shell_seam_fastener_positions
 
 
@@ -1080,6 +1084,8 @@ def rear_service_removal_sweep_check(
         "lower_shell",
         "upper_shell",
         "router_tray",
+        "router_rear_retainer_left",
+        "router_rear_retainer_right",
         "power_compartment",
         "power_compartment_cover",
         "upper_cap",
@@ -1124,6 +1130,8 @@ def mac_cradle_downward_removal_sweep_check(
         "lower_shell",
         "upper_shell",
         "router_tray",
+        "router_rear_retainer_left",
+        "router_rear_retainer_right",
         "power_compartment",
         "power_compartment_cover",
         "rear_panel",
@@ -1154,22 +1162,13 @@ def router_rearward_removal_sweep_check(
     parts: Mapping[str, cq.Workplane],
     model: ReferenceModel | None = None,
 ) -> CheckResult:
-    """Sample router-only +Y withdrawal with the rear retainers spread."""
+    """Sample router-only +Y withdrawal after the two rear stops are removed."""
 
     if model is None:
         model = build_reference_model(p)
     c = p.components
     layout = packaging_layout(p)
-    x0, y0, z0 = layout.router_center
-    rail_x = c.router_width / 2.0 + p.fits.equipment_clearance + 1.5
-    rear_latch_y = y0 + c.router_depth / 2.0 + 1.2
-    released_tray = parts["router_tray"]
-    # These two local cuts represent the two rear latch/nib flexures being held
-    # outward.  The tray otherwise remains installed and is checked as an obstacle.
-    for side in (-1.0, 1.0):
-        nib_x = x0 + side * (rail_x - 2.5)
-        release_relief = box_at(8.0, 6.0, c.router_height + 4.0, (nib_x, rear_latch_y, z0))
-        released_tray = released_tray.cut(release_relief)
+    _x0, _y0, _z0 = layout.router_center
 
     stationary_names = (
         "lower_shell",
@@ -1181,7 +1180,7 @@ def router_rearward_removal_sweep_check(
         "wifi_dock_right",
     )
     stationary = {name: parts[name] for name in stationary_names}
-    stationary["router_tray_retainers_spread"] = released_tray
+    stationary["router_tray_with_rear_stops_removed"] = parts["router_tray"]
     stationary["equipment_mac_mini_m4"] = model.equipment["mac_mini_m4"]
     stationary["equipment_apv_35_36"] = model.equipment["apv_35_36"]
     distances = (0.0, 1.0, 2.0, 4.0, 8.0) + tuple(
@@ -1190,12 +1189,12 @@ def router_rearward_removal_sweep_check(
     translations = tuple((0.0, distance, 0.0) for distance in distances)
     router_service_envelope = box_at(c.router_width, c.router_depth, c.router_height, layout.router_center)
     return _sampled_translation_clearance(
-        "RUTM30 sampled rearward service sweep (retainers released)",
+        "RUTM30 sampled rearward service sweep (screw retainers removed)",
         {"rutm30_conservative_body_envelope": router_service_envelope},
         stationary,
         translations,
         "+Y from 0 to 112 mm; a conservative 100 x 93.7 x 30 mm router body envelope alone moves, "
-        "panel/bezel are removed, and both rear retainers are spread",
+        "panel/bezel and both screw-mounted rear corner retainers are removed",
     )
 
 
@@ -1734,6 +1733,8 @@ def router_support_stack_check(
 
     template_dims = bbox_dimensions(pad_template)
     residual_floor = plate_thickness - f.m3_low_head_recess_depth
+    screw_head_projection = c.router_tray_screw_head_height - f.m3_low_head_recess_depth
+    screw_to_router_clearance = router_bottom - plate_top - screw_head_projection
     passed = (
         len(positions) == 4
         and len(counterbore_obstructions) == 4
@@ -1742,7 +1743,8 @@ def router_support_stack_check(
         and abs(template_dims[0] - c.router_pad_width) <= 0.01
         and abs(template_dims[1] - c.router_pad_depth) <= 0.01
         and abs(template_dims[2] - c.router_pad_thickness) <= 0.01
-        and residual_floor >= 0.8
+        and residual_floor >= 0.8 - 1e-6
+        and screw_to_router_clearance >= 0.6
         and min(land_volumes) >= 0.95 * expected_land
         and max(counterbore_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
         and max(through_axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
@@ -1753,11 +1755,84 @@ def router_support_stack_check(
         passed,
         f"four {land_height:.1f} mm lands plus {c.router_pad_thickness:.1f} mm pads at "
         f"{c.router_pad_nominal_compression:.1f} mm compression finish at router Z={router_bottom:.1f}; "
-        f"four {f.m3_low_head_recess_depth:.1f} mm counterbores leave {residual_floor:.1f} mm floor",
+        f"four {f.m3_low_head_recess_depth:.1f} mm counterbores leave {residual_floor:.1f} mm floor and "
+        f"{screw_to_router_clearance:.1f} mm below the measured {c.router_tray_screw_head_height:.1f} mm heads",
         f"land volumes={land_volumes}, pad template={template_dims}, plane error="
         f"{land_top + effective_pad_height - router_bottom:.3f}, counterbore obstructions="
         f"{counterbore_obstructions}, through-axis obstructions={through_axis_obstructions}, "
         f"pad/counterbore overlaps={pad_counterbore_overlaps}",
+    )
+
+
+def router_screw_retainer_check(
+    p: StationParameters,
+    parts: Mapping[str, cq.Workplane],
+    model: ReferenceModel | None = None,
+) -> CheckResult:
+    """Verify the two rigid, adjustable screw-mounted rear router stops."""
+
+    if model is None:
+        model = build_reference_model(p)
+    c = p.components
+    f = p.fasteners
+    tray = parts["router_tray"]
+    retainers = (parts["router_rear_retainer_left"], parts["router_rear_retainer_right"])
+    axes = router_rear_retainer_screw_positions(p)
+    slot_obstructions: list[float] = []
+    insert_obstructions: list[float] = []
+    boss_witnesses: list[float] = []
+    router_overlaps: list[float] = []
+    tray_overlaps: list[float] = []
+    outer = 4.4
+    inner = f.m3_insert_hole_diameter / 2.0 + 0.1
+    expected_ring = pi * (outer**2 - inner**2) * 0.5
+    boss_top = p.components.router_tray_z + 3.0 + 9.0
+
+    for (x, y, _z), retainer in zip(axes, retainers):
+        slot = cylinder_axis(
+            f.m3_clearance_diameter / 2.0 - 0.05,
+            3.2,
+            (x, y, boss_top - 0.1),
+            (0.0, 0.0, 1.0),
+        )
+        insert = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0 - 0.05,
+            5.4,
+            (x, y, boss_top - 5.5),
+            (0.0, 0.0, 1.0),
+        )
+        ring = _annular_axis_witness(outer, inner, 0.5, (x, y, boss_top - 1.0), (0.0, 0.0, 1.0))
+        slot_obstructions.append(_intersection_volume(slot, retainer))
+        insert_obstructions.append(_intersection_volume(insert, tray))
+        boss_witnesses.append(_intersection_volume(ring, tray))
+        router_overlaps.append(_intersection_volume(model.equipment["rutm30"], retainer))
+        tray_overlaps.append(_intersection_volume(tray, retainer))
+
+    retainer_grip = 3.0
+    penetration = c.router_rear_retainer_screw_length - retainer_grip
+    nominal_side_clearance = p.fits.equipment_clearance - c.router_side_guide_inset
+    passed = (
+        len(axes) == 2
+        and all(len(retainer.solids().vals()) == 1 for retainer in retainers)
+        and max(slot_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(insert_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(boss_witnesses) >= 0.90 * expected_ring
+        and max(router_overlaps) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and max(tray_overlaps) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and 0.3 <= nominal_side_clearance <= 0.6
+        and c.router_rear_retainer_adjustment >= 0.8
+        and penetration >= f.minimum_thread_engagement
+        and penetration <= 5.5
+    )
+    return _check(
+        "RUTM30 rigid two-screw adjustable rear retention",
+        passed,
+        f"two connected corner stops use M3x{c.router_rear_retainer_screw_length:.0f} screws, Ø4.2 insert towers, "
+        f"±{c.router_rear_retainer_adjustment:.1f} mm slots, a physically corrected rear datum, and "
+        f"{nominal_side_clearance:.1f} mm nominal side clearance without entering the official router solid",
+        f"axes={len(axes)}, slot obstructions={slot_obstructions}, insert obstructions={insert_obstructions}, "
+        f"boss rings={boss_witnesses}/{expected_ring:.2f}, router overlaps={router_overlaps}, "
+        f"tray overlaps={tray_overlaps}, retainer grip={retainer_grip:.1f}, penetration={penetration:.1f} mm",
     )
 
 
@@ -1961,6 +2036,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
             parts["router_compliant_pad_template"],
         )
     )
+    results.append(router_screw_retainer_check(p, parts, model))
     results.extend(fastener_stack_checks(p, parts))
     results.extend(
         extension_mount_hole_checks(
