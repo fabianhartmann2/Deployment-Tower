@@ -57,7 +57,7 @@ With the selected Ø5.4 M4 pilot regenerated, print `lower_shell_v3` first and i
 
 | Part | Review |
 | --- | --- |
-| Lower/upper shell | Warp, shadow seam, three keys/pockets, rear seat, lower rear-sill angle beam, paired U-belts, six hidden seam bosses/lugs, low-head pockets and open top-driver corridors, router/power rails, dock/logo receivers, cap/handle load spines, and completely closed exterior skin |
+| Lower/upper shell | Warp, shadow seam, three keys/pockets, rear seat, lower rear-sill angle beam, paired U-belts, six hidden seam bosses/lugs, Ø8.2 head pockets for measured Ø7.0 heads, 8.4-wide internal entry slots, open top-driver corridors, router/power rails, dock/logo receivers, cap/handle load spines, and completely closed exterior skin |
 | Base | Broad skin printed down after 180-degree flip, feet/contact, diameter-116 intake, four M3x14 clearances, continuous button path |
 | Mac cradle | Three 1 mm pad seats with 2 mm pads, diameter-112 opening, 0.30 side clearance, four lowered clip/cams and wear pockets, two extended bottom release rails, four ears, rear-left button corridor |
 | Router tray | Four compliant lands/pads, guide spacing, top ledges, latch-flexure layers, front stop, vents, four low-head M3x6 recesses, -Y insertion/+Y removal |

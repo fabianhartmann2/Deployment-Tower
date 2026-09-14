@@ -79,7 +79,7 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | Wi-Fi docks to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outside-accessible positions per dock; webbed pocket bosses |
 | Logo panels to upper shell | 4 M3 total | 4 provisional M3x8 screws + 4 M3 inserts | Two outward-accessible positions per panel; shell-webbed blind bosses; 5.5 mm nominal insert overlap |
 | Removable handle to upper cap | 4 M3 | 4 provisional low-head M3x10 screws + 4 M3 inserts | Two screws per broad 5 mm foot into full-depth cap bosses/pads; 5.0 mm nominal engagement |
-| Lower-to-upper shell structural seam | 6 M4 | 6 provisional low-head M4x18 screws + 6 M4 inserts | Three per side at X ±76.8 and Y -50/10/50; internal heads and top tool corridors, paired U-belts, no exterior openings |
+| Lower-to-upper shell structural seam | 6 M4 | 6 provisional low-head M4x18 screws with measured Ø7.0 heads + 6 M4 inserts | Three per side at X ±76.8 and Y -50/10/50; Ø8.2 internal pockets, 8.4-wide entry slots and top tool corridors, paired U-belts, no exterior openings |
 | Upper cap to upper shell | 6 M4 | 6 provisional M4x18 screws + 6 M4 inserts | Four perimeter plus two handle-spine positions |
 | APV fixing | 2 diameter-3.6 axes | Exact screw/insert/washer or approved alternative TBD | Supplier-coordinate axes over 3 mm blind diameter-4.2 pilots with 2.7 mm sealed floor; top service after shell mounting |
 | C8 fixing | 2 diameter-3.2 positions | Supplier-approved screws/nuts/locking TBD | Fixed island pattern; terminal access/shroud review required |
@@ -87,7 +87,7 @@ Current joint-stack labels are **M3x14 for the base**, **M3x10 for the Mac cradl
 | Mac HDMI/USB-C flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional vertical-20 pattern in removable rear panel; exact extension governs |
 | Router LAN/WAN flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional horizontal-27 pattern in replaceable bezel; exact extension governs |
 
-The modeled shell service/structural patterns total **40 M3 screw/insert positions** and **12 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. The six seam screws specifically require a low head no larger than the provisional Ø7.6 x 3.2 envelope and a long hex driver through the open top. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
+The modeled shell service/structural patterns total **40 M3 screw/insert positions** and **12 M4 screw/insert positions**, excluding the two APV axes, two C8 points, and provisional extension-flange through-holes. The six seam screws use physically measured Ø7.0 heads in Ø8.2 x 3.2 pockets and require a long hex driver through the open top. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
 
 ## Compliant and finishing items
 

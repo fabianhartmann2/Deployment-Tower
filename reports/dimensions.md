@@ -49,7 +49,7 @@ The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled p
 | --- | ---: |
 | Base | 14 high total; 5 high feet; visible skin inset 1.5 per side |
 | Shell split | lower nominal top `Z=105`; 0.8 shadow gap; upper shell to `Z=268` |
-| Structural shell seam | Six hidden vertical M4 axes: X `±76.8`, Y `-50/10/50`; Ø10.4 local bosses/lugs, Ø7.6 x 3.2 internal low-head pockets, Ø5.5 top-driver corridors; no exterior openings |
+| Structural shell seam | Six hidden vertical M4 axes: X `±76.8`, Y `-50/10/50`; Ø10.4 local bosses/lugs, Ø8.2 x 3.2 internal low-head pockets for measured Ø7.0 heads, 8.4-wide internal entry slots, Ø5.5 top-driver corridors; no exterior openings |
 | Rear lower sill | Existing 4 mm sill reinforced internally by a 145 x 11 x 4 flange and 145 x 4 x 10 web; rear-panel seat and Mac-button path recut clear |
 | Cap | `Z=268..280`, 12 high; six M4 clearance positions |
 | Rear shell opening | 120 wide, `Z=18..252` |
@@ -120,7 +120,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `base_height`, `foot_height`, `cap_height` | 14, 5, 12 | Vertical modules |
 | `lower_shell_top`, `shell_top`, `shadow_gap` | 105, 268, 0.8 | Split/cap datums |
 | Seam axes / boss / lug | X ±76.8; Y -50/10/50; Ø10.4; 11 high | Six hidden internal M4 joints distributed along the side walls |
-| Seam head pocket / driver corridor | Ø7.6 x 3.2 / Ø5.5 | Internal low-head M4 envelope and top tool access; exterior skin remains closed |
+| Seam head / pocket / entry / driver | measured Ø7.0 / Ø8.2 x 3.2 / 8.4 wide / Ø5.5 | 0.6 radial head relief plus explicit lateral insertion and top tool access; 1.6 mm local closed exterior skin remains behind the pocket |
 | `rear_opening_width`, `rear_opening_bottom/top` | 120, 18/252 | Shell service opening |
 | `rear_panel_width/height/thickness/radius` | 132/236/3.2/8 | Rear service panel |
 | `equipment_clearance` | 1.5 | Nominal equipment gap |

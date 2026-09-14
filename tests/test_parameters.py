@@ -57,6 +57,12 @@ def test_m4_insert_pilot_matches_selected_one_notch_coupon():
     assert DEFAULT.fasteners.m4_insert_hole_diameter == 5.4
 
 
+def test_seam_head_has_physical_trial_clearance():
+    enclosure = DEFAULT.enclosure
+    assert enclosure.seam_screw_head_diameter == 7.0
+    assert enclosure.seam_head_clearance_diameter - enclosure.seam_screw_head_diameter == pytest.approx(1.2)
+
+
 def test_service_joint_lengths_are_distinct_by_grip_stack():
     fasteners = DEFAULT.fasteners
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)

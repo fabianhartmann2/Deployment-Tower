@@ -1087,7 +1087,7 @@
   {
     "name": "six-M4 hidden structural shell seam access",
     "status": "PASS",
-    "detail": "six internal M4x18 axes have open head pockets, lateral screw insertion, top driver corridors, lower insert pilots, bearing rings, and closed exterior skins"
+    "detail": "six internal M4x18 axes have \u00d88.2 head pockets for the measured \u00d87.0 heads, explicit lateral entry slots, top driver corridors, lower insert pilots, bearing rings, and closed exterior skins"
   },
   {
     "name": "rear-panel lower sill angle-beam reinforcement",

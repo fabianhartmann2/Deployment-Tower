@@ -223,7 +223,7 @@ Summary: 277 PASS, 2 WARN, 12 PENDING, 0 FAIL.
 | square replaceable panel: logo_panel_left | PASS | 70.00 x 70.00 mm face; 0.25 mm/side rail clearance |
 | square replaceable panel: logo_panel_right | PASS | 70.00 x 70.00 mm face; 0.25 mm/side rail clearance |
 | handle four-screw reinforced mounting stack | PASS | four clear M3 axes, two 42 x 32 x 5 mm feet, full-depth cap bosses/pads, and 5.0 mm nominal engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass |
-| six-M4 hidden structural shell seam access | PASS | six internal M4x18 axes have open head pockets, lateral screw insertion, top driver corridors, lower insert pilots, bearing rings, and closed exterior skins |
+| six-M4 hidden structural shell seam access | PASS | six internal M4x18 axes have Ø8.2 head pockets for the measured Ø7.0 heads, explicit lateral entry slots, top driver corridors, lower insert pilots, bearing rings, and closed exterior skins |
 | rear-panel lower sill angle-beam reinforcement | PASS | the 4 mm sill has an internal flange/web beam tied into both rear base-boss regions; the separate Mac-button swept-path check remains authoritative for the local notch |
 | logo panels four-screw replaceable mounting stack | PASS | two outward-accessible M3 screws per panel; four clear axes, solid shell-webbed bosses, 5.5 mm nominal insert overlap, and zero installed interference |
 | Wi-Fi dock rounded-lip insertion geometry | PASS | Ø30.0 mm hub enters a 29.5 mm rounded mouth with 0.25 mm nominal movement per arm and seats in a 31.0 mm cavity; stem movement is 0.25 mm/arm |

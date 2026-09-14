@@ -377,13 +377,22 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
             (x, y, lug_top),
             (0, 0, 1),
         )
+        # An explicit internal-only entry slot prevents the printed shell edge
+        # from rubbing the head while it moves laterally into its pocket.
+        entry_start_x = (1.0 if x > 0.0 else -1.0) * 60.0
+        head_entry = box_at(
+            abs(x) - 60.0,
+            e.seam_head_entry_width,
+            e.seam_head_clearance_height + 0.2,
+            ((entry_start_x + x) / 2.0, y, lug_top + (e.seam_head_clearance_height + 0.2) / 2.0),
+        )
         driver_clear = cylinder_axis(
             e.seam_driver_clearance_diameter / 2.0,
             e.shell_top - lug_top - e.seam_head_clearance_height + 1.0,
             (x, y, lug_top + e.seam_head_clearance_height),
             (0, 0, 1),
         )
-        part = part.union(seam_lug).cut(seam_clear).cut(head_clear).cut(driver_clear)
+        part = part.union(seam_lug).cut(seam_clear).cut(head_clear).cut(head_entry).cut(driver_clear)
 
     # Shell-tied router cross rails and top-loaded M3 insert bosses.
     tray_positions = router_tray_fastener_positions(p)
@@ -439,13 +448,20 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
             (x, y, lug_top),
             (0, 0, 1),
         )
+        entry_start_x = (1.0 if x > 0.0 else -1.0) * 60.0
+        head_entry = box_at(
+            abs(x) - 60.0,
+            e.seam_head_entry_width,
+            e.seam_head_clearance_height + 0.2,
+            ((entry_start_x + x) / 2.0, y, lug_top + (e.seam_head_clearance_height + 0.2) / 2.0),
+        )
         driver_clear = cylinder_axis(
             e.seam_driver_clearance_diameter / 2.0,
             e.shell_top - lug_top - e.seam_head_clearance_height + 1.0,
             (x, y, lug_top + e.seam_head_clearance_height),
             (0, 0, 1),
         )
-        part = part.cut(seam_clear).cut(head_clear).cut(driver_clear)
+        part = part.cut(seam_clear).cut(head_clear).cut(head_entry).cut(driver_clear)
     for x, y, sx, sy in keys:
         pocket = box_at(sx + 2.0 * clearance, sy + 2.0 * clearance, 9.0, (x, y, e.lower_shell_top + 2.0))
         part = part.cut(pocket)

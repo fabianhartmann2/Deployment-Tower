@@ -529,7 +529,7 @@ def shell_seam_access_check(
         lateral_start_x = side * 60.0
         lateral = box_at(
             abs(x) - 60.0,
-            e.seam_head_clearance_diameter - 0.1,
+            e.seam_head_entry_width - 0.1,
             e.seam_head_clearance_height - 0.1,
             (
                 (lateral_start_x + x) / 2.0,
@@ -583,11 +583,12 @@ def shell_seam_access_check(
         and min(lower_boss_witnesses) >= 0.95 * expected_lower_ring
         and min(upper_bearing_witnesses) >= 0.90 * expected_bearing_ring
         and min(exterior_skin_witnesses) >= 0.95 * expected_skin
+        and e.seam_head_clearance_diameter - e.seam_screw_head_diameter >= 1.2 - 1e-6
     )
     return _check(
         "six-M4 hidden structural shell seam access",
         passed,
-        "six internal M4x18 axes have open head pockets, lateral screw insertion, top driver corridors, "
+        "six internal M4x18 axes have Ø8.2 head pockets for the measured Ø7.0 heads, explicit lateral entry slots, top driver corridors, "
         "lower insert pilots, bearing rings, and closed exterior skins",
         f"axes={len(axes)}, axis={axis_obstructions}, head={head_obstructions}, driver={driver_obstructions}, "
         f"lateral={lateral_obstructions}, insert={insert_obstructions}, lower bosses={lower_boss_witnesses}, "

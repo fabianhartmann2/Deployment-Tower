@@ -35,7 +35,12 @@ class EnclosureParameters:
     seam_axis_x: float = 76.8
     seam_boss_diameter: float = 10.4
     seam_lug_height: float = 11.0
-    seam_head_clearance_diameter: float = 7.6
+    # Physical v3 trial used a Ø7.0 mm head and found the earlier Ø7.6 pocket
+    # tight against the printed inner shell edge.  Preserve generous radial
+    # assembly relief without opening the exterior skin.
+    seam_screw_head_diameter: float = 7.0
+    seam_head_clearance_diameter: float = 8.2
+    seam_head_entry_width: float = 8.4
     seam_head_clearance_height: float = 3.2
     seam_driver_clearance_diameter: float = 5.5
     rear_opening_width: float = 120.0
