@@ -171,6 +171,8 @@ def rear_io_mount_coupon_v2(
     _usbc_reinforcement_rebate_location: str = "exterior",
     _usbc_reinforcement_pocket_width: float | None = None,
     _usbc_reinforcement_pocket_height: float | None = None,
+    _usbc_reinforcement_pocket_depth: float | None = None,
+    _usbc_reinforcement_pocket_square: bool = False,
 ) -> cq.Workplane:
     """Revised rear-I/O coupon with the intended inside mounting directions.
 
@@ -310,6 +312,7 @@ def rear_io_mount_coupon_v2(
         else _usbc_board_standoff
     )
     boss_face_y = panel_t + usbc_board_standoff
+    reinforcement_pocket: cq.Workplane | None = None
     if _usbc_reinforcement_rebate_location == "boss_face":
         bridge = box_at(
             v.usbc_mount_bridge_width,
@@ -330,7 +333,11 @@ def rear_io_mount_coupon_v2(
                 boss_face_y - cut_y + 1.0,
             )
         )
-        reinforcement_depth = v.usbc_reinforcement_depth_selected + v.cutout_allowance
+        reinforcement_depth = (
+            v.usbc_reinforcement_depth_selected + v.cutout_allowance
+            if _usbc_reinforcement_pocket_depth is None
+            else _usbc_reinforcement_pocket_depth
+        )
         reinforcement_width = (
             v.usbc_shell_width + 2.0 * v.cutout_allowance
             if _usbc_reinforcement_pocket_width is None
@@ -341,17 +348,26 @@ def rear_io_mount_coupon_v2(
             if _usbc_reinforcement_pocket_height is None
             else _usbc_reinforcement_pocket_height
         )
-        coupon = coupon.cut(
-            _rounded_cutout_xz(
+        reinforcement_cut_depth = reinforcement_depth + 0.2
+        reinforcement_y0 = boss_face_y - reinforcement_depth
+        if _usbc_reinforcement_pocket_square:
+            reinforcement_pocket = box_at(
+                reinforcement_width,
+                reinforcement_cut_depth,
+                reinforcement_height,
+                (x, reinforcement_y0 + reinforcement_cut_depth / 2.0, center_z),
+            )
+        else:
+            reinforcement_pocket = _rounded_cutout_xz(
                 reinforcement_width,
                 reinforcement_height,
                 reinforcement_height / 2.0 - 0.1,
                 x,
                 center_z,
-                boss_face_y - reinforcement_depth,
-                reinforcement_depth + 0.2,
+                reinforcement_y0,
+                reinforcement_cut_depth,
             )
-        )
+        coupon = coupon.cut(reinforcement_pocket)
     for dx in (-v.usbc_mount_pitch / 2.0, v.usbc_mount_pitch / 2.0):
         boss_x = x + dx
         boss = cylinder_axis(
@@ -368,6 +384,11 @@ def rear_io_mount_coupon_v2(
             (0.0, -1.0, 0.0),
         )
         coupon = coupon.cut(insert_pocket)
+    # V7's rectangular pocket is a finished hardware envelope, so re-cut it
+    # after adding the circular bosses.  This prevents the boss unions from
+    # growing material back into either outer corner of the specified pocket.
+    if _usbc_reinforcement_pocket_square and reinforcement_pocket is not None:
+        coupon = coupon.cut(reinforcement_pocket)
 
     # C8: retain the measured opening and increase the physical hole pitch from
     # the v1 trial's 29.0 mm to the selected 30.0 mm.
@@ -444,8 +465,27 @@ def rear_io_mount_coupon_v6(p: StationParameters = DEFAULT) -> cq.Workplane:
         _hdmi_shelf_depth=v.hdmi_shelf_depth_selected,
         _usbc_board_standoff=v.usbc_board_standoff_selected,
         _usbc_reinforcement_rebate_location="boss_face",
+        _usbc_reinforcement_pocket_width=13.0,
+        _usbc_reinforcement_pocket_height=6.0,
+    )
+
+
+def rear_io_mount_coupon_v7(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """V6 with the enlarged sharp-cornered USB reinforcement pocket."""
+
+    v = p.prototype_v4
+    return rear_io_mount_coupon_v2(
+        p,
+        _hdmi_insert_diameter=p.fasteners.m3_insert_hole_diameter,
+        _hdmi_shelf_drop=v.hdmi_shelf_drop_selected,
+        _hdmi_mount_axis_setback=v.hdmi_mount_axis_setback_selected,
+        _hdmi_shelf_depth=v.hdmi_shelf_depth_selected,
+        _usbc_board_standoff=v.usbc_board_standoff_selected,
+        _usbc_reinforcement_rebate_location="boss_face",
         _usbc_reinforcement_pocket_width=v.usbc_reinforcement_pocket_width_selected,
         _usbc_reinforcement_pocket_height=v.usbc_reinforcement_pocket_height_selected,
+        _usbc_reinforcement_pocket_depth=v.usbc_reinforcement_pocket_depth_selected,
+        _usbc_reinforcement_pocket_square=True,
     )
 
 

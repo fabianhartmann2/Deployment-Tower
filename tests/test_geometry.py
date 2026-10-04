@@ -113,6 +113,7 @@ def test_all_required_coupons_exist_and_are_valid():
         "coupon_rear_io_mount_v4",
         "coupon_rear_io_mount_v5",
         "coupon_rear_io_mount_v6",
+        "coupon_rear_io_mount_v7",
         "coupon_rf_bulkhead_v1",
         "coupon_logo_magnet_v1",
         "coupon_logo_magnet_v2",
@@ -130,11 +131,31 @@ def test_v4_fit_coupons_match_the_release_trial_layout():
     assert bbox_dimensions(coupons["coupon_rear_io_mount_v4"]) == pytest.approx((180.0, 31.2, 50.0), abs=0.01)
     assert bbox_dimensions(coupons["coupon_rear_io_mount_v5"]) == pytest.approx((180.0, 31.2, 50.0), abs=0.01)
     assert bbox_dimensions(coupons["coupon_rear_io_mount_v6"]) == pytest.approx((180.0, 16.2, 50.0), abs=0.01)
+    assert bbox_dimensions(coupons["coupon_rear_io_mount_v7"]) == pytest.approx((180.0, 16.2, 50.0), abs=0.01)
     assert bbox_dimensions(coupons["coupon_rf_bulkhead_v1"]) == pytest.approx((78.0, 3.2, 50.0), abs=0.01)
     assert len(coupons["coupon_logo_magnet_v1"].solids().vals()) == 2
     assert len(coupons["coupon_logo_magnet_v2"].solids().vals()) == 2
     assert len(coupons["coupon_cap_dovetail_v1"].solids().vals()) == 6
     assert len(coupons["coupon_cap_dovetail_v2"].solids().vals()) == 6
+
+
+def test_rear_io_v7_usb_pocket_has_full_sharp_corner_envelope():
+    coupons = fit_coupons()
+    v6 = coupons["coupon_rear_io_mount_v6"].val()
+    v7 = coupons["coupon_rear_io_mount_v7"].val()
+    usb_x = 22.5
+    boss_face_y = DEFAULT.prototype_v4.rear_panel_thickness + DEFAULT.prototype_v4.usbc_board_standoff_selected
+
+    # Near the specified rectangular corner V6 still contains material due to
+    # its rounded pocket; V7 must be empty over the full 14 x 6.5 x 2.5 mm.
+    corner_point = (usb_x + 6.8, boss_face_y - 1.0, 25.0 + 3.1)
+    assert v6.isInside(corner_point)
+    assert not v7.isInside(corner_point)
+
+    # Immediately outside each selected limit, supporting material remains.
+    assert v7.isInside((usb_x + 7.1, boss_face_y - 1.0, 25.0))
+    assert v7.isInside((usb_x, boss_face_y - 2.6, 25.0 + 3.1))
+    assert v7.isInside((usb_x, boss_face_y - 1.0, 25.0 + 3.3))
 
 
 def test_official_router_step_and_connector_count():

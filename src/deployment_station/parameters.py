@@ -366,8 +366,9 @@ class PrototypeV4Parameters:
     # dedicated rebate cut from the panel's inside face.
     usbc_board_standoff_selected: float = 6.0
     usbc_reinforcement_depth_selected: float = 2.0
-    usbc_reinforcement_pocket_width_selected: float = 13.0
-    usbc_reinforcement_pocket_height_selected: float = 6.0
+    usbc_reinforcement_pocket_width_selected: float = 14.0
+    usbc_reinforcement_pocket_height_selected: float = 6.5
+    usbc_reinforcement_pocket_depth_selected: float = 2.5
     usbc_mount_bridge_width: float = 28.0
     usbc_mount_bridge_height: float = 12.0
     c8_cutout_width: float = 21.0

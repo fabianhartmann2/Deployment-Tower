@@ -113,6 +113,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_rear_io_mount_v4` | 180 x 31.2 x 50; HDMI shelf -1 mm/axes 9 mm, USB 6 mm bosses and inside 12.4 x 5.4 x 2.2 reinforcement rebate |
 | `coupon_rear_io_mount_v5` | 180 x 31.2 x 50; v4 HDMI plus 28 x 12 x 6 USB boss bridge with PCB-facing 12.4 x 5.4 x 2.2 stepped pocket |
 | `coupon_rear_io_mount_v6` | 180 x 16.2 x 50; accepted HDMI position with 13 mm shelf depth, USB boss bridge with PCB-facing 13 x 6 x 2.2 stepped pocket |
+| `coupon_rear_io_mount_v7` | 180 x 16.2 x 50; v6 HDMI geometry with a sharp-cornered PCB-facing 14 x 6.5 x 2.5 USB pocket |
 | `coupon_rf_bulkhead_v1` | 78 x 3.2 x 50; six RF trials at two local wall thicknesses |
 | `coupon_logo_magnet_v1` | 16.4 x 110 x 35 design compound; separate blind-pocket receiver and steel-recess panel |
 | `coupon_logo_magnet_v2` | 16.4 x 110 x 35 design compound; 3 mm shell magnets opposed by 1.5 mm panel magnets |
