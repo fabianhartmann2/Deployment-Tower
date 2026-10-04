@@ -20,6 +20,7 @@ from .prototype_v4 import (
     rear_io_mount_coupon_v2,
     rear_io_mount_coupon_v3,
     rear_io_mount_coupon_v4,
+    rear_io_mount_coupon_v5,
     rf_bulkhead_fit_coupon_v1,
 )
 from .rear_panel import c8_cutout_coupon, rear_panel_fit_coupon, router_rf_access_coupon
@@ -43,6 +44,7 @@ def fit_coupons(p: StationParameters = DEFAULT) -> OrderedDict[str, cq.Workplane
             ("coupon_rear_io_mount_v2", rear_io_mount_coupon_v2(p)),
             ("coupon_rear_io_mount_v3", rear_io_mount_coupon_v3(p)),
             ("coupon_rear_io_mount_v4", rear_io_mount_coupon_v4(p)),
+            ("coupon_rear_io_mount_v5", rear_io_mount_coupon_v5(p)),
             ("coupon_rf_bulkhead_v1", rf_bulkhead_fit_coupon_v1(p)),
             ("coupon_logo_magnet_v1", logo_magnet_fit_coupon_v1(p)),
             ("coupon_logo_magnet_v2", logo_magnet_fit_coupon_v2(p)),

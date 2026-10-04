@@ -167,7 +167,7 @@ def rear_io_mount_coupon_v2(
     _hdmi_shelf_drop: float = 0.0,
     _hdmi_mount_axis_setback: float | None = None,
     _usbc_board_standoff: float | None = None,
-    _usbc_inside_reinforcement_rebate: bool = False,
+    _usbc_reinforcement_rebate_location: str = "exterior",
 ) -> cq.Workplane:
     """Revised rear-I/O coupon with the intended inside mounting directions.
 
@@ -263,9 +263,8 @@ def rear_io_mount_coupon_v2(
         coupon = coupon.cut(pocket)
 
     # USB-C: unlike HDMI, the PCB is fastened from behind, parallel to the rear
-    # panel.  Four-millimetre stand-offs reduce the measured 4.5 mm projection
-    # to the selected 0.5 mm.  The exterior skin remains closed at both screw
-    # positions; screws enter the blind M3 insert pockets from the interior.
+    # panel.  The selected revision controls the stand-off and reinforcement
+    # relief while the exterior skin stays closed at both screw positions.
     x = centres[2]
     coupon = coupon.cut(
         _rounded_cutout_xz(
@@ -278,36 +277,68 @@ def rear_io_mount_coupon_v2(
             cut_d,
         )
     )
-    reinforcement_depth = (
-        v.usbc_reinforcement_depth_selected
-        if _usbc_inside_reinforcement_rebate
-        else v.usbc_shell_depth
-    )
-    reinforcement_cut_depth = reinforcement_depth + v.cutout_allowance
-    if _usbc_inside_reinforcement_rebate:
-        reinforcement_cut_depth += 0.2
-    reinforcement_y0 = (
-        panel_t - reinforcement_depth - v.cutout_allowance
-        if _usbc_inside_reinforcement_rebate
-        else -0.2
-    )
-    coupon = coupon.cut(
-        _rounded_cutout_xz(
-            v.usbc_shell_width + 2.0 * v.cutout_allowance,
-            v.usbc_shell_height + 2.0 * v.cutout_allowance,
-            (v.usbc_shell_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
-            x,
-            center_z,
-            reinforcement_y0,
-            reinforcement_cut_depth,
+    if _usbc_reinforcement_rebate_location not in {"exterior", "panel_inside", "boss_face"}:
+        raise ValueError("unknown USB-C reinforcement rebate location")
+    if _usbc_reinforcement_rebate_location != "boss_face":
+        inside_rebate = _usbc_reinforcement_rebate_location == "panel_inside"
+        reinforcement_depth = (
+            v.usbc_reinforcement_depth_selected if inside_rebate else v.usbc_shell_depth
         )
-    )
+        reinforcement_cut_depth = reinforcement_depth + v.cutout_allowance
+        if inside_rebate:
+            reinforcement_cut_depth += 0.2
+        reinforcement_y0 = (
+            panel_t - reinforcement_depth - v.cutout_allowance if inside_rebate else -0.2
+        )
+        coupon = coupon.cut(
+            _rounded_cutout_xz(
+                v.usbc_shell_width + 2.0 * v.cutout_allowance,
+                v.usbc_shell_height + 2.0 * v.cutout_allowance,
+                (v.usbc_shell_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
+                x,
+                center_z,
+                reinforcement_y0,
+                reinforcement_cut_depth,
+            )
+        )
     usbc_board_standoff = (
         v.usbc_board_standoff
         if _usbc_board_standoff is None
         else _usbc_board_standoff
     )
     boss_face_y = panel_t + usbc_board_standoff
+    if _usbc_reinforcement_rebate_location == "boss_face":
+        bridge = box_at(
+            v.usbc_mount_bridge_width,
+            usbc_board_standoff,
+            v.usbc_mount_bridge_height,
+            (x, panel_t + usbc_board_standoff / 2.0, center_z),
+        )
+        coupon = coupon.union(bridge)
+        # Re-open the small connector tunnel through the newly added bridge.
+        coupon = coupon.cut(
+            _rounded_cutout_xz(
+                v.usbc_through_width + 2.0 * v.cutout_allowance,
+                v.usbc_through_height + 2.0 * v.cutout_allowance,
+                (v.usbc_through_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
+                x,
+                center_z,
+                cut_y,
+                boss_face_y - cut_y + 1.0,
+            )
+        )
+        reinforcement_depth = v.usbc_reinforcement_depth_selected + v.cutout_allowance
+        coupon = coupon.cut(
+            _rounded_cutout_xz(
+                v.usbc_shell_width + 2.0 * v.cutout_allowance,
+                v.usbc_shell_height + 2.0 * v.cutout_allowance,
+                (v.usbc_shell_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
+                x,
+                center_z,
+                boss_face_y - reinforcement_depth,
+                reinforcement_depth + 0.2,
+            )
+        )
     for dx in (-v.usbc_mount_pitch / 2.0, v.usbc_mount_pitch / 2.0):
         boss_x = x + dx
         boss = cylinder_axis(
@@ -370,7 +401,21 @@ def rear_io_mount_coupon_v4(p: StationParameters = DEFAULT) -> cq.Workplane:
         _hdmi_shelf_drop=v.hdmi_shelf_drop_selected,
         _hdmi_mount_axis_setback=v.hdmi_mount_axis_setback_selected,
         _usbc_board_standoff=v.usbc_board_standoff_selected,
-        _usbc_inside_reinforcement_rebate=True,
+        _usbc_reinforcement_rebate_location="panel_inside",
+    )
+
+
+def rear_io_mount_coupon_v5(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """V4 with the USB reinforcement pocket correctly located at the bosses."""
+
+    v = p.prototype_v4
+    return rear_io_mount_coupon_v2(
+        p,
+        _hdmi_insert_diameter=p.fasteners.m3_insert_hole_diameter,
+        _hdmi_shelf_drop=v.hdmi_shelf_drop_selected,
+        _hdmi_mount_axis_setback=v.hdmi_mount_axis_setback_selected,
+        _usbc_board_standoff=v.usbc_board_standoff_selected,
+        _usbc_reinforcement_rebate_location="boss_face",
     )
 
 

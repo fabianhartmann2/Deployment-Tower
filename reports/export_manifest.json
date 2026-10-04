@@ -581,6 +581,20 @@
     "sha256": "71b75311019155d006ed2a84e41ad926e9c2d8d5b6bbdde141af9c7d0a4ee936"
   },
   {
+    "name": "coupon_rear_io_mount_v5",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_rear_io_mount_v5.step",
+    "bytes": 259019,
+    "sha256": "6ee2e2b3de90769bd453f2cadeac985b40e7fe43828945fc124b0e8a916effad"
+  },
+  {
+    "name": "coupon_rear_io_mount_v5",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_rear_io_mount_v5.stl",
+    "bytes": 301084,
+    "sha256": "dbca5075e4c20f8013a90babb5efbb8b3bc456f200b7b87159bd8b10fd29643d"
+  },
+  {
     "name": "coupon_rf_bulkhead_v1",
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rf_bulkhead_v1.step",
