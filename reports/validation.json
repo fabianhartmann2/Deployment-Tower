@@ -410,6 +410,16 @@
     "detail": "valid shape"
   },
   {
+    "name": "coupon build volume: coupon_rear_io_mount_v2",
+    "status": "PASS",
+    "detail": "bounding box 180.0 x 31.2 x 50.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_rear_io_mount_v2",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
     "name": "coupon build volume: coupon_rf_bulkhead_v1",
     "status": "PASS",
     "detail": "bounding box 78.0 x 3.2 x 50.0 mm"
@@ -1455,6 +1465,11 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
+    "name": "watertight STL: coupon_rear_io_mount_v2.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
     "name": "watertight STL: coupon_rear_io_v1.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
@@ -1621,6 +1636,11 @@
   },
   {
     "name": "grounded STL components: coupon_mac_button_recess.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_rear_io_mount_v2.stl",
     "status": "PASS",
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },

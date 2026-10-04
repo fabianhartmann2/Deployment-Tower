@@ -76,6 +76,7 @@ def _print_oriented(name: str, obj: cq.Workplane) -> cq.Workplane:
         "coupon_c8_cutout",
         "coupon_router_rf_access",
         "coupon_rear_io_v1",
+        "coupon_rear_io_mount_v2",
         "coupon_rf_bulkhead_v1",
     }:
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 90.0)

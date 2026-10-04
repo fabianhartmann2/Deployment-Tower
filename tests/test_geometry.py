@@ -108,6 +108,7 @@ def test_all_required_coupons_exist_and_are_valid():
         "coupon_mac_button_recess",
         "coupon_router_rf_access",
         "coupon_rear_io_v1",
+        "coupon_rear_io_mount_v2",
         "coupon_rf_bulkhead_v1",
         "coupon_logo_magnet_v1",
         "coupon_cap_dovetail_v1",
@@ -118,6 +119,7 @@ def test_all_required_coupons_exist_and_are_valid():
 def test_v4_fit_coupons_match_the_release_trial_layout():
     coupons = fit_coupons()
     assert bbox_dimensions(coupons["coupon_rear_io_v1"]) == pytest.approx((180.0, 3.2, 45.0), abs=0.01)
+    assert bbox_dimensions(coupons["coupon_rear_io_mount_v2"]) == pytest.approx((180.0, 31.2, 50.0), abs=0.01)
     assert bbox_dimensions(coupons["coupon_rf_bulkhead_v1"]) == pytest.approx((78.0, 3.2, 50.0), abs=0.01)
     assert len(coupons["coupon_logo_magnet_v1"].solids().vals()) == 2
     assert len(coupons["coupon_cap_dovetail_v1"].solids().vals()) == 6

@@ -160,6 +160,161 @@ def rear_io_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
     return coupon
 
 
+def rear_io_mount_coupon_v2(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """Revised rear-I/O coupon with the intended inside mounting directions.
+
+    The outside face is at Y=0 and the enclosure interior is +Y.  Ethernet and
+    C8 remain flange-fit stations.  USB-C mounts from the interior against two
+    blind M3-insert bosses; only HDMI uses a horizontal shelf with top-down M4
+    mounting points.
+    """
+
+    v = p.prototype_v4
+    panel_t = v.rear_panel_thickness
+    width = 180.0
+    height = 50.0
+    center_z = height / 2.0
+    coupon = rounded_panel_xz(width, height, panel_t, 4.0, 0.0, 0.0, center_z, 1)
+    cut_y = -1.0
+    cut_d = panel_t + 2.0
+    centres = (-67.5, -22.5, 22.5, 67.5)
+
+    # Ethernet: the opening remains centred while the two flange axes move
+    # 1.0 mm down when the RJ45 latch is at the bottom.
+    x = centres[0]
+    coupon = coupon.cut(
+        _rounded_cutout_xz(
+            v.ethernet_cutout_width + 2.0 * v.cutout_allowance,
+            v.ethernet_cutout_height + 2.0 * v.cutout_allowance,
+            1.2,
+            x,
+            center_z,
+            cut_y,
+            cut_d,
+        )
+    )
+    ethernet_hole_z = center_z + v.ethernet_mount_z_offset_selected
+    for dx in (-v.ethernet_mount_pitch / 2.0, v.ethernet_mount_pitch / 2.0):
+        coupon = coupon.cut(
+            cylinder_axis(
+                (v.ethernet_mount_hole_diameter + v.mounting_hole_allowance) / 2.0,
+                cut_d,
+                (x + dx, cut_y, ethernet_hole_z),
+                (0.0, 1.0, 0.0),
+            )
+        )
+
+    # HDMI: the PCB lies horizontally.  Its underside rests 5.0 mm below the
+    # opening centre because the physical connector spans Z=2...8 mm above the
+    # PCB underside.  Two blind Ø5.4 M4 insert pockets sit 8.0 mm behind the
+    # connector face; the screws enter vertically from above through the PCB.
+    x = centres[1]
+    coupon = coupon.cut(
+        _rounded_cutout_xz(
+            v.hdmi_cutout_width + 2.0 * v.cutout_allowance,
+            v.hdmi_cutout_height + 2.0 * v.cutout_allowance,
+            1.5,
+            x,
+            center_z,
+            cut_y,
+            cut_d,
+        )
+    )
+    hdmi_connector_center_above_board = (
+        v.hdmi_connector_top_above_board - v.hdmi_cutout_height / 2.0
+    )
+    shelf_top = center_z - hdmi_connector_center_above_board
+    # Seven millimetres leaves 1.5 mm solid material below the tested 5.5 mm
+    # insert after heat-setting; the pocket must not break through the shelf.
+    shelf_thickness = 7.0
+    shelf_depth = 28.0
+    shelf = box_at(
+        42.0,
+        shelf_depth,
+        shelf_thickness,
+        (x, panel_t + shelf_depth / 2.0, shelf_top - shelf_thickness / 2.0),
+    )
+    coupon = coupon.union(shelf)
+    for dx in (-v.hdmi_mount_pitch / 2.0, v.hdmi_mount_pitch / 2.0):
+        pocket = cylinder_axis(
+            p.fasteners.m4_insert_hole_diameter / 2.0,
+            p.fasteners.insert_depth,
+            (x + dx, v.hdmi_mount_axis_setback, shelf_top + 0.01),
+            (0.0, 0.0, -1.0),
+        )
+        coupon = coupon.cut(pocket)
+
+    # USB-C: unlike HDMI, the PCB is fastened from behind, parallel to the rear
+    # panel.  Four-millimetre stand-offs reduce the measured 4.5 mm projection
+    # to the selected 0.5 mm.  The exterior skin remains closed at both screw
+    # positions; screws enter the blind M3 insert pockets from the interior.
+    x = centres[2]
+    coupon = coupon.cut(
+        _rounded_cutout_xz(
+            v.usbc_through_width + 2.0 * v.cutout_allowance,
+            v.usbc_through_height + 2.0 * v.cutout_allowance,
+            (v.usbc_through_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
+            x,
+            center_z,
+            cut_y,
+            cut_d,
+        )
+    )
+    coupon = coupon.cut(
+        _rounded_cutout_xz(
+            v.usbc_shell_width + 2.0 * v.cutout_allowance,
+            v.usbc_shell_height + 2.0 * v.cutout_allowance,
+            (v.usbc_shell_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
+            x,
+            center_z,
+            -0.2,
+            v.usbc_shell_depth + v.cutout_allowance,
+        )
+    )
+    boss_face_y = panel_t + v.usbc_board_standoff
+    for dx in (-v.usbc_mount_pitch / 2.0, v.usbc_mount_pitch / 2.0):
+        boss_x = x + dx
+        boss = cylinder_axis(
+            p.fasteners.m3_boss_diameter / 2.0,
+            v.usbc_board_standoff,
+            (boss_x, panel_t, center_z),
+            (0.0, 1.0, 0.0),
+        )
+        coupon = coupon.union(boss)
+        insert_pocket = cylinder_axis(
+            p.fasteners.m3_insert_hole_diameter / 2.0,
+            p.fasteners.insert_depth,
+            (boss_x, boss_face_y + 0.01, center_z),
+            (0.0, -1.0, 0.0),
+        )
+        coupon = coupon.cut(insert_pocket)
+
+    # C8: retain the measured opening and increase the physical hole pitch from
+    # the v1 trial's 29.0 mm to the selected 30.0 mm.
+    x = centres[3]
+    coupon = coupon.cut(
+        _rounded_cutout_xz(
+            v.c8_cutout_width + 2.0 * v.cutout_allowance,
+            v.c8_cutout_height + 2.0 * v.cutout_allowance,
+            3.5,
+            x,
+            center_z,
+            cut_y,
+            cut_d,
+        )
+    )
+    for dx in (-v.c8_mount_pitch_selected / 2.0, v.c8_mount_pitch_selected / 2.0):
+        coupon = coupon.cut(
+            cylinder_axis(
+                (v.c8_mount_hole_diameter + v.mounting_hole_allowance) / 2.0,
+                cut_d,
+                (x + dx, cut_y, center_z),
+                (0.0, 1.0, 0.0),
+            )
+        )
+    return coupon
+
+
 def rf_bulkhead_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
     """Compare three RF-hole allowances at full and locally thinned walls."""
 

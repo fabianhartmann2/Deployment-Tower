@@ -328,6 +328,7 @@ class PrototypeV4Parameters:
     # Physical part: the top-down PCB mounting axes are 8.0 mm behind the
     # front connector datum, measured toward the ribbon cable.
     hdmi_mount_axis_setback: float = 8.0
+    hdmi_connector_top_above_board: float = 8.0
     hdmi_inner_width: float = 19.0
     hdmi_inner_height: float = 13.0
     hdmi_inner_depth: float = 13.0
@@ -353,6 +354,8 @@ class PrototypeV4Parameters:
     # Physical part: mounting axes are 2.5 mm behind the connector datum.  The
     # PCB mounts against the inside of the rear panel, not to the HDMI shelf.
     usbc_mount_axis_setback: float = 2.5
+    usbc_target_projection: float = 0.5
+    usbc_board_standoff: float = 4.0
     c8_cutout_width: float = 21.0
     c8_cutout_height: float = 12.5
     c8_mount_pitch: float = 29.0

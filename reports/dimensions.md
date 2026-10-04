@@ -108,6 +108,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_mac_button_recess` | 54 x 58 x 12 |
 | `coupon_router_rf_access` | 110 x 3.2 x 46 |
 | `coupon_rear_io_v1` | 180 x 3.2 x 45; Ethernet/HDMI/USB-C/candidate-C8 strip |
+| `coupon_rear_io_mount_v2` | 180 x 31.2 x 50; corrected Ethernet/C8 plus inside USB bosses and top-down HDMI shelf |
 | `coupon_rf_bulkhead_v1` | 78 x 3.2 x 50; six RF trials at two local wall thicknesses |
 | `coupon_logo_magnet_v1` | 16.4 x 110 x 35 design compound; separate blind-pocket receiver and steel-recess panel |
 | `coupon_cap_dovetail_v1` | 56 x 18 x 11 design compound; six separately packed rail/slider bodies |
