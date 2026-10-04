@@ -39,6 +39,17 @@ After the listed transform, the exporter repacks disconnected solids along X wit
 
 Do not start either large cosmetic shell until the dependent gates pass.
 
+### V4 prototype-change gate
+
+Before regenerating the large v4 shell/cap/rear-panel parts, print these four small articles from the owner-supplied October measurements:
+
+1. `coupon_rear_io_v1`: left-to-right Ethernet, HDMI, USB-C, and the new C8 inlet. Confirm the physical connector nose enters without force, both mounting axes align, the visible face seats flat, and the PCB/flange does not rock. The USB-C station deliberately has a small outer opening plus a shallow 12.4 x 5.4 mm inner rebate for its measured reinforcement shell.
+2. `coupon_rf_bulkhead_v1`: columns left-to-right are diameter 6.6/6.8/7.0 mm; the upper row retains the full 3.2 mm wall and the lower row has a 2.0 mm local land. Select both the smallest smooth hole and the thickest wall that permit full washer/nut thread engagement. Test RP-SMA mechanically for Wi-Fi and the separately sourced SMA mobile bulkhead before freezing a shared geometry.
+3. `coupon_logo_magnet_v1`: insert two diameter-6 x 3 mm magnets from the rear of the receiver into the diameter-6.2 x 3.2 mm blind pockets, leaving 0.6 mm cosmetic skin. Bond the intended steel pieces into the two 12 x 12 x 0.6 mm panel recesses and assess seating, rattle, pull-off force, and repeated removal. The final recessed logo receiver provides position; no extra locating ledge or finger notch is planned.
+4. `coupon_cap_dovetail_v1`: the one-, two-, and three-notch pairs provide 0.25, 0.35, and 0.45 mm per-side sliding clearance. Test after cooling in the intended shell/cap material and orientation. Select the smallest variant that slides the full 18 mm without binding yet has no perceptible lift or rattle.
+
+Do not print `upper_shell_v4`, `rear_panel_v4`, `upper_cap_v4`, the new handle, or the repacked router tray until these four results are recorded. The 71 x 36 x 25 mm DC/DC converter is only a reserved envelope until connector locations, mounting method, heat behavior, and electrical role are supplied. The marketplace C8 coupon is a mechanical fit test only and does not approve the inlet, wiring, insulation, protection, materials, or mains use.
+
 1. **Insert-boss coupon.** Establish M3 pilot in every intended material/orientation; inspect insertion, perpendicularity, torque, pull-out, cracking, and breakthrough.
 2. **Hidden-seam M4 insert coupon.** `coupon_m4_seam_insert` was printed in the production orientation; the owner selected the one-notch Ø5.4 mm boss over the Ø5.6 and Ø5.8 alternatives. All M4 insert pilots now use Ø5.4. Repeat only if the insert, material, layer height, wall settings, or conditioning changes; torque/pull-out checks still apply.
 3. **C8 cutout coupon.** First reconfirm the specified part's availability/phase-out status and current drawing. Fit the exact inlet and fixing hardware; inspect flange seating, tolerance, panel thickness, rear access, and shroud envelope. This never authorizes wiring or energization.

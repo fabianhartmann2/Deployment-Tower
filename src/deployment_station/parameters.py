@@ -300,6 +300,72 @@ class LogoParameters:
 
 
 @dataclass(frozen=True)
+class PrototypeV4Parameters:
+    """Measured hardware inputs for the v4 fit-coupon and repack phase."""
+
+    rear_panel_thickness: float = 3.2
+    cutout_allowance: float = 0.20
+    mounting_hole_allowance: float = 0.20
+    ethernet_cutout_width: float = 17.0
+    ethernet_cutout_height: float = 14.0
+    ethernet_mount_pitch: float = 27.6
+    ethernet_mount_hole_diameter: float = 3.2
+    ethernet_inner_width: float = 22.0
+    ethernet_inner_height: float = 23.0
+    ethernet_inner_depth: float = 42.0
+    hdmi_cutout_width: float = 16.0
+    hdmi_cutout_height: float = 6.0
+    hdmi_mount_pitch: float = 27.0
+    hdmi_mount_hole_diameter: float = 3.2
+    hdmi_inner_width: float = 19.0
+    hdmi_inner_height: float = 13.0
+    hdmi_inner_depth: float = 13.0
+    hdmi_required_bend_space: float = 45.0
+    usbc_through_width: float = 10.0
+    usbc_through_height: float = 4.0
+    usbc_shell_width: float = 12.0
+    usbc_shell_height: float = 5.0
+    usbc_shell_depth: float = 1.75
+    usbc_mount_pitch: float = 19.0
+    usbc_slot_width: float = 6.0
+    usbc_slot_height: float = 3.5
+    usbc_board_thickness: float = 1.5
+    usbc_inner_width: float = 17.2
+    usbc_inner_height: float = 9.5
+    usbc_ribbon_width: float = 14.2
+    usbc_ribbon_thickness: float = 2.0
+    c8_cutout_width: float = 21.0
+    c8_cutout_height: float = 12.5
+    c8_mount_pitch: float = 29.0
+    c8_mount_hole_diameter: float = 3.5
+    c8_flange_width: float = 35.5
+    c8_flange_height: float = 15.1
+    c8_flange_depth: float = 3.0
+    c8_inner_width: float = 20.1
+    c8_inner_height: float = 12.0
+    c8_inner_depth: float = 10.0
+    rf_bulkhead_nominal_hole: float = 6.5
+    rf_bulkhead_hex_across_flats: float = 8.0
+    rf_bulkhead_hex_depth: float = 2.1
+    rf_bulkhead_nut_depth: float = 2.0
+    magnet_diameter: float = 6.0
+    magnet_thickness: float = 3.0
+    magnet_pocket_diametral_clearance: float = 0.20
+    magnet_pocket_depth_allowance: float = 0.20
+    magnet_cover_skin: float = 0.60
+    steel_recess_width: float = 12.0
+    steel_recess_height: float = 12.0
+    steel_recess_depth: float = 0.60
+    dovetail_clearances: tuple[float, ...] = (0.25, 0.35, 0.45)
+    dovetail_rail_bottom_width: float = 8.0
+    dovetail_rail_top_width: float = 12.0
+    dovetail_rail_height: float = 4.0
+    dc_converter_width: float = 36.0
+    dc_converter_length: float = 71.0
+    dc_converter_height: float = 25.0
+
+
+@dataclass(frozen=True)
 class FastenerParameters:
     service_screw: str = "M3x8"
     base_screw: str = "M3x14"
@@ -351,6 +417,7 @@ class StationParameters:
     handle: HandleParameters = field(default_factory=HandleParameters)
     wifi: WifiDockParameters = field(default_factory=WifiDockParameters)
     logo: LogoParameters = field(default_factory=LogoParameters)
+    prototype_v4: PrototypeV4Parameters = field(default_factory=PrototypeV4Parameters)
     fasteners: FastenerParameters = field(default_factory=FastenerParameters)
     printer: PrintParameters = field(default_factory=PrintParameters)
 

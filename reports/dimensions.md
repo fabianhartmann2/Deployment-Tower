@@ -107,6 +107,23 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_wifi_dock_v2` | 17.9 x 120 x 42 |
 | `coupon_mac_button_recess` | 54 x 58 x 12 |
 | `coupon_router_rf_access` | 110 x 3.2 x 46 |
+| `coupon_rear_io_v1` | 180 x 3.2 x 45; Ethernet/HDMI/USB-C/candidate-C8 strip |
+| `coupon_rf_bulkhead_v1` | 78 x 3.2 x 50; six RF trials at two local wall thicknesses |
+| `coupon_logo_magnet_v1` | 16.4 x 110 x 35 design compound; separate blind-pocket receiver and steel-recess panel |
+| `coupon_cap_dovetail_v1` | 56 x 18 x 11 design compound; six separately packed rail/slider bodies |
+
+### Pending v4 measured-interface coupon parameters
+
+| Parameter group | Defaults | Meaning |
+| --- | --- | --- |
+| Ethernet opening / pitch / inner body | 17 x 14 / 27.6 / 22 x 23 x 42 | Owner-measured downward-cable adapter; coupon adds 0.20 mm per cutout side and 0.20 mm diametral hole allowance |
+| HDMI opening / pitch / inner body / bend space | 16 x 6 / 27 / 19 x 13 x 13 / 45 | A6-A8T owner measurement; final inner support awaits coupon result |
+| USB-C opening / shell rebate / oval pitch | 10 x 4 / 12 x 5 x 1.75 / 19 | T9B-T8T-NC 20P; two identical production interfaces intended |
+| Candidate C8 opening / pitch / first envelope | 21 x 12.5 / 29 / 35.5 x 15.1 x 3 | Mechanical coupon only; no mains approval implied |
+| RF bulkhead trials | diameter 6.6/6.8/7.0; wall 3.2/2.0 | Select actual SMA-mobile and RP-SMA-Wi-Fi fit/thread stack physically |
+| Logo magnet pocket / skin / steel recess | diameter 6.2 x 3.2 / 0.6 / 12 x 12 x 0.6 | Two magnets in shell only; recessed panel positions itself; no finger notch |
+| Cap dovetail clearances | 0.25/0.35/0.45 per side | One/two/three-notch coupon pairs; final positive lock and load path not yet modeled |
+| DC/DC reserved envelope | 71 x 36 x 25 | 24 V/1 A owner-supplied module; mount, terminals, thermal and electrical role unresolved |
 
 ## Parameter reference
 

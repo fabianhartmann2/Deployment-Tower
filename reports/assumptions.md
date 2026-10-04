@@ -2,6 +2,16 @@
 
 A named CAD parameter is not automatically a verified physical dimension. This report distinguishes imported authority, controlled placeholders, and unresolved hardware.
 
+## October v4 measured-interface inputs
+
+Owner-supplied measurements and photographs now define a coupon-stage Ethernet adapter (17 x 14 opening, 27.6 mm two-hole pitch, 22 x 23 x 42 mm inner body), HDMI A6-A8T module (16 x 6 opening, 27 mm pitch, 19 x 13 x 13 mm body and 45 mm bend allowance), two USB-C T9B-T8T-NC 20P modules (10 x 4 visible opening, 12 x 5 x 1.75 mm reinforcement shell, 19 mm oval-slot pitch, 14.2 x 2 mm ribbon), and a candidate marketplace C8 inlet (21 x 12.5 opening, 29 mm pitch, 35.5 x 15.1 mm first inner envelope). These are physical prototype inputs, not supplier-controlled drawings.
+
+The supplied Wi-Fi pigtail is RP-SMA female to RP-SMA male with a nominal 6.5 mm bulkhead hole, 8 mm hex, and 2.1 mm inner bearing depth. The four mobile connections still require mechanically checked SMA—not RP-SMA—bulkheads/pigtails. The coupon therefore explores diameter and local panel thickness without treating the two connector families as electrically interchangeable.
+
+The Type-15 Wi-Fi antennas are recorded as 170 mm long and 90-degree adjustable. Their exact hinge/base sweep remains unverified because the marketplace pages could not be accessed by the available browser tools. The DC/DC converter is recorded only as a 71 x 36 x 25 mm, 24 V/1 A envelope; connector positions, retention, heat dissipation, electrical purpose, and suitability remain unresolved.
+
+The approved v4 logo direction retains the existing recessed 70 mm receiver as the sole positional feature, removes the finger scallop, places magnets only in blind shell pockets, and uses bonded steel on the removable panel. The approved cap/handle direction uses underside handle screws and a concealed sliding dovetail connection with a separate positive lock; the final load path awaits coupon fit and structural redesign.
+
 ## Evidence hierarchy
 
 | Item | CAD source | Confidence and boundary |

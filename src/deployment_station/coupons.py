@@ -11,6 +11,12 @@ from .handle import handle_mount_coupon
 from .logo_panel import logo_mount_coupon
 from .parameters import DEFAULT, StationParameters
 from .power_compartment import insert_boss_coupon
+from .prototype_v4 import (
+    cap_dovetail_fit_coupon_v1,
+    logo_magnet_fit_coupon_v1,
+    rear_io_fit_coupon_v1,
+    rf_bulkhead_fit_coupon_v1,
+)
 from .rear_panel import c8_cutout_coupon, rear_panel_fit_coupon, router_rf_access_coupon
 from .shell import m4_seam_insert_coupon
 from .wifi_dock import wifi_dock_coupon
@@ -28,5 +34,9 @@ def fit_coupons(p: StationParameters = DEFAULT) -> OrderedDict[str, cq.Workplane
             ("coupon_wifi_dock_v2", wifi_dock_coupon(p)),
             ("coupon_mac_button_recess", mac_button_coupon(p)),
             ("coupon_router_rf_access", router_rf_access_coupon(p)),
+            ("coupon_rear_io_v1", rear_io_fit_coupon_v1(p)),
+            ("coupon_rf_bulkhead_v1", rf_bulkhead_fit_coupon_v1(p)),
+            ("coupon_logo_magnet_v1", logo_magnet_fit_coupon_v1(p)),
+            ("coupon_cap_dovetail_v1", cap_dovetail_fit_coupon_v1(p)),
         )
     )

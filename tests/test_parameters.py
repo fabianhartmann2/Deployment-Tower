@@ -72,6 +72,16 @@ def test_router_tray_matches_physical_retention_feedback():
     assert DEFAULT.fasteners.m3_low_head_recess_depth == 2.2
 
 
+def test_v4_measured_interface_inputs_are_recorded():
+    v = DEFAULT.prototype_v4
+    assert (v.ethernet_cutout_width, v.ethernet_cutout_height, v.ethernet_mount_pitch) == (17.0, 14.0, 27.6)
+    assert (v.hdmi_cutout_width, v.hdmi_cutout_height, v.hdmi_mount_pitch) == (16.0, 6.0, 27.0)
+    assert (v.usbc_through_width, v.usbc_through_height, v.usbc_mount_pitch) == (10.0, 4.0, 19.0)
+    assert (v.c8_cutout_width, v.c8_cutout_height, v.c8_mount_pitch) == (21.0, 12.5, 29.0)
+    assert (v.magnet_diameter, v.magnet_thickness) == (6.0, 3.0)
+    assert v.dovetail_clearances == (0.25, 0.35, 0.45)
+
+
 def test_service_joint_lengths_are_distinct_by_grip_stack():
     fasteners = DEFAULT.fasteners
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)

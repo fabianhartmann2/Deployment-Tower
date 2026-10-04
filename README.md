@@ -66,7 +66,7 @@ The source checks are fail-gated, but aggregate counts and artifact hashes are i
 The current source registry expects **21 printable definitions**: 17 installed assembly parts plus four reusable/non-installed templates. Regeneration writes:
 
 - one printable-part STEP and one print-oriented STL for each registered definition;
-- 9 coupon STEP files and 9 coupon STL files;
+- 13 coupon STEP files and 13 coupon STL files, including four pending-v4 fit articles;
 - `complete_assembly.step`, `exploded_assembly.step`, and `packaging_study.step`;
 - `component_envelopes.step`, containing non-printable references and keep-outs;
 - four deterministic PNG renders; and
@@ -114,7 +114,8 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 | `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, wall-tied upper cover bosses, four verified shell-mount access corridors, exits, and cover |
 | `handle.py` | Six-fastener cap, structural beams, four-screw handle feet/bosses, and mounting coupon |
 | `wifi_dock.py`, `logo_panel.py` | Screw-fastened antenna docks and two-screw replaceable logo panels |
-| `coupons.py` | Nine high-risk physical-fit articles, including a vertical M4 seam-insert calibration coupon |
+| `coupons.py` | High-risk physical-fit articles, including the original calibration set and four measured v4 interface coupons |
+| `prototype_v4.py` | Coupon-stage measured Ethernet/HDMI/USB-C/C8 interfaces, RF bulkhead wall trials, blind logo magnets, and concealed cap dovetails for the pending v4 redesign |
 | `assembly.py`, `render.py` | Part registry, assemblies, non-printable references, and views |
 | `validation.py`, `export.py` | Fail-closed computational checks and reproducible outputs |
 
