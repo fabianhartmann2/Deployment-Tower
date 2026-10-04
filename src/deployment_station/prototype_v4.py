@@ -164,6 +164,10 @@ def rear_io_mount_coupon_v2(
     p: StationParameters = DEFAULT,
     *,
     _hdmi_insert_diameter: float | None = None,
+    _hdmi_shelf_drop: float = 0.0,
+    _hdmi_mount_axis_setback: float | None = None,
+    _usbc_board_standoff: float | None = None,
+    _usbc_inside_reinforcement_rebate: bool = False,
 ) -> cq.Workplane:
     """Revised rear-I/O coupon with the intended inside mounting directions.
 
@@ -227,7 +231,7 @@ def rear_io_mount_coupon_v2(
     hdmi_connector_center_above_board = (
         v.hdmi_connector_top_above_board - v.hdmi_cutout_height / 2.0
     )
-    shelf_top = center_z - hdmi_connector_center_above_board
+    shelf_top = center_z - hdmi_connector_center_above_board - _hdmi_shelf_drop
     # Seven millimetres leaves 1.5 mm solid material below the tested 5.5 mm
     # insert after heat-setting; the pocket must not break through the shelf.
     shelf_thickness = 7.0
@@ -244,11 +248,16 @@ def rear_io_mount_coupon_v2(
         if _hdmi_insert_diameter is None
         else _hdmi_insert_diameter
     )
+    hdmi_mount_axis_setback = (
+        v.hdmi_mount_axis_setback
+        if _hdmi_mount_axis_setback is None
+        else _hdmi_mount_axis_setback
+    )
     for dx in (-v.hdmi_mount_pitch / 2.0, v.hdmi_mount_pitch / 2.0):
         pocket = cylinder_axis(
             hdmi_insert_diameter / 2.0,
             p.fasteners.insert_depth,
-            (x + dx, v.hdmi_mount_axis_setback, shelf_top + 0.01),
+            (x + dx, hdmi_mount_axis_setback, shelf_top + 0.01),
             (0.0, 0.0, -1.0),
         )
         coupon = coupon.cut(pocket)
@@ -269,6 +278,19 @@ def rear_io_mount_coupon_v2(
             cut_d,
         )
     )
+    reinforcement_depth = (
+        v.usbc_reinforcement_depth_selected
+        if _usbc_inside_reinforcement_rebate
+        else v.usbc_shell_depth
+    )
+    reinforcement_cut_depth = reinforcement_depth + v.cutout_allowance
+    if _usbc_inside_reinforcement_rebate:
+        reinforcement_cut_depth += 0.2
+    reinforcement_y0 = (
+        panel_t - reinforcement_depth - v.cutout_allowance
+        if _usbc_inside_reinforcement_rebate
+        else -0.2
+    )
     coupon = coupon.cut(
         _rounded_cutout_xz(
             v.usbc_shell_width + 2.0 * v.cutout_allowance,
@@ -276,16 +298,21 @@ def rear_io_mount_coupon_v2(
             (v.usbc_shell_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
             x,
             center_z,
-            -0.2,
-            v.usbc_shell_depth + v.cutout_allowance,
+            reinforcement_y0,
+            reinforcement_cut_depth,
         )
     )
-    boss_face_y = panel_t + v.usbc_board_standoff
+    usbc_board_standoff = (
+        v.usbc_board_standoff
+        if _usbc_board_standoff is None
+        else _usbc_board_standoff
+    )
+    boss_face_y = panel_t + usbc_board_standoff
     for dx in (-v.usbc_mount_pitch / 2.0, v.usbc_mount_pitch / 2.0):
         boss_x = x + dx
         boss = cylinder_axis(
             p.fasteners.m3_boss_diameter / 2.0,
-            v.usbc_board_standoff,
+            usbc_board_standoff,
             (boss_x, panel_t, center_z),
             (0.0, 1.0, 0.0),
         )
@@ -330,6 +357,20 @@ def rear_io_mount_coupon_v3(p: StationParameters = DEFAULT) -> cq.Workplane:
     return rear_io_mount_coupon_v2(
         p,
         _hdmi_insert_diameter=p.fasteners.m3_insert_hole_diameter,
+    )
+
+
+def rear_io_mount_coupon_v4(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """V3 with physically corrected HDMI access and USB reinforcement space."""
+
+    v = p.prototype_v4
+    return rear_io_mount_coupon_v2(
+        p,
+        _hdmi_insert_diameter=p.fasteners.m3_insert_hole_diameter,
+        _hdmi_shelf_drop=v.hdmi_shelf_drop_selected,
+        _hdmi_mount_axis_setback=v.hdmi_mount_axis_setback_selected,
+        _usbc_board_standoff=v.usbc_board_standoff_selected,
+        _usbc_inside_reinforcement_rebate=True,
     )
 
 

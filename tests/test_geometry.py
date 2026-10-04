@@ -110,6 +110,7 @@ def test_all_required_coupons_exist_and_are_valid():
         "coupon_rear_io_v1",
         "coupon_rear_io_mount_v2",
         "coupon_rear_io_mount_v3",
+        "coupon_rear_io_mount_v4",
         "coupon_rf_bulkhead_v1",
         "coupon_logo_magnet_v1",
         "coupon_logo_magnet_v2",
@@ -124,6 +125,7 @@ def test_v4_fit_coupons_match_the_release_trial_layout():
     assert bbox_dimensions(coupons["coupon_rear_io_v1"]) == pytest.approx((180.0, 3.2, 45.0), abs=0.01)
     assert bbox_dimensions(coupons["coupon_rear_io_mount_v2"]) == pytest.approx((180.0, 31.2, 50.0), abs=0.01)
     assert bbox_dimensions(coupons["coupon_rear_io_mount_v3"]) == pytest.approx((180.0, 31.2, 50.0), abs=0.01)
+    assert bbox_dimensions(coupons["coupon_rear_io_mount_v4"]) == pytest.approx((180.0, 31.2, 50.0), abs=0.01)
     assert bbox_dimensions(coupons["coupon_rf_bulkhead_v1"]) == pytest.approx((78.0, 3.2, 50.0), abs=0.01)
     assert len(coupons["coupon_logo_magnet_v1"].solids().vals()) == 2
     assert len(coupons["coupon_logo_magnet_v2"].solids().vals()) == 2

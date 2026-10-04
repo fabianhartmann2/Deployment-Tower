@@ -110,6 +110,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_rear_io_v1` | 180 x 3.2 x 45; Ethernet/HDMI/USB-C/candidate-C8 strip |
 | `coupon_rear_io_mount_v2` | 180 x 31.2 x 50; corrected Ethernet/C8 plus inside USB bosses and top-down HDMI shelf |
 | `coupon_rear_io_mount_v3` | 180 x 31.2 x 50; v2 mounting layout with M3 rather than M4 HDMI insert pilots |
+| `coupon_rear_io_mount_v4` | 180 x 31.2 x 50; HDMI shelf -1 mm/axes 9 mm, USB 6 mm bosses and inside 12.4 x 5.4 x 2.2 reinforcement rebate |
 | `coupon_rf_bulkhead_v1` | 78 x 3.2 x 50; six RF trials at two local wall thicknesses |
 | `coupon_logo_magnet_v1` | 16.4 x 110 x 35 design compound; separate blind-pocket receiver and steel-recess panel |
 | `coupon_logo_magnet_v2` | 16.4 x 110 x 35 design compound; 3 mm shell magnets opposed by 1.5 mm panel magnets |
