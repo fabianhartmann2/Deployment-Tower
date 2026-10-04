@@ -80,6 +80,9 @@ def test_v4_measured_interface_inputs_are_recorded():
     assert (v.c8_cutout_width, v.c8_cutout_height, v.c8_mount_pitch) == (21.0, 12.5, 29.0)
     assert (v.magnet_diameter, v.magnet_thickness) == (6.0, 3.0)
     assert v.dovetail_clearances == (0.25, 0.35, 0.45)
+    assert v.panel_magnet_thickness == 1.5
+    assert v.rf_bulkhead_hole_selected == 6.6
+    assert v.dovetail_clearances_v2 == (0.05, 0.10, 0.15)
 
 
 def test_v4_rear_io_coupon_feedback_is_recorded_without_mutating_v1():

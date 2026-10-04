@@ -10,7 +10,7 @@ The supplied Wi-Fi pigtail is RP-SMA female to RP-SMA male with a nominal 6.5 mm
 
 The Type-15 Wi-Fi antennas are recorded as 170 mm long and 90-degree adjustable. Their exact hinge/base sweep remains unverified because the marketplace pages could not be accessed by the available browser tools. The DC/DC converter is recorded only as a 71 x 36 x 25 mm, 24 V/1 A envelope; connector positions, retention, heat dissipation, electrical purpose, and suitability remain unresolved.
 
-The approved v4 logo direction retains the existing recessed 70 mm receiver as the sole positional feature, removes the finger scallop, places magnets only in blind shell pockets, and uses bonded steel on the removable panel. The approved cap/handle direction uses underside handle screws and a concealed sliding dovetail connection with a separate positive lock; the final load path awaits coupon fit and structural redesign.
+The approved v4 logo direction retains the existing recessed 70 mm receiver as the sole positional feature and removes the finger scallop. The original shell-magnet/bonded-steel concept passed pocket fit but is superseded for testing by 3 mm shell magnets opposed by 1.5 mm magnets in the removable panel; pull force, polarity, adhesive, and cycles remain pending. The approved cap/handle direction uses underside handle screws and a concealed sliding dovetail connection with a separate positive lock; the original 0.25 mm tightest coupon was still loose, so 0.05/0.10/0.15 mm trials now gate the final load path and structural redesign.
 
 ## Evidence hierarchy
 

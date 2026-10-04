@@ -553,6 +553,20 @@
     "sha256": "153882cd1235e6c504f230317b6b1bb6c64b08adb49ffe21f890d1c130426e9a"
   },
   {
+    "name": "coupon_rear_io_mount_v3",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_rear_io_mount_v3.step",
+    "bytes": 246172,
+    "sha256": "dfac249fada2d964c08b774e6ec750eb366db099fa26225390eba9ef2e8ef8ab"
+  },
+  {
+    "name": "coupon_rear_io_mount_v3",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_rear_io_mount_v3.stl",
+    "bytes": 346684,
+    "sha256": "a26a174e24addce842b295a3c16e58cf396b16d782d6c0a3c96f6e13f864f286"
+  },
+  {
     "name": "coupon_rf_bulkhead_v1",
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rf_bulkhead_v1.step",
@@ -581,6 +595,20 @@
     "sha256": "9db14de1970437e1ec012e3bc0f496c4a69bb962739d21d87cfbef370057eea0"
   },
   {
+    "name": "coupon_logo_magnet_v2",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_logo_magnet_v2.step",
+    "bytes": 77864,
+    "sha256": "e294935014acb58f2d2d052f7c64029050b8e2d25a2fb2bfe674494c714e6b62"
+  },
+  {
+    "name": "coupon_logo_magnet_v2",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_logo_magnet_v2.stl",
+    "bytes": 128484,
+    "sha256": "6511bec05efa8bc81d0fd4dfa19f8397c70ef969731aa24f58f6458518dc2abd"
+  },
+  {
     "name": "coupon_cap_dovetail_v1",
     "kind": "coupon STEP",
     "path": "exports/step/coupon_cap_dovetail_v1.step",
@@ -593,6 +621,20 @@
     "path": "exports/stl/coupon_cap_dovetail_v1.stl",
     "bytes": 14884,
     "sha256": "e546c5d135b06dbf39f2e8e4af442c7daa04ed683640979ce19c6769f870e56d"
+  },
+  {
+    "name": "coupon_cap_dovetail_v2",
+    "kind": "coupon STEP",
+    "path": "exports/step/coupon_cap_dovetail_v2.step",
+    "bytes": 305409,
+    "sha256": "2ee6321885dbcc4d45508f9bdad4082ddcbd21cd176878d1584e6e63ef04ac36"
+  },
+  {
+    "name": "coupon_cap_dovetail_v2",
+    "kind": "coupon STL",
+    "path": "exports/stl/coupon_cap_dovetail_v2.stl",
+    "bytes": 14884,
+    "sha256": "daf477de84fd13a29a83d3819ff701713a12f947fba05aae7d1078808252a251"
   },
   {
     "name": "complete_assembly",

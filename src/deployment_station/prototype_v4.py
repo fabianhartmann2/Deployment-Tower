@@ -160,7 +160,11 @@ def rear_io_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
     return coupon
 
 
-def rear_io_mount_coupon_v2(p: StationParameters = DEFAULT) -> cq.Workplane:
+def rear_io_mount_coupon_v2(
+    p: StationParameters = DEFAULT,
+    *,
+    _hdmi_insert_diameter: float | None = None,
+) -> cq.Workplane:
     """Revised rear-I/O coupon with the intended inside mounting directions.
 
     The outside face is at Y=0 and the enclosure interior is +Y.  Ethernet and
@@ -206,8 +210,8 @@ def rear_io_mount_coupon_v2(p: StationParameters = DEFAULT) -> cq.Workplane:
 
     # HDMI: the PCB lies horizontally.  Its underside rests 5.0 mm below the
     # opening centre because the physical connector spans Z=2...8 mm above the
-    # PCB underside.  Two blind Ø5.4 M4 insert pockets sit 8.0 mm behind the
-    # connector face; the screws enter vertically from above through the PCB.
+    # PCB underside.  V2 preserves the originally generated M4 insert pockets;
+    # v3 calls the same construction with the subsequently selected M3 pilot.
     x = centres[1]
     coupon = coupon.cut(
         _rounded_cutout_xz(
@@ -235,9 +239,14 @@ def rear_io_mount_coupon_v2(p: StationParameters = DEFAULT) -> cq.Workplane:
         (x, panel_t + shelf_depth / 2.0, shelf_top - shelf_thickness / 2.0),
     )
     coupon = coupon.union(shelf)
+    hdmi_insert_diameter = (
+        p.fasteners.m4_insert_hole_diameter
+        if _hdmi_insert_diameter is None
+        else _hdmi_insert_diameter
+    )
     for dx in (-v.hdmi_mount_pitch / 2.0, v.hdmi_mount_pitch / 2.0):
         pocket = cylinder_axis(
-            p.fasteners.m4_insert_hole_diameter / 2.0,
+            hdmi_insert_diameter / 2.0,
             p.fasteners.insert_depth,
             (x + dx, v.hdmi_mount_axis_setback, shelf_top + 0.01),
             (0.0, 0.0, -1.0),
@@ -315,6 +324,15 @@ def rear_io_mount_coupon_v2(p: StationParameters = DEFAULT) -> cq.Workplane:
     return coupon
 
 
+def rear_io_mount_coupon_v3(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """V2 mounting geometry with owner-selected M3 HDMI fasteners."""
+
+    return rear_io_mount_coupon_v2(
+        p,
+        _hdmi_insert_diameter=p.fasteners.m3_insert_hole_diameter,
+    )
+
+
 def rf_bulkhead_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
     """Compare three RF-hole allowances at full and locally thinned walls."""
 
@@ -361,6 +379,35 @@ def logo_magnet_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
     return receiver.union(panel)
 
 
+def logo_magnet_fit_coupon_v2(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """Three-millimetre shell magnets opposed by 1.5 mm panel magnets."""
+
+    v = p.prototype_v4
+    receiver_t = v.magnet_thickness + v.magnet_pocket_depth_allowance + v.magnet_cover_skin
+    receiver = rounded_panel_yz(50.0, 35.0, receiver_t, 4.0, 0.0, -30.0, 17.5, 1)
+    panel = rounded_panel_yz(50.0, 35.0, p.logo.thickness, 4.0, 14.0, 30.0, 17.5, 1)
+    pocket_d = v.magnet_diameter + v.magnet_pocket_diametral_clearance
+    shell_depth = v.magnet_thickness + v.magnet_pocket_depth_allowance
+    panel_depth = v.panel_magnet_thickness + v.magnet_pocket_depth_allowance
+    for y in (-42.0, -18.0):
+        pocket = cylinder_axis(
+            pocket_d / 2.0,
+            shell_depth + 0.1,
+            (-0.1, y, 17.5),
+            (1.0, 0.0, 0.0),
+        )
+        receiver = receiver.cut(pocket)
+    for y in (18.0, 42.0):
+        pocket = cylinder_axis(
+            pocket_d / 2.0,
+            panel_depth + 0.1,
+            (13.9, y, 17.5),
+            (1.0, 0.0, 0.0),
+        )
+        panel = panel.cut(pocket)
+    return receiver.union(panel)
+
+
 def _dovetail_profile(
     bottom_width: float,
     top_width: float,
@@ -377,13 +424,14 @@ def _dovetail_profile(
     return cq.Workplane("XZ").polyline(points).close().extrude(length, both=True)
 
 
-def cap_dovetail_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
-    """Three sliding-cap dovetail clearances: 0.25, 0.35, and 0.45 mm."""
-
+def _cap_dovetail_fit_coupon(
+    clearances: tuple[float, ...],
+    p: StationParameters,
+) -> cq.Workplane:
     v = p.prototype_v4
     pieces: list[cq.Workplane] = []
     length = 18.0
-    for index, clearance in enumerate(v.dovetail_clearances, start=1):
+    for index, clearance in enumerate(clearances, start=1):
         base = box_at(22.0, length, 3.0, (0.0, 0.0, 1.5))
         rail = _dovetail_profile(
             v.dovetail_rail_bottom_width,
@@ -408,3 +456,15 @@ def cap_dovetail_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
             slider = slider.cut(box_at(1.2, 2.0, 1.2, (34.0 + notch_x, -length / 2.0 + 0.5, 3.6)))
         pieces.extend((rail_piece, slider))
     return compound(pieces)
+
+
+def cap_dovetail_fit_coupon_v1(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """Three sliding-cap dovetail clearances: 0.25, 0.35, and 0.45 mm."""
+
+    return _cap_dovetail_fit_coupon(p.prototype_v4.dovetail_clearances, p)
+
+
+def cap_dovetail_fit_coupon_v2(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """Tighter sliding-cap clearances: 0.05, 0.10, and 0.15 mm."""
+
+    return _cap_dovetail_fit_coupon(p.prototype_v4.dovetail_clearances_v2, p)

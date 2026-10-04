@@ -369,11 +369,15 @@ class PrototypeV4Parameters:
     c8_inner_height: float = 12.0
     c8_inner_depth: float = 10.0
     rf_bulkhead_nominal_hole: float = 6.5
+    # Physical RF coupon: the one-notch diameter was reported as the best fit.
+    # The full-wall versus locally thinned row still needs to be identified.
+    rf_bulkhead_hole_selected: float = 6.6
     rf_bulkhead_hex_across_flats: float = 8.0
     rf_bulkhead_hex_depth: float = 2.1
     rf_bulkhead_nut_depth: float = 2.0
     magnet_diameter: float = 6.0
     magnet_thickness: float = 3.0
+    panel_magnet_thickness: float = 1.5
     magnet_pocket_diametral_clearance: float = 0.20
     magnet_pocket_depth_allowance: float = 0.20
     magnet_cover_skin: float = 0.60
@@ -381,6 +385,9 @@ class PrototypeV4Parameters:
     steel_recess_height: float = 12.0
     steel_recess_depth: float = 0.60
     dovetail_clearances: tuple[float, ...] = (0.25, 0.35, 0.45)
+    # V1's tightest 0.25 mm-per-side pair was still loose in the physical
+    # print, so v2 brackets the likely fit much more closely.
+    dovetail_clearances_v2: tuple[float, ...] = (0.05, 0.10, 0.15)
     dovetail_rail_bottom_width: float = 8.0
     dovetail_rail_top_width: float = 12.0
     dovetail_rail_height: float = 4.0

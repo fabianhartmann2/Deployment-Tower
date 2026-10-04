@@ -420,6 +420,16 @@
     "detail": "valid shape"
   },
   {
+    "name": "coupon build volume: coupon_rear_io_mount_v3",
+    "status": "PASS",
+    "detail": "bounding box 180.0 x 31.2 x 50.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_rear_io_mount_v3",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
     "name": "coupon build volume: coupon_rf_bulkhead_v1",
     "status": "PASS",
     "detail": "bounding box 78.0 x 3.2 x 50.0 mm"
@@ -440,12 +450,32 @@
     "detail": "valid shape"
   },
   {
+    "name": "coupon build volume: coupon_logo_magnet_v2",
+    "status": "PASS",
+    "detail": "bounding box 16.4 x 110.0 x 35.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_logo_magnet_v2",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
     "name": "coupon build volume: coupon_cap_dovetail_v1",
     "status": "PASS",
     "detail": "bounding box 56.0 x 18.0 x 11.0 mm"
   },
   {
     "name": "coupon validity: coupon_cap_dovetail_v1",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_cap_dovetail_v2",
+    "status": "PASS",
+    "detail": "bounding box 56.0 x 18.0 x 11.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_cap_dovetail_v2",
     "status": "PASS",
     "detail": "valid shape"
   },
@@ -1435,6 +1465,11 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
+    "name": "watertight STL: coupon_cap_dovetail_v2.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
     "name": "watertight STL: coupon_handle_mount.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
@@ -1446,6 +1481,11 @@
   },
   {
     "name": "watertight STL: coupon_logo_magnet_v1.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_logo_magnet_v2.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1466,6 +1506,11 @@
   },
   {
     "name": "watertight STL: coupon_rear_io_mount_v2.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: coupon_rear_io_mount_v3.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1610,6 +1655,11 @@
     "detail": "6 independently grounded watertight component(s); Z minima [0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000] mm"
   },
   {
+    "name": "grounded STL components: coupon_cap_dovetail_v2.stl",
+    "status": "PASS",
+    "detail": "6 independently grounded watertight component(s); Z minima [0.00000, 0.00000, 0.00000, 0.00000, 0.00000, 0.00000] mm"
+  },
+  {
     "name": "grounded STL components: coupon_handle_mount.stl",
     "status": "PASS",
     "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
@@ -1621,6 +1671,11 @@
   },
   {
     "name": "grounded STL components: coupon_logo_magnet_v1.stl",
+    "status": "PASS",
+    "detail": "2 independently grounded watertight component(s); Z minima [0.00000, -0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_logo_magnet_v2.stl",
     "status": "PASS",
     "detail": "2 independently grounded watertight component(s); Z minima [0.00000, -0.00000] mm"
   },
@@ -1641,6 +1696,11 @@
   },
   {
     "name": "grounded STL components: coupon_rear_io_mount_v2.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: coupon_rear_io_mount_v3.stl",
     "status": "PASS",
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
