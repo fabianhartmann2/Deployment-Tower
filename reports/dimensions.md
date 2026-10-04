@@ -128,7 +128,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Candidate C8 opening / pitch / first envelope | 21 x 12.5 / 29 / 35.5 x 15.1 x 3 | Mechanical coupon only; no mains approval implied |
 | RF bulkhead trials | diameter 6.6/6.8/7.0; wall 3.2/2.0 | Select actual SMA-mobile and RP-SMA-Wi-Fi fit/thread stack physically |
 | Logo magnet pocket / skins | shell Ø6.2 x 3.2 behind 0.6; panel Ø6.2 x 1.7 leaving about 0.7 | Magnet-to-magnet v2 trial; recessed panel positions itself; no finger notch |
-| Cap dovetail clearances | v1 0.25/0.35/0.45; v2 0.05/0.10/0.15 per side | One/two/three-notch coupon pairs; final positive lock and load path not yet modeled |
+| Cap dovetail clearance | v1 0.25/0.35/0.45; v2 0.05/0.10/0.15 per side; **selected 0.10 per side** | Two-notch pair selected; 0.05 rejected as too tight for the longer production rail; final positive lock and load path not yet modeled |
 | DC/DC reserved envelope | 71 x 36 x 25 | 24 V/1 A owner-supplied module; mount, terminals, thermal and electrical role unresolved |
 
 ## Parameter reference

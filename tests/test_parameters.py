@@ -86,6 +86,7 @@ def test_v4_measured_interface_inputs_are_recorded():
     assert v.power_compartment_target_x_sign == 1.0
     assert v.power_compartment_relocation_required is True
     assert v.dovetail_clearances_v2 == (0.05, 0.10, 0.15)
+    assert v.dovetail_clearance_selected == 0.10
 
 
 def test_v4_rear_io_coupon_feedback_is_recorded_without_mutating_v1():

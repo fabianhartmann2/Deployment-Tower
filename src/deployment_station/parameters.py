@@ -406,6 +406,10 @@ class PrototypeV4Parameters:
     # V1's tightest 0.25 mm-per-side pair was still loose in the physical
     # print, so v2 brackets the likely fit much more closely.
     dovetail_clearances_v2: tuple[float, ...] = (0.05, 0.10, 0.15)
+    # Physical v2 coupon: two-notch 0.10 mm per side was selected.  The
+    # one-notch 0.05 mm pair already binds over the short coupon and would be
+    # too tight over the full cap engagement length.
+    dovetail_clearance_selected: float = 0.10
     dovetail_rail_bottom_width: float = 8.0
     dovetail_rail_top_width: float = 12.0
     dovetail_rail_height: float = 4.0
