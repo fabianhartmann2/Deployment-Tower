@@ -370,8 +370,15 @@ class PrototypeV4Parameters:
     c8_inner_depth: float = 10.0
     rf_bulkhead_nominal_hole: float = 6.5
     # Physical RF coupon: the one-notch diameter was reported as the best fit.
-    # The full-wall versus locally thinned row still needs to be identified.
+    # The owner subsequently selected the locally thinned 2.0 mm wall row.
     rf_bulkhead_hole_selected: float = 6.6
+    rf_bulkhead_wall_selected: float = 2.0
+    # The HDMI/USB-C cable paths are fixed by the Mac mini.  Their physical
+    # leads collide with the current -X power compartment, so the complete
+    # compartment, C8 island/tunnel, and mains hardware must move to +X during
+    # the later v4 repack; the low-voltage connector routes remain fixed.
+    power_compartment_target_x_sign: float = 1.0
+    power_compartment_relocation_required: bool = True
     rf_bulkhead_hex_across_flats: float = 8.0
     rf_bulkhead_hex_depth: float = 2.1
     rf_bulkhead_nut_depth: float = 2.0

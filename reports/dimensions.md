@@ -33,8 +33,8 @@ The generated fixed-envelope result is `165.00 x 165.00 x 280.00`. Non-default p
 | --- | ---: | ---: | --- |
 | Mac mini placeholder | `(0,-8,41)` | 127 x 127 x 50 overall | X `-63.5..63.5`; Y `-71.5..55.5`; Z `16..66`; 42 mm retained square body above support plane plus 8 mm central underside drop |
 | Mac support plane | `Z=24` | — | 10 above nominal base top `Z=14` |
-| APV case placeholder | `(-35,8,103.55)` | 57 X x 84 Y x 29.5 Z | X `-63.5..-6.5`; Y `-34..50`; Z `88.8..118.3` |
-| APV/mains box | centre `(-35,8,105)` | nominal 72 x 120 x 44 | X `-71..1`; Y `-52..68`; Z `83..127`; fixed rear island/tunnel extends overall design bbox depth to 134.5 |
+| APV case placeholder | current/withdrawn `(-35,8,103.55)` | 57 X x 84 Y x 29.5 Z | Physical HDMI/USB cable collision requires the complete power assembly to move to the opposite +X side during the later v4 repack |
+| APV/mains box | current/withdrawn centre `(-35,8,105)` | nominal 72 x 120 x 44 | Present X `-71..1`; the box, C8 island/tunnel, cover, mounts, exits, and mains envelopes must be repacked together at +X while low-voltage cable routes remain fixed |
 | Low-voltage lane | `(48,0,116)` | 34 x 122 x 76 | X `31..65`; Y `-61..61`; Z `78..154` |
 | Mac-AC reserved corridor | gland datum `(-55,-33.5,83)` toward provisional Mac AC | stepped 6 wide packaging solid | Approximate bbox X `-75.3..42`; Y `-36.5..68.5`; Z `38..83`; side run remains above the extended cradle-release rail; no physical conduit or electrical release implied |
 | Router tray datum | `Z=151` | 3 thick plate | Shell-supported fasteners; guide/retainer geometry extends above the plate |
