@@ -82,6 +82,16 @@ def test_v4_measured_interface_inputs_are_recorded():
     assert v.dovetail_clearances == (0.25, 0.35, 0.45)
 
 
+def test_v4_rear_io_coupon_feedback_is_recorded_without_mutating_v1():
+    v = DEFAULT.prototype_v4
+    assert v.ethernet_mount_z_offset_selected == -1.0
+    assert v.hdmi_mount_hole_diameter == 3.2
+    assert v.hdmi_mount_hole_diameter_selected == 4.1
+    assert v.usbc_coupon_projection_measured == 4.5
+    assert v.c8_mount_pitch == 29.0
+    assert v.c8_mount_pitch_selected == 30.0
+
+
 def test_service_joint_lengths_are_distinct_by_grip_stack():
     fasteners = DEFAULT.fasteners
     assert (fasteners.base_screw, fasteners.base_screw_length) == ("M3x14", 14.0)

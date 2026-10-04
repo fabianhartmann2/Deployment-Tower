@@ -310,6 +310,11 @@ class PrototypeV4Parameters:
     ethernet_cutout_height: float = 14.0
     ethernet_mount_pitch: float = 27.6
     ethernet_mount_hole_diameter: float = 3.2
+    # Rear-I/O coupon v1 physical trial: with the RJ45 latch at the bottom,
+    # both mounting holes need to move 1.0 mm downward relative to the cutout.
+    # Kept separate from the v1 inputs so that coupon_rear_io_v1 remains an
+    # immutable record of the part that was actually printed.
+    ethernet_mount_z_offset_selected: float = -1.0
     ethernet_inner_width: float = 22.0
     ethernet_inner_height: float = 23.0
     ethernet_inner_depth: float = 42.0
@@ -317,6 +322,9 @@ class PrototypeV4Parameters:
     hdmi_cutout_height: float = 6.0
     hdmi_mount_pitch: float = 27.0
     hdmi_mount_hole_diameter: float = 3.2
+    # The v1 opening fitted, but the physical part requires at least Ø4.0 mm.
+    # Ø4.1 mm is selected for the internal-carrier revision.
+    hdmi_mount_hole_diameter_selected: float = 4.1
     hdmi_inner_width: float = 19.0
     hdmi_inner_height: float = 13.0
     hdmi_inner_depth: float = 13.0
@@ -334,10 +342,17 @@ class PrototypeV4Parameters:
     usbc_inner_height: float = 9.5
     usbc_ribbon_width: float = 14.2
     usbc_ribbon_thickness: float = 2.0
+    # Coupon v1 placed the carrier PCB against the test wall and the connector
+    # nose projected 4.5 mm.  The production concept instead mounts the PCB to
+    # an internal carrier; its final fore/aft datum remains a measured-gated
+    # decision rather than silently changing the v1 coupon.
+    usbc_coupon_projection_measured: float = 4.5
     c8_cutout_width: float = 21.0
     c8_cutout_height: float = 12.5
     c8_mount_pitch: float = 29.0
     c8_mount_hole_diameter: float = 3.5
+    # Coupon v1 physical trial requested 1.0 mm more centre-to-centre spacing.
+    c8_mount_pitch_selected: float = 30.0
     c8_flange_width: float = 35.5
     c8_flange_height: float = 15.1
     c8_flange_depth: float = 3.0
