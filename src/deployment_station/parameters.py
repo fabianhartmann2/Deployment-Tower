@@ -325,6 +325,9 @@ class PrototypeV4Parameters:
     # The v1 opening fitted, but the physical part requires at least Ø4.0 mm.
     # Ø4.1 mm is selected for the internal-carrier revision.
     hdmi_mount_hole_diameter_selected: float = 4.1
+    # Physical part: the top-down PCB mounting axes are 8.0 mm behind the
+    # front connector datum, measured toward the ribbon cable.
+    hdmi_mount_axis_setback: float = 8.0
     hdmi_inner_width: float = 19.0
     hdmi_inner_height: float = 13.0
     hdmi_inner_depth: float = 13.0
@@ -347,6 +350,9 @@ class PrototypeV4Parameters:
     # an internal carrier; its final fore/aft datum remains a measured-gated
     # decision rather than silently changing the v1 coupon.
     usbc_coupon_projection_measured: float = 4.5
+    # Physical part: mounting axes are 2.5 mm behind the connector datum.  The
+    # PCB mounts against the inside of the rear panel, not to the HDMI shelf.
+    usbc_mount_axis_setback: float = 2.5
     c8_cutout_width: float = 21.0
     c8_cutout_height: float = 12.5
     c8_mount_pitch: float = 29.0
