@@ -98,12 +98,15 @@ def test_v4_rear_io_coupon_feedback_is_recorded_without_mutating_v1():
     assert v.hdmi_connector_top_above_board == 8.0
     assert v.hdmi_shelf_drop_selected == 1.0
     assert v.hdmi_mount_axis_setback_selected == 9.0
+    assert v.hdmi_shelf_depth_selected == 13.0
     assert v.usbc_coupon_projection_measured == 4.5
     assert v.usbc_mount_axis_setback == 2.5
     assert v.usbc_target_projection == 0.5
     assert v.usbc_board_standoff == 4.0
     assert v.usbc_board_standoff_selected == 6.0
     assert v.usbc_reinforcement_depth_selected == 2.0
+    assert v.usbc_reinforcement_pocket_width_selected == 13.0
+    assert v.usbc_reinforcement_pocket_height_selected == 6.0
     assert v.usbc_mount_bridge_width == 28.0
     assert v.usbc_mount_bridge_height == 12.0
     assert v.c8_mount_pitch == 29.0

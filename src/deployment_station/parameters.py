@@ -333,6 +333,7 @@ class PrototypeV4Parameters:
     # and move both M3 axes 1.0 mm farther into the enclosure for tool access.
     hdmi_shelf_drop_selected: float = 1.0
     hdmi_mount_axis_setback_selected: float = 9.0
+    hdmi_shelf_depth_selected: float = 13.0
     hdmi_inner_width: float = 19.0
     hdmi_inner_height: float = 13.0
     hdmi_inner_depth: float = 13.0
@@ -365,6 +366,8 @@ class PrototypeV4Parameters:
     # dedicated rebate cut from the panel's inside face.
     usbc_board_standoff_selected: float = 6.0
     usbc_reinforcement_depth_selected: float = 2.0
+    usbc_reinforcement_pocket_width_selected: float = 13.0
+    usbc_reinforcement_pocket_height_selected: float = 6.0
     usbc_mount_bridge_width: float = 28.0
     usbc_mount_bridge_height: float = 12.0
     c8_cutout_width: float = 21.0

@@ -166,8 +166,11 @@ def rear_io_mount_coupon_v2(
     _hdmi_insert_diameter: float | None = None,
     _hdmi_shelf_drop: float = 0.0,
     _hdmi_mount_axis_setback: float | None = None,
+    _hdmi_shelf_depth: float | None = None,
     _usbc_board_standoff: float | None = None,
     _usbc_reinforcement_rebate_location: str = "exterior",
+    _usbc_reinforcement_pocket_width: float | None = None,
+    _usbc_reinforcement_pocket_height: float | None = None,
 ) -> cq.Workplane:
     """Revised rear-I/O coupon with the intended inside mounting directions.
 
@@ -235,7 +238,7 @@ def rear_io_mount_coupon_v2(
     # Seven millimetres leaves 1.5 mm solid material below the tested 5.5 mm
     # insert after heat-setting; the pocket must not break through the shelf.
     shelf_thickness = 7.0
-    shelf_depth = 28.0
+    shelf_depth = 28.0 if _hdmi_shelf_depth is None else _hdmi_shelf_depth
     shelf = box_at(
         42.0,
         shelf_depth,
@@ -328,11 +331,21 @@ def rear_io_mount_coupon_v2(
             )
         )
         reinforcement_depth = v.usbc_reinforcement_depth_selected + v.cutout_allowance
+        reinforcement_width = (
+            v.usbc_shell_width + 2.0 * v.cutout_allowance
+            if _usbc_reinforcement_pocket_width is None
+            else _usbc_reinforcement_pocket_width
+        )
+        reinforcement_height = (
+            v.usbc_shell_height + 2.0 * v.cutout_allowance
+            if _usbc_reinforcement_pocket_height is None
+            else _usbc_reinforcement_pocket_height
+        )
         coupon = coupon.cut(
             _rounded_cutout_xz(
-                v.usbc_shell_width + 2.0 * v.cutout_allowance,
-                v.usbc_shell_height + 2.0 * v.cutout_allowance,
-                (v.usbc_shell_height + 2.0 * v.cutout_allowance) / 2.0 - 0.1,
+                reinforcement_width,
+                reinforcement_height,
+                reinforcement_height / 2.0 - 0.1,
                 x,
                 center_z,
                 boss_face_y - reinforcement_depth,
@@ -416,6 +429,23 @@ def rear_io_mount_coupon_v5(p: StationParameters = DEFAULT) -> cq.Workplane:
         _hdmi_mount_axis_setback=v.hdmi_mount_axis_setback_selected,
         _usbc_board_standoff=v.usbc_board_standoff_selected,
         _usbc_reinforcement_rebate_location="boss_face",
+    )
+
+
+def rear_io_mount_coupon_v6(p: StationParameters = DEFAULT) -> cq.Workplane:
+    """V5 with the selected compact HDMI shelf and larger USB pocket."""
+
+    v = p.prototype_v4
+    return rear_io_mount_coupon_v2(
+        p,
+        _hdmi_insert_diameter=p.fasteners.m3_insert_hole_diameter,
+        _hdmi_shelf_drop=v.hdmi_shelf_drop_selected,
+        _hdmi_mount_axis_setback=v.hdmi_mount_axis_setback_selected,
+        _hdmi_shelf_depth=v.hdmi_shelf_depth_selected,
+        _usbc_board_standoff=v.usbc_board_standoff_selected,
+        _usbc_reinforcement_rebate_location="boss_face",
+        _usbc_reinforcement_pocket_width=v.usbc_reinforcement_pocket_width_selected,
+        _usbc_reinforcement_pocket_height=v.usbc_reinforcement_pocket_height_selected,
     )
 
 

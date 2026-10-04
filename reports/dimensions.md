@@ -112,6 +112,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_rear_io_mount_v3` | 180 x 31.2 x 50; v2 mounting layout with M3 rather than M4 HDMI insert pilots |
 | `coupon_rear_io_mount_v4` | 180 x 31.2 x 50; HDMI shelf -1 mm/axes 9 mm, USB 6 mm bosses and inside 12.4 x 5.4 x 2.2 reinforcement rebate |
 | `coupon_rear_io_mount_v5` | 180 x 31.2 x 50; v4 HDMI plus 28 x 12 x 6 USB boss bridge with PCB-facing 12.4 x 5.4 x 2.2 stepped pocket |
+| `coupon_rear_io_mount_v6` | 180 x 16.2 x 50; accepted HDMI position with 13 mm shelf depth, USB boss bridge with PCB-facing 13 x 6 x 2.2 stepped pocket |
 | `coupon_rf_bulkhead_v1` | 78 x 3.2 x 50; six RF trials at two local wall thicknesses |
 | `coupon_logo_magnet_v1` | 16.4 x 110 x 35 design compound; separate blind-pocket receiver and steel-recess panel |
 | `coupon_logo_magnet_v2` | 16.4 x 110 x 35 design compound; 3 mm shell magnets opposed by 1.5 mm panel magnets |
@@ -127,7 +128,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | USB-C opening / shell rebate / oval pitch | 10 x 4 / 12 x 5 x 1.75 / 19 | T9B-T8T-NC 20P; two identical production interfaces intended |
 | Candidate C8 opening / pitch / first envelope | 21 x 12.5 / 29 / 35.5 x 15.1 x 3 | Mechanical coupon only; no mains approval implied |
 | RF bulkhead trials | diameter 6.6/6.8/7.0; wall 3.2/2.0 | Select actual SMA-mobile and RP-SMA-Wi-Fi fit/thread stack physically |
-| Logo magnet pocket / skins | shell Ø6.2 x 3.2 behind 0.6; panel Ø6.2 x 1.7 leaving about 0.7 | Magnet-to-magnet v2 trial; recessed panel positions itself; no finger notch |
+| Logo magnet pocket / skins | shell Ø6.2 x 3.2 behind 0.6; panel Ø6.2 x 1.7 leaving about 0.7 | Both magnet pockets fit; pull-off, rattle, bonding, and cycle checks remain; recessed panel positions itself; no finger notch |
 | Cap dovetail clearance | v1 0.25/0.35/0.45; v2 0.05/0.10/0.15 per side; **selected 0.10 per side** | Two-notch pair selected; 0.05 rejected as too tight for the longer production rail; final positive lock and load path not yet modeled |
 | DC/DC reserved envelope | 71 x 36 x 25 | 24 V/1 A owner-supplied module; mount, terminals, thermal and electrical role unresolved |
 
