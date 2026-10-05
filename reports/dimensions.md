@@ -56,12 +56,12 @@ The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled p
 | Rear service panel | 132 x 250 x 3.2; radius 8; eight M3 positions |
 | Rear SMA row | six direct Ø6.6 holes at X `-50,-30,-10,10,30,50`, Z `158`; inner Ø12 rebates leave 2.0 mm exterior lands |
 | RF bulkhead row | Six Ø6.6 holes at 20 pitch, centre `Z=158`; 2.0 mm outer clamping lands; Mobile/Wi-Fi/Mobile/Mobile/Wi-Fi/Mobile |
-| Router extension centres | X `-17,+17`, Z `196`; provisional cutouts 18 x 16 |
-| Router extension flange datums | Two provisional M3 axes per extension, horizontal pitch 27; diameter-3.4 clearances |
+| External Ethernet opening | 17 x 14; centre `(X,Z)=(-42,108)`, or 24 mm from the visible right edge and 90 mm from the bottom when viewed from behind; 27.6 mm horizontal M3 pitch with accepted 1 mm vertical correction |
+| External Ethernet inner service envelope | 22 x 23 x 42 adapter body; 18 mm angled plug; 6 mm cable with a reserved 20 mm bend toward the -X low-voltage lane |
 | C8 fixed island | 42 x 28 nominal island; inlet centre `(X,Z)=(38,116)` on relocated +X power compartment |
 | C8 controlled cutout | 21 x 12.5 plus 0.40 profile allowance; two full-depth Ø4.2 M3 insert pockets at 30 pitch |
-| HDMI extension opening | 16.4 x 6.4; centre `(X,Z)=(6,108)`; equivalently 60 mm from panel right and 90 mm from panel bottom; 13 mm shelf; two top-down blind M3 axes |
-| USB-C extension openings | 10.4 x 4.4; centres `(X,Z)=(24,68),(41,78)`; equivalently right/bottom offsets `(42,50)` and `(25,60)`; 6 mm rear boss bridges and sharp 14 x 6.5 x 2.5 pockets |
+| HDMI extension opening | 16.4 x 6.4; centre `(X,Z)=(-6,108)`; equivalently 60 mm from the visible right edge and 90 mm from the bottom when viewed from behind; 13 mm shelf; two top-down blind M3 axes |
+| USB-C extension openings | 10.4 x 4.4; centres `(X,Z)=(-24,68),(-41,78)`; equivalently rear-view right/bottom offsets `(42,50)` and `(25,60)`; 6 mm rear boss bridges and sharp 14 x 6.5 x 2.5 pockets |
 | Mac button approach | 26 wide; installed base run follows the button-to-rear distance (42.5 before the rounded end); continuous swept path validated with diameter-11 probe |
 | Base intake opening | diameter 116 at Mac Y centre |
 | Logo faces | 70 x 70 x 2.4, radius 6, centre `Z=156`, 0.8 reveal; two blind Ø6.2 x 1.7 panel pockets and two Ø6.2 x 3.2 shell pockets per side |

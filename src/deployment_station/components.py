@@ -267,6 +267,55 @@ def service_removal_envelopes(p: StationParameters = DEFAULT) -> dict[str, cq.Wo
     return {"mac_downward_removal": mac_down, "router_rear_removal": router_rear, "rear_panel_removal": panel_rear}
 
 
+def external_ethernet_envelopes(p: StationParameters = DEFAULT) -> dict[str, cq.Workplane]:
+    """Measured adapter body, angled plug, and immediate 20 mm bend reservation."""
+
+    e = p.enclosure
+    i = p.interfaces
+    panel_inner_y = e.depth / 2.0 - e.rear_panel_thickness
+    body_depth = 42.0
+    plug_depth = 18.0
+    cable_bend_radius = 20.0
+    cable_diameter = 6.0
+
+    body = box_at(
+        22.0,
+        body_depth,
+        23.0,
+        (i.ethernet_position_x, panel_inner_y - body_depth / 2.0, i.ethernet_position_z),
+    )
+    plug = box_at(
+        24.0,
+        plug_depth,
+        24.0,
+        (
+            i.ethernet_position_x,
+            panel_inner_y - body_depth - plug_depth / 2.0,
+            i.ethernet_position_z,
+        ),
+    )
+    # The right-angle lead turns toward global -X, into the dedicated
+    # low-voltage side lane.  A 26 x 26 mm box is the conservative plan-view
+    # envelope of a 20 mm centreline radius plus the 6 mm cable diameter.
+    bend_span = cable_bend_radius + cable_diameter
+    plug_inner_y = panel_inner_y - body_depth - plug_depth
+    bend = box_at(
+        bend_span,
+        bend_span,
+        cable_diameter + 2.0,
+        (
+            i.ethernet_position_x - cable_bend_radius / 2.0,
+            plug_inner_y - cable_bend_radius / 2.0,
+            i.ethernet_position_z,
+        ),
+    )
+    return {
+        "external_ethernet_inner_body": body,
+        "external_ethernet_angled_plug": plug,
+        "external_ethernet_bend_reservation": bend,
+    }
+
+
 def build_reference_model(p: StationParameters = DEFAULT) -> ReferenceModel:
     equipment = {
         "mac_mini_m4": mac_reference(p),
@@ -300,6 +349,7 @@ def build_reference_model(p: StationParameters = DEFAULT) -> ReferenceModel:
         "mac_hdmi_panel_extension": rounded_panel_xz(24.0, 26.0, 4.0, 2.5, y0, i.hdmi_position_x, i.hdmi_position_z, 1),
         "mac_usbc_panel_extension_1": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_position_x, i.usbc_position_z, 1),
         "mac_usbc_panel_extension_2": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_second_position_x, i.usbc_second_position_z, 1),
+        **external_ethernet_envelopes(p),
     }
     for index in range(6):
         x = (index - 2.5) * i.router_bulkhead_pitch + i.router_interface_center_x

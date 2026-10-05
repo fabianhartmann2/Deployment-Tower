@@ -189,19 +189,23 @@ class InterfaceParameters:
     # Raised 8 mm so the enclosed terminal tunnel clears the user-positioned
     # HDMI shelf while remaining tied into the power-compartment rear wall.
     c8_position_z: float = 116.0
-    ethernet_position_x: float = -38.0
+    # Ethernet is stacked above the rear-view right USB-C connector.  This
+    # keeps its 42 mm body, 18 mm angled plug, and 20 mm cable-bend reservation
+    # in the -X low-voltage lane and away from the +X power compartment.
+    ethernet_position_x: float = -42.0
     ethernet_position_z: float = 108.0
     hdmi_cutout_width: float = 16.4
     hdmi_cutout_height: float = 6.4
-    # User-defined V5 connector centres.  X is derived from the 132 mm panel's
-    # right edge; Z is derived from its lower edge at station Z=18 mm.
-    hdmi_position_x: float = 6.0
+    # User-defined connector centres as seen from outside, looking directly at
+    # the rear panel.  That view reverses station X: its right edge is X=-66.
+    # Z is derived from the panel lower edge at station Z=18 mm.
+    hdmi_position_x: float = -6.0
     hdmi_position_z: float = 108.0
     usbc_cutout_width: float = 10.4
     usbc_cutout_height: float = 4.4
-    usbc_position_x: float = 24.0
+    usbc_position_x: float = -24.0
     usbc_position_z: float = 68.0
-    usbc_second_position_x: float = 41.0
+    usbc_second_position_x: float = -41.0
     usbc_second_position_z: float = 78.0
     mac_extension_mount_vertical_pitch: float = 20.0
     router_interface_center_x: float = 0.0

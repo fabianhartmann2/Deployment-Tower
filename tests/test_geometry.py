@@ -32,6 +32,7 @@ from deployment_station.validation import (
     cap_dovetail_engagement_check,
     c8_insert_mount_check,
     c8_terminal_passage_check,
+    ethernet_inner_service_envelope_check,
     extension_mount_hole_checks,
     fastener_stack_checks,
     geometry_checks,
@@ -343,6 +344,15 @@ def test_new_cap_and_bulkhead_interfaces_validate(validation_parts):
     assert rf_result.status == "PASS", rf_result.detail
 
 
+def test_external_ethernet_measured_body_plug_and_bend_are_clear(validation_parts):
+    result = ethernet_inner_service_envelope_check(
+        DEFAULT,
+        validation_parts,
+        build_reference_model(DEFAULT),
+    )
+    assert result.status == "PASS", result.detail
+
+
 def test_sampled_motion_check_detects_an_intermediate_obstruction():
     moving = {"service_part": box_at(2.0, 2.0, 2.0, (0.0, 0.0, 0.0))}
     stationary = {"obstacle": box_at(2.0, 2.0, 2.0, (0.0, 5.0, 0.0))}
@@ -472,6 +482,7 @@ def test_full_geometry_validation_has_no_failures():
     assert "six screw-mounted RF bulkhead interfaces" in result_names
     assert "C8 terminal tunnel/main-compartment passage" in result_names
     assert "C8 dual M3 insert mounts" in result_names
+    assert "external Ethernet measured body/plug/bend clearance" in result_names
     assert "shell rounded-exterior containment" in result_names
     assert "sealed-floor raised power tie bridges" in result_names
     assert "Mac AC nominal gland aperture" in result_names

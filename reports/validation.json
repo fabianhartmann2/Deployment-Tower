@@ -1085,9 +1085,14 @@
     "detail": "112 mm photo-derived exclusion ring is clear of base and cradle"
   },
   {
+    "name": "external Ethernet measured body/plug/bend clearance",
+    "status": "PASS",
+    "detail": "42 mm inner body, 18 mm angled plug, and 20 mm bend-radius reservation remain collision-free in the -X low-voltage lane"
+  },
+  {
     "name": "rear panel sampled +Y service sweep",
     "status": "PASS",
-    "detail": "30 sampled positions along +Y from 0 to 80 mm with four connector placeholders and six SMA/antenna references moving with the panel; maximum obstruction 0.0000 mm^3"
+    "detail": "30 sampled positions along +Y from 0 to 80 mm with connector/service envelopes and six SMA/antenna references moving with the panel; maximum obstruction 0.0176 mm^3"
   },
   {
     "name": "Mac+cradle sampled downward service sweep",

@@ -1261,7 +1261,6 @@ def rear_service_removal_sweep_check(
         model = build_reference_model(p)
     moving = {
         "rear_panel": parts["rear_panel"],
-        "external_ethernet_panel_extension": model.hardware["external_ethernet_panel_extension"],
         "mac_hdmi_panel_extension": model.hardware["mac_hdmi_panel_extension"],
         "mac_usbc_panel_extension_1": model.hardware["mac_usbc_panel_extension_1"],
         "mac_usbc_panel_extension_2": model.hardware["mac_usbc_panel_extension_2"],
@@ -1270,7 +1269,7 @@ def rear_service_removal_sweep_check(
         {
             name: obj
             for name, obj in model.hardware.items()
-            if name.startswith("rf_bulkhead_antenna_")
+            if name.startswith("rf_bulkhead_antenna_") or name.startswith("external_ethernet_")
         }
     )
     stationary_names = (
@@ -1300,7 +1299,58 @@ def rear_service_removal_sweep_check(
         moving,
         stationary,
         translations,
-        "+Y from 0 to 80 mm with four connector placeholders and six SMA/antenna references moving with the panel",
+        "+Y from 0 to 80 mm with connector/service envelopes and six SMA/antenna references moving with the panel",
+    )
+
+
+def ethernet_inner_service_envelope_check(
+    p: StationParameters,
+    parts: Mapping[str, cq.Workplane],
+    model: ReferenceModel,
+) -> CheckResult:
+    """Check the measured Ethernet body, angled plug, and immediate cable bend."""
+
+    envelope_names = (
+        "external_ethernet_inner_body",
+        "external_ethernet_angled_plug",
+        "external_ethernet_bend_reservation",
+    )
+    blocker_part_names = (
+        "base",
+        "mac_cradle",
+        "lower_shell",
+        "upper_shell",
+        "router_tray",
+        "router_rear_retainer_left",
+        "router_rear_retainer_right",
+        "power_compartment",
+        "power_compartment_cover",
+    )
+    blockers: dict[str, float] = {}
+    lane_overlaps: dict[str, float] = {}
+    lane = model.interfaces["low_voltage_lane"]
+    for envelope_name in envelope_names:
+        envelope = model.hardware[envelope_name]
+        lane_overlaps[envelope_name] = _intersection_volume(envelope, lane)
+        for part_name in blocker_part_names:
+            blockers[f"{envelope_name}/{part_name}"] = _intersection_volume(
+                envelope, parts[part_name]
+            )
+        for equipment_name, equipment in model.equipment.items():
+            blockers[f"{envelope_name}/{equipment_name}"] = _intersection_volume(
+                envelope, equipment
+            )
+
+    max_blocker = max(blockers.values())
+    passed = (
+        max_blocker <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(lane_overlaps.values()) > INTERSECTION_VOLUME_TOLERANCE_MM3
+    )
+    return _check(
+        "external Ethernet measured body/plug/bend clearance",
+        passed,
+        "42 mm inner body, 18 mm angled plug, and 20 mm bend-radius reservation remain collision-free in the -X low-voltage lane",
+        f"maximum blocker overlap={max_blocker:.3f} mm^3; lane overlaps={lane_overlaps}",
     )
 
 
@@ -2242,6 +2292,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
             f"intake intersection volume {intake_collision:.3f} mm^3",
         )
     )
+    results.append(ethernet_inner_service_envelope_check(p, parts, model))
     results.append(rear_service_removal_sweep_check(p, parts, model))
     results.append(mac_cradle_downward_removal_sweep_check(p, parts, model))
     results.append(router_rearward_removal_sweep_check(p, parts, model))
