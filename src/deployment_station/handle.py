@@ -157,26 +157,36 @@ def removable_handle(p: StationParameters = DEFAULT) -> cq.Workplane:
     f = p.fasteners
     anchor_y = -42.0
     handle = cq.Workplane("XY")
-    leg_center_z = e.height + h.rise / 2.0
+    leg_radius = h.ergonomic_leg_radius
+    grip_radius = h.ergonomic_grip_radius
+    grip_z = e.height + h.rise + grip_radius
     for x in (-h.anchor_spacing / 2.0, h.anchor_spacing / 2.0):
+        # Fully filleted feet retain the accepted four-insert pattern while
+        # removing the exposed rectangular edges of the previous handle.
         foot = box_at(
             h.foot_width,
             h.foot_depth,
             h.foot_thickness,
             (x, anchor_y, e.height + h.foot_thickness / 2.0),
-        )
-        leg = box_at(h.leg_width, h.leg_depth, h.rise, (x, anchor_y, leg_center_z))
-        handle = handle.union(foot).union(leg)
-        # Broad front/rear stiffening ribs spread leg bending across nearly the
-        # full foot width without obstructing the two screw heads on its centreline.
-        for offset_y in (-h.leg_depth / 2.0 - 1.5, h.leg_depth / 2.0 + 1.5):
-            gusset = box_at(
-                h.foot_width - 6.0,
-                3.0,
-                12.0,
-                (x, anchor_y + offset_y, e.height + 6.0),
+        ).edges("|Z").fillet(h.foot_corner_radius).faces(">Z").edges().fillet(h.foot_top_edge_radius)
+        # A broad conical root blends each foot into a round load-bearing leg.
+        collar = cq.Workplane(
+            obj=cq.Solid.makeCone(
+                h.ergonomic_root_radius,
+                leg_radius,
+                16.0,
+                cq.Vector(x, anchor_y, e.height + 4.0),
+                cq.Vector(0.0, 0.0, 1.0),
             )
-            handle = handle.union(gusset)
+        )
+        leg = cylinder_axis(
+            leg_radius,
+            grip_z - (e.height + 14.0),
+            (x, anchor_y, e.height + 14.0),
+            (0, 0, 1),
+        )
+        shoulder = cq.Workplane(obj=cq.Solid.makeSphere(grip_radius, cq.Vector(x, anchor_y, grip_z)))
+        handle = handle.union(foot).union(collar).union(leg).union(shoulder)
 
     for x, y in handle_mount_fastener_positions(p):
         insert = cylinder_axis(
@@ -187,12 +197,19 @@ def removable_handle(p: StationParameters = DEFAULT) -> cq.Workplane:
         )
         handle = handle.cut(insert)
 
-    grip_z = e.height + h.rise + h.grip_height / 2.0
-    grip = rounded_rect_prism(h.grip_span, h.grip_depth, h.grip_height, min(7.0, h.grip_depth / 2.0 - 0.5), grip_z - h.grip_height / 2.0).translate((0, anchor_y, 0))
-    handle = handle.union(grip)
-    # Under-grip relief improves finger comfort without thinning the loaded top.
-    relief = rounded_rect_prism(h.grip_span - 28.0, h.grip_depth + 2.0, 7.0, 4.0, grip_z - h.grip_height / 2.0 - 1.0).translate((0, anchor_y, 0))
-    return handle.cut(relief)
+    # Cylindrical grip and spherical end blends create a continuous palm
+    # surface without hard upper, lower, or end corners.
+    # Extend the cylinder 2 mm through each spherical shoulder.  The overlap
+    # avoids a coincident end-cap/equator seam which is a valid OCC solid but
+    # can tessellate into zero-area triangles in an STL.
+    shoulder_overlap = 2.0
+    grip = cylinder_axis(
+        grip_radius,
+        h.anchor_spacing + 2.0 * shoulder_overlap,
+        (-h.anchor_spacing / 2.0 - shoulder_overlap, anchor_y, grip_z),
+        (1, 0, 0),
+    )
+    return handle.union(grip)
 
 
 def handle_mount_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:

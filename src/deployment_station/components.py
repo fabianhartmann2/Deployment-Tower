@@ -299,9 +299,7 @@ def build_reference_model(p: StationParameters = DEFAULT) -> ReferenceModel:
         "external_ethernet_panel_extension": rounded_panel_xz(34.0, 24.0, 4.0, 2.5, y0, i.ethernet_position_x, i.ethernet_position_z, 1),
         "mac_hdmi_panel_extension": rounded_panel_xz(24.0, 26.0, 4.0, 2.5, y0, i.hdmi_position_x, i.hdmi_position_z, 1),
         "mac_usbc_panel_extension_1": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_position_x, i.usbc_position_z, 1),
-        "mac_usbc_panel_extension_2": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_second_position_x, i.usbc_position_z, 1),
-        "router_lan_panel_extension": rounded_panel_xz(34.0, 22.0, 4.0, 2.0, y0, i.router_interface_center_x - 17.0, i.router_interface_center_z + 18.0, 1),
-        "router_wan_panel_extension": rounded_panel_xz(34.0, 22.0, 4.0, 2.0, y0, i.router_interface_center_x + 17.0, i.router_interface_center_z + 18.0, 1),
+        "mac_usbc_panel_extension_2": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_second_position_x, i.usbc_second_position_z, 1),
     }
     for index in range(6):
         x = (index - 2.5) * i.router_bulkhead_pitch + i.router_interface_center_x

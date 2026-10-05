@@ -4,15 +4,15 @@ This is editable concept/prototype CAD. It must not be represented as production
 
 ## Current limitations
 
-1. **Ethernet concurrency is unresolved.** The two-port RUTM30 cannot simultaneously serve two external wired links and the internal Mac link without an approved topology change.
-2. **Connector hardware still needs assembled validation.** The measured Ethernet, HDMI, dual USB-C, and C8 parts fit the accepted V7 coupons and that geometry is transferred into the production rear panel. Cable strain support, exact screws/locking, insertion loads, internal bends, functional performance, and repeated replacement remain unverified; both RJ45 router extensions remain provisional.
-3. **The power compartment has been relocated but not physically revalidated.** The complete compartment, C8 island/tunnel, APV mounts, cover, and support rails now sit on +X to preserve the Mac-determined HDMI/USB cable paths. A new print and fully wired clearance/service check are still required.
+1. **The resolved Ethernet allocation still needs physical validation.** One RUTM30 port is reserved for the internal Mac link and the second for the single rear-panel extension; lead routing, latch access, link performance, and service remain unverified.
+2. **Connector hardware still needs assembled validation.** The measured Ethernet, HDMI, dual USB-C, and C8 parts fit the accepted V7 coupons and that geometry is transferred into the production rear panel. Cable strain support, exact screws/locking, insertion loads, internal bends, functional performance, and repeated replacement remain unverified; the single RJ45 router extension remains provisional.
+3. **The power compartment has been relocated but not physically revalidated.** The complete compartment, raised C8 island/tunnel, APV mounts, cover, and support rails now sit on +X and 3 mm farther forward to preserve the Mac-determined HDMI/USB cable paths. A new print and fully wired clearance/service check are still required.
 4. **Only the router has official imported CAD.** `reference/0112_RUTM30AMBKX_02.STEP` is official Teltonika geometry. The Mac, APV, antennas, C8, plugs, extensions, and cables are controlled placeholders.
 5. **Physical corrections are not a validated scan.** The full Mac-cradle trial selected rear-left button handedness, 0.30 mm side clearance, an 8 mm lower retained-body/hook datum, and a Ø112 cradle opening. Exact Mac underside surfaces, feet, intake slots, support lands, port centres/overmoulds, antenna bodies, APV production dimensions/lugs/leads, and the inlet still require measured verification.
 6. **The specified C8 has procurement risk.** Schurter 6160.0021 availability and phase-out/lifecycle status must be confirmed. Any substitute requires dimensional, mounting, terminal, ratings, and electrical re-review—not a silent part-number swap.
 7. **Real cable fit is unknown.** The final plug overmoulds, release tabs, bend limits, service loops, coax liner/support, router DC path, and all simultaneous connections have not been mocked up. The stepped 6 mm Mac-AC solid is only a reserved corridor; it is not a selected protective conduit and does not include branch/protection hardware volume.
 8. **RF bulkheads are only geometrically validated.** Six Ø6.6 rear holes retain 2.0 mm clamping lands, but the actual SMA/RP-SMA pigtails, washers/nuts, torque, anti-rotation, strain relief, coax bends, antenna spacing, handling loads, and RF performance are pending.
-9. **Printed mechanisms are not durability-qualified.** The original router rear flexure is withdrawn and replaced by two rigid adjustable M3-screwed stops. The former side Wi-Fi docks are removed from production. The four Mac clip/cams and release rails, bezel hooks, revised router stops, selected cap dovetails, magnetic panels, and inserts still require material-, orientation-, force-, scratch-, conditioning-, carry-, and cycle-specific tests.
+9. **Printed mechanisms are not durability-qualified.** The original router rear flexure is withdrawn and replaced by two rigid adjustable M3-screwed stops. The former side Wi-Fi docks and router-interface bezel are removed from production. The four Mac clip/cams and release rails, revised router stops, selected cap dovetails, magnetic panels, and inserts still require material-, orientation-, force-, scratch-, conditioning-, carry-, and cycle-specific tests.
 10. **Mating supports exist but lack physical proof.** Paired supports are modeled for the cradle, relocated power box, router tray, six-point hidden split-shell seam, sliding cap, underside-mounted handle, magnetic logo panels, and full-height rear panel. Current stack labels are M3x14 base/handle, M3x10 cradle, low-head M3x6 router tray, M3x8 service/cover, M4x10 cap locks, and M4x18 seam; Ø5.4 M4 pilots and 0.10 mm/side dovetails were physically selected, while full-length sliding, bottoming, insert pull-out/torque, revised-print access, wear, and service cycles remain open.
 11. **Compliant supports are provisional.** Three 2 mm Mac pads sit in 1 mm seats, and four 1.3 mm router pads sit on printed lands clear of modeled vents and low-head recesses. Actual safe contact regions, material compatibility, compression, rocking, heat, wear, and retention are unverified.
 12. **There is no structural rating.** The four-screw handle check verifies geometry and a 4x proof-load target only; it is not FEA or a capacity calculation. Insert pull-out, unequal screw loading, strength, layer adhesion, safe working load, fatigue, creep, impact, and vehicle vibration are untested.
@@ -30,7 +30,7 @@ Use the freshly regenerated [validation_results.md](validation_results.md) and `
 
 - square footprint, ratio, and fixed external bbox;
 - validity, connected-solid state, and orientable 256 mm bbox for every printable part;
-- every pair among the 15 installed printed parts using bounding-box screening and OpenCascade intersection volume, failing closed if an intersection is indeterminate;
+- every pair among the 14 installed printed parts using bounding-box screening and OpenCascade intersection volume, failing closed if an intersection is indeterminate;
 - zero unallowlisted installed-part interference; the current screw-mounted design has no intentional overlap allowlist;
 - selected equipment-to-shell and equipment-to-mount intersections;
 - the Mac intake exclusion and a continuous diameter-11 button-probe swept path through base, cradle, lower shell, and rear panel;
@@ -51,7 +51,7 @@ These computations do **not** prove:
 - HDMI/USB-C/Ethernet function, signal integrity, RF performance/detuning, or EMC; or
 - electrical safety, regulatory compliance, or authorization to energize.
 
-A PASS must be read with its exact check description. The Ethernet topology warning, packaging-only power-route warning, and every PENDING physical/safety item remain open.
+A PASS must be read with its exact check description. The Ethernet allocation still needs physical proof; the packaging-only power-route warning and every PENDING physical/safety item remain open.
 
 ## Explicit mains/electrical boundary
 
@@ -71,8 +71,8 @@ Before freezing a complete mechanical prototype:
 - prove the three Mac base pads, four clip/cams, two bottom release rails, four router pads/lands, and low-head tray screws on actual devices;
 - complete the Mac-AC branch architecture, reserve all hardware volume, and replace the route envelope with reviewed conduit/barrier/restraint geometry where required;
 - complete a fully wired unenergized fit/service mock-up;
-- resolve and implement the Ethernet topology;
-- pass insert, panel, button, antenna, RF, logo, bezel, tray, cradle, and handle-mount fit/cycle checks; and
+- physically validate the resolved one-internal/one-external Ethernet allocation;
+- pass insert, panel, button, antenna, RF, logo, tray, cradle, and handle-mount fit/cycle checks; and
 - retain zero computational FAIL results after every parameter change/export.
 
 Before carrying or routine energized use:

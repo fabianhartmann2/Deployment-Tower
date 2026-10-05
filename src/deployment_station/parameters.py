@@ -186,31 +186,29 @@ class InterfaceParameters:
     c8_hole_diameter: float = 3.7
     c8_panel_fit_allowance: float = 0.40
     c8_position_x: float = 38.0
-    c8_position_z: float = 108.0
+    # Raised 8 mm so the enclosed terminal tunnel clears the user-positioned
+    # HDMI shelf while remaining tied into the power-compartment rear wall.
+    c8_position_z: float = 116.0
     ethernet_position_x: float = -38.0
     ethernet_position_z: float = 108.0
     hdmi_cutout_width: float = 16.4
     hdmi_cutout_height: float = 6.4
-    hdmi_position_x: float = -40.0
-    hdmi_position_z: float = 57.0
+    # User-defined V5 connector centres.  X is derived from the 132 mm panel's
+    # right edge; Z is derived from its lower edge at station Z=18 mm.
+    hdmi_position_x: float = 6.0
+    hdmi_position_z: float = 108.0
     usbc_cutout_width: float = 10.4
     usbc_cutout_height: float = 4.4
-    usbc_position_x: float = -5.0
-    usbc_second_position_x: float = 25.0
-    usbc_position_z: float = 57.0
+    usbc_position_x: float = 24.0
+    usbc_position_z: float = 68.0
+    usbc_second_position_x: float = 41.0
+    usbc_second_position_z: float = 78.0
     mac_extension_mount_vertical_pitch: float = 20.0
     router_interface_center_x: float = 0.0
     router_interface_center_z: float = 178.0
-    router_bezel_center_x: float = 0.0
-    router_bezel_width: float = 118.0
-    router_bezel_height: float = 78.0
-    router_bezel_thickness: float = 4.8
-    router_bezel_aperture_width: float = 112.0
-    router_bezel_aperture_height: float = 72.0
     router_rf_window_height: float = 30.0
     router_bulkhead_pitch: float = 20.0
     router_bulkhead_z: float = 158.0
-    router_extension_mount_horizontal_pitch: float = 27.0
     rear_panel_screw_x: float = 63.0
     rear_panel_screw_z: tuple[float, ...] = (31.0, 92.0, 218.0, 244.0)
     finger_well_width: float = 26.0
@@ -227,7 +225,9 @@ class PowerCompartmentParameters:
     bottom: float = 2.8
     cover_thickness: float = 2.8
     center_x: float = 35.0
-    center_y: float = 8.0
+    # Shifted 3 mm toward the front so the accepted 13 mm HDMI shelf clears the
+    # closed rear wall while the box remains on the requested +X side.
+    center_y: float = 5.0
     bottom_z: float = 83.0
     grommet_hole_diameter: float = 9.0
     mac_ac_gland_diameter: float = 12.0
@@ -254,6 +254,11 @@ class HandleParameters:
     grip_span: float = 128.0
     grip_depth: float = 20.0
     grip_height: float = 18.0
+    ergonomic_grip_radius: float = 11.0
+    ergonomic_leg_radius: float = 12.0
+    ergonomic_root_radius: float = 16.0
+    foot_corner_radius: float = 6.0
+    foot_top_edge_radius: float = 2.0
     rise: float = 58.0
     leg_width: float = 18.0
     leg_depth: float = 26.0

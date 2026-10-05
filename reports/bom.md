@@ -14,13 +14,12 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `router_rear_retainer_left`, `router_rear_retainer_right` | 1 each | ASA | Rigid slotted rear-corner stops, installed after the router with one M3x8 screw each; remain outside the SMA envelopes |
 | `power_compartment` | 1 | Reviewed flame-/temperature-suitable engineering material | Mechanical APV/mains box, fixed C8 island/tunnel, raised sealed-floor tie bridges, two top-service blind APV pilots, four open lower-shell mounting corridors, four upper wall-tied cover bosses, and exits; not an approved electrical enclosure |
 | `power_compartment_cover` | 1 | Same reviewed material | Separate deliberate-access cover with four column-aligned M3 clearance axes |
-| `rear_panel` | 1 | Dark ASA | Full-height eight-fastener V7 service face with accepted Ethernet, HDMI, dual USB-C, and relocated C8-island clearance |
-| `router_interface_bezel` | 1 | Dark ASA | Replaceable Ethernet/RF insert with six Ø6.6 bulkhead holes, 2.0 mm clamping lands, and four integral hooks |
+| `rear_panel` | 1 | Dark ASA | Full-height one-piece service face with one Ethernet, relocated HDMI/dual USB-C, six direct Ø6.6 SMA bulkheads with 2.0 mm lands, and fixed C8-island clearance |
 | `upper_cap` | 1 | Matte white ASA | Selected 0.10 mm/side dovetail grooves, crossmember, bearing pads, underside handle clearances, and two blind M4 lock inserts |
-| `removable_handle` | 1 | Candidate ASA/PA-CF after tests | Grip, gusseted legs/ribs, two 42 x 32 x 8 mm feet, four underside M3 insert pockets; no load rating |
+| `removable_handle` | 1 | Candidate ASA/PA-CF after tests | Continuous cylindrical grip, spherical shoulders, round legs, flared roots, two rounded 42 x 32 x 8 mm feet, and four underside M3 insert pockets; no load rating |
 | `logo_panel_left`, `logo_panel_right` | 1 each | ASA or approved variant | Recessed 70 mm faces with two blind 6 x 1.5 mm magnet pockets each |
 
-The registry contains **19 printable definitions**: the 15 installed parts above plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
+The registry contains **18 printable definitions**: the 14 installed parts above plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
 
 ## Fit coupons
 
@@ -51,11 +50,11 @@ The registry contains **19 printable definitions**: the 15 installed parts above
 
 | Item | Provisional qty | Acceptance criteria |
 | --- | ---: | --- |
-| Panel-supported RJ45 extension/coupler | 2 | Required link category/rate; compact replaceable retention; latch and internal lead access; vendor pattern checked against provisional two-hole M3 flange datums |
-| Internal leads for the RJ45 extensions | 2 | Correct orientation/performance, bend radius, and service loop |
+| Panel-supported RJ45 extension/coupler | 1 | Required link category/rate; accepted 17 x 14 opening and 27.6 mm pitch; latch and internal lead access |
+| Internal lead for the RJ45 extension | 1 | Correct orientation/performance, 42 mm adapter depth, angled plug, 20 mm bend radius, and service loop |
 | Mac-to-router Ethernet patch lead | 1 | Required rate, compact plugs, low-voltage-lane fit; topology warning resolved |
 | Panel-supported HDMI extension | 1 | Required HDMI mode end to end, positive mounting, serviceable internal lead; vendor pattern checked against provisional vertical two-hole M3 flange datums |
-| Panel-supported USB-C extension | 1 | Explicit data/video/power capability, orientation, positive mounting, full-feature test; vendor pattern checked against provisional vertical two-hole M3 flange datums |
+| Panel-supported USB-C extension | 2 | Explicit data/video/power capability, orientation, positive inside mounting, full-feature test; accepted 19 mm mounting pitch and reinforcement relief |
 | SMA/RP-SMA panel bulkheads and short coax pigtails | 6 total | Four cellular plus two Wi-Fi positions; correct gender, Ø6.6 fit, nut torque, bend radius, strain relief, and router-port compatibility |
 | Type-15 Wi-Fi antennas | 2 | Screw securely to the two Wi-Fi bulkheads; spacing, hinge clearance, RF performance, handling load, and loosening resistance verified |
 | PR1KC540 cellular leads | 4 attached | Connector identity, manufacturer bend limit, and support verified |
@@ -83,14 +82,12 @@ Current joint-stack labels are **M3x14 for the base and underside-mounted handle
 | Lower-to-upper shell structural seam | 6 M4 | 6 provisional low-head M4x18 screws with measured Ø7.0 heads + 6 M4 inserts | Three per side at X ±76.8 and Y -50/10/50; Ø8.2 internal pockets, 8.4-wide entry slots and top tool corridors, paired U-belts, no exterior openings |
 | Upper cap to upper shell | 2 M4 | 2 provisional M4x10 screws + 2 M4 inserts | Selected dual dovetails carry vertical load; two concealed internal locks prevent lateral escape |
 | APV fixing | 2 diameter-3.6 axes | Exact screw/insert/washer or approved alternative TBD | Supplier-coordinate axes over 3 mm blind diameter-4.2 pilots with 2.7 mm sealed floor; top service after shell mounting |
-| C8 fixing | 2 diameter-3.2 positions | Supplier-approved screws/nuts/locking TBD | Fixed island pattern; terminal access/shroud review required |
-| Router bezel | 4 integral hooks | No normal fasteners | Replaceable cantilever retention; cycle test pending |
+| C8 fixing | 2 M3 insert positions | 2 M3 heat-set inserts plus selected screws/locking TBD | Fixed island with full-depth Ø4.2 pockets; terminal access/shroud review required |
 | External Ethernet flange | 2 M3 through positions | Vendor-specific screws/nuts/locking TBD | Accepted 27.6 mm pitch with the vertical offset physically corrected |
 | Mac HDMI PCB | 2 M3 blind positions | 2 screws + 2 M3 inserts | Accepted top-down mounting on 13 mm shelf, 9 mm axis setback |
 | Two Mac USB-C PCBs | 4 M3 blind positions | 4 screws + 4 M3 inserts | Accepted inside mounting on 6 mm bosses with sharp reinforcement pockets |
-| Router LAN/WAN flanges | 2 M3 holes per extension | Vendor-specific screws/nuts/locking TBD | Provisional horizontal-27 pattern in replaceable bezel; exact extension governs |
 
-The modeled printed-part joints total **34 general M3 insert positions** and **8 M4 insert positions**, excluding the two APV axes and all connector-specific Ethernet/HDMI/USB/C8 hardware. The six seam screws use physically measured Ø7.0 heads in Ø8.2 x 3.2 pockets and require a long hex driver through the open top. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
+The modeled printed-part joints total **34 general M3 insert positions** and **8 M4 insert positions**, excluding the two APV axes and connector-specific Ethernet/HDMI/USB hardware; the fixed C8 island adds two dedicated Ø4.2 M3 insert pockets. The six seam screws use physically measured Ø7.0 heads in Ø8.2 x 3.2 pockets and require a long hex driver through the open top. Do not purchase by aggregate count alone: select head type, grade, washer, insert series, length, engagement, torque, access tool, and spare quantity after coupon and joint-stack review.
 
 ## Compliant and finishing items
 

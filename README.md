@@ -1,6 +1,6 @@
 # Integrated Deployment Station CAD
 
-Parametric CadQuery concept for an FDM-printed station containing a Mac mini M4, a Teltonika RUTM30, and a Mean Well APV-35-36. The modeled default is a **165 x 165 x 280 mm fixed enclosure** (base, panels, bezel, and cap included; removable handle and antennas excluded), with a **1:1:1.697** width:depth:height ratio.
+Parametric CadQuery concept for an FDM-printed station containing a Mac mini M4, a Teltonika RUTM30, and a Mean Well APV-35-36. The modeled default is a **165 x 165 x 280 mm fixed enclosure** (base, panels, and cap included; removable handle and antennas excluded), with a **1:1:1.697** width:depth:height ratio.
 
 > **Prototype status and safety boundary:** this package is editable concept/prototype mechanical CAD. It is not a production release, an electrical design, a safe-working-load rating, or evidence of regulatory compliance. Computational PASS results prove only the checks named in the generated report. Actual hardware fit, cables and overmoulds, printing tolerances, thermal behavior, carrying load/cycles, and qualified 230 V electrical review and tests are still pending. Do not energize a built unit until a competent electrical designer has completed the architecture and a qualified person has inspected and tested the complete assembly.
 
@@ -31,7 +31,7 @@ All dimensions are millimetres.
 - Fixed body: approximately `X=-82.5..82.5`, `Y=-82.5..82.5`, `Z=0..280`.
 - Equipment positions in `layout.py` are reference-envelope centres.
 
-The principal centres are Mac `(0,-8,41)`, APV `(35,8,103.55)`, and RUTM30 `(0,28,170.5)`. The Mac reference preserves 50 mm overall height while representing the physically observed 8 mm underside drop below its retained square body. Full datums, packaging ranges, and parameter defaults are in [dimensions.md](reports/dimensions.md).
+The principal centres are Mac `(0,-8,41)`, APV `(35,5,103.55)`, and RUTM30 `(0,28,170.5)`. The Mac reference preserves 50 mm overall height while representing the physically observed 8 mm underside drop below its retained square body. Full datums, packaging ranges, and parameter defaults are in [dimensions.md](reports/dimensions.md).
 
 ## Build, test, and export
 
@@ -63,7 +63,7 @@ The source checks are fail-gated, but aggregate counts and artifact hashes are i
 
 ## Generated outputs
 
-The current source registry expects **19 printable definitions**: 15 installed assembly parts plus four reusable/non-installed templates. Regeneration writes:
+The current source registry expects **18 printable definitions**: 14 installed assembly parts plus four reusable/non-installed templates. Regeneration writes:
 
 - one printable-part STEP and one print-oriented STL for each registered definition;
 - 21 coupon STEP files and 21 coupon STL files, including retained historical fit articles;
@@ -76,7 +76,7 @@ STEP files remain in assembly coordinates. STL files receive the documented prin
 
 ### macOS Finder model
 
-`exports/interactive/complete_assembly_finder.usdz` is a color, interactive Quick Look model containing all 15 installed printed parts plus equipment and interface-hardware references. Select it in Finder and press Space, or open it directly, to orbit, pan, and zoom. It uses metres-per-unit metadata corresponding to the millimetre CAD model and passes Apple's strict RealityKit USDZ validation.
+`exports/interactive/complete_assembly_finder.usdz` is a color, interactive Quick Look model containing all 14 installed printed parts plus equipment and interface-hardware references. Select it in Finder and press Space, or open it directly, to orbit, pan, and zoom. It uses metres-per-unit metadata corresponding to the millimetre CAD model and passes Apple's strict RealityKit USDZ validation.
 
 On macOS with the Apple USD command-line tools available, regenerate it with:
 
@@ -92,15 +92,15 @@ This convenience visualization is generated separately from the fail-gated STEP/
 | --- | --- | --- | --- |
 | Four cellular SMA connections | Rear bulkhead extensions | Four of six Ø6.6 rear holes with thinned 2.0 mm clamping lands; row sequence Mobile / Wi-Fi / Mobile / Mobile / Wi-Fi / Mobile | Exact pigtails, nut torque, strain relief, first bends, and antenna load test pending |
 | Two Wi-Fi RP-SMA connections | Rear bulkhead extensions | Two of the same six screw-clamped rear positions; former side docks removed | Exact RP-SMA gender, coax routing, antenna spacing, RF performance, and load test pending |
-| RUTM30 LAN and WAN | Replaceable extensions | Two supported positions with provisional two-hole M3 flange patterns in the removable router bezel | Exact parts, hole patterns, latch access, link performance, and topology pending |
+| External Ethernet | One replaceable extension | One accepted 17 x 14 opening with 27.6 mm mounting pitch directly in the rear panel | Exact screws/locking, latch access, bend space, strain support, and link performance pending |
 | Internal Mac Ethernet | Internal patch lead | Placeholder plug volume in low-voltage lane | Consumes one native router port; actual lead fit pending |
-| Mac HDMI | Replaceable extension | Accepted V7 opening at `(-40,57)` with a 13 mm shelf and two top-down blind M3 mounts | Cable bend, strain support, access, and functional test pending |
-| Two Mac USB-C | Replaceable extensions | Accepted V7 openings at `(-5,57)` and `(25,57)`, mounted from inside to 6 mm blind-boss bridges with sharp 14 x 6.5 x 2.5 mm reliefs | Cable bend, strain support, access, and functional test pending |
+| Mac HDMI | Replaceable extension | Accepted V7 mount relocated to `(6,108)` with a 13 mm shelf and two top-down blind M3 mounts | Cable bend, strain support, access, and functional test pending |
+| Two Mac USB-C | Replaceable extensions | Accepted V7 mounts relocated to `(24,68)` and `(41,78)`, mounted from inside to 6 mm blind-boss bridges with sharp 14 x 6.5 x 2.5 mm reliefs | Cable bend, strain support, access, and functional test pending |
 | Mac AC | Internal only | Diameter-12 gland and continuous stepped 6 mm reserved envelope from the covered zone toward the provisional Mac connector | This is packaging space, not a selected conduit or completed branch architecture; qualified design remains PENDING |
-| Candidate measured C8 | Direct component | Accepted 21 x 12.5 opening and 30 mm pitch on the fixed inlet island at `(38,108)`, integral with the relocated closed compartment | Mounting, shroud, wiring, and electrical review pending |
+| Candidate measured C8 | Direct component | Accepted 21 x 12.5 opening on the fixed inlet island at `(38,116)` with two full-depth Ø4.2 M3 insert pockets, integral with the relocated closed compartment | Insert installation, shroud, wiring, and electrical review pending |
 | Mac power button | Direct mechanical reach | Continuous rear-left/underside finger path; no Mac modification | Handedness corrected by full-cradle trial; physical ergonomics/guarding cycles pending |
 
-The two-port router cannot simultaneously provide both external Ethernet links and the required internal Mac link. Both extension positions exist mechanically, but three simultaneous links require an approved topology change (for example, an appropriately integrated active switch). See [interface_decisions.md](reports/interface_decisions.md).
+The two native router ports now have a defined one-to-one allocation: one internal Mac link and one external Ethernet extension. No second external Ethernet opening is modeled.
 
 ## Source map
 
@@ -110,7 +110,7 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 | `components.py` | Official router import; controlled equipment, hardware, cable, and removal placeholders |
 | `base.py`, `mac_mount.py` | Base, intake/button path, three 2 mm pad positions in 1 mm seats, four clip/cam retainers, two bottom release rails, and shell-fastened cradle ears |
 | `shell.py` | Split shell, reinforced rear sill, three seam keys, six hidden internal seam joints/belts, magnetic logo receivers, dovetail cap rails, equipment supports, and handle load path |
-| `router_tray.py`, `rear_panel.py` | Router support, physically corrected side/top fit, four compliant pads, adjustable screw-mounted rear stops, full-height V7 rear panel, replaceable bezel, six RF bulkheads, and extension mounts |
+| `router_tray.py`, `rear_panel.py` | Router support, physically corrected side/top fit, four compliant pads, adjustable screw-mounted rear stops, and a full-height one-piece rear panel with six direct RF bulkheads and the measured extension mounts |
 | `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, wall-tied upper cover bosses, four verified shell-mount access corridors, exits, and cover |
 | `handle.py` | Sliding dovetail cap, two concealed anti-slide locks, structural beams, underside four-screw handle feet, and mounting coupon |
 | `wifi_dock.py`, `logo_panel.py` | Legacy dock coupon source retained for traceability; production magnet-retained logo panels |
@@ -122,7 +122,7 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 ## Documentation
 
 - [dimensions.md](reports/dimensions.md) — envelope, packaging, part envelopes, and parameter reference.
-- [interface_decisions.md](reports/interface_decisions.md) — direct/extension decisions and Ethernet warning.
+- [interface_decisions.md](reports/interface_decisions.md) — direct/extension decisions and the one-internal/one-external Ethernet allocation.
 - [bom.md](reports/bom.md) — printed parts, equipment, provisional hardware, screws, and inserts.
 - [assembly.md](reports/assembly.md) — de-energized assembly, service, and load-path sequence.
 - [print_plan.md](reports/print_plan.md) — orientations, starting process, and coupon order.
@@ -134,4 +134,4 @@ The two-port router cannot simultaneously provide both external Ethernet links a
 
 ## Release boundary
 
-The repository demonstrates a coherent, printable mechanical prototype concept. Before a complete prototype is frozen, it still requires the actual devices, extensions, cables, inserts, pads, and connector hardware to be measured and dry-fitted; physical coupons and service trials to pass; and the Ethernet topology to be resolved. The Mac-AC envelope is only a reserved path, and the branch hardware/topology, APV lead bends, protective separation, restraint, and materials are not released. Before carrying or energizing, it additionally requires load/cycle and thermal tests, a complete competent electrical design, and qualified inspection/testing. Supplier availability and lifecycle status—including the specified C8 inlet—must be reconfirmed before procurement.
+The repository demonstrates a coherent, printable mechanical prototype concept. Before a complete prototype is frozen, it still requires the actual devices, extensions, cables, inserts, pads, and connector hardware to be measured and dry-fitted and physical coupons and service trials to pass. The Mac-AC envelope is only a reserved path, and the branch hardware/topology, APV lead bends, protective separation, restraint, and materials are not released. Before carrying or energizing, it additionally requires load/cycle and thermal tests, a complete competent electrical design, and qualified inspection/testing. Supplier availability and lifecycle status—including the specified C8 inlet—must be reconfirmed before procurement.

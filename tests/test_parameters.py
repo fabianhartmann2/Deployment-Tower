@@ -132,3 +132,13 @@ def test_v4_production_layout_uses_relocated_power_and_full_height_rear_panel():
     assert DEFAULT.enclosure.rear_panel_height == 250.0
     assert DEFAULT.enclosure.rear_opening_top == 268.0
     assert DEFAULT.interfaces.router_bulkhead_pitch == 20.0
+
+
+def test_v5_rear_connector_centres_match_edge_dimensioned_feedback():
+    e = DEFAULT.enclosure
+    i = DEFAULT.interfaces
+    right_edge = e.rear_panel_width / 2.0
+    bottom_edge = e.rear_opening_bottom
+    assert (right_edge - i.usbc_position_x, i.usbc_position_z - bottom_edge) == (42.0, 50.0)
+    assert (right_edge - i.usbc_second_position_x, i.usbc_second_position_z - bottom_edge) == (25.0, 60.0)
+    assert (right_edge - i.hdmi_position_x, i.hdmi_position_z - bottom_edge) == (60.0, 90.0)

@@ -145,11 +145,36 @@ def power_compartment(p: StationParameters = DEFAULT) -> cq.Workplane:
     ch = i.c8_cutout_height + i.c8_panel_fit_allowance
     inlet_cut = rounded_panel_xz(cw, ch, p.enclosure.rear_panel_thickness + 2.0, i.c8_cutout_corner_radius, panel_inner_y - 1.0, i.c8_position_x, i.c8_position_z, 1)
     island = island.cut(inlet_cut)
-    for x in (i.c8_position_x - i.c8_hole_pitch / 2.0, i.c8_position_x + i.c8_hole_pitch / 2.0):
-        island = island.cut(
-            cylinder_axis(i.c8_hole_diameter / 2.0, p.enclosure.rear_panel_thickness + 2.0, (x, panel_inner_y - 1.0, i.c8_position_z), (0, 1, 0))
+    # The inlet screws now terminate in the same physically selected Ø4.2 mm
+    # M3 heat-set inserts used elsewhere.  Rearward bosses provide the full
+    # insert depth instead of relying on the 3.2 mm cosmetic island alone.
+    c8_insert_axes = (i.c8_position_x - i.c8_hole_pitch / 2.0, i.c8_position_x + i.c8_hole_pitch / 2.0)
+    for x in c8_insert_axes:
+        insert_boss = cylinder_axis(
+            4.0,
+            f.insert_depth + 1.0,
+            (x, panel_inner_y - f.insert_depth - 1.0, i.c8_position_z),
+            (0, 1, 0),
         )
+        insert_pocket = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0,
+            f.insert_depth + 0.3,
+            (x, p.enclosure.depth / 2.0 + 0.1, i.c8_position_z),
+            (0, -1, 0),
+        )
+        island = island.union(insert_boss).cut(insert_pocket)
     box = box.union(island)
+    # Recut after unioning with the terminal tunnel: otherwise the tunnel's
+    # solid outer wall silently refills the rear half of both insert pockets.
+    for x in c8_insert_axes:
+        box = box.cut(
+            cylinder_axis(
+                f.m3_insert_hole_diameter / 2.0,
+                f.insert_depth + 0.3,
+                (x, p.enclosure.depth / 2.0 + 0.1, i.c8_position_z),
+                (0, -1, 0),
+            )
+        )
 
     # DC/SELV leaves only through a fitted grommet on the front-right wall.  The
     # opening is isolated from the inlet tunnel and placed beside the data lane.

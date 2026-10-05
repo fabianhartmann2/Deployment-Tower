@@ -39,6 +39,19 @@ def _rear_panel_seat_cut(p: StationParameters) -> cq.Workplane:
     )
 
 
+def _exterior_profile_clip(p: StationParameters, z0: float, z1: float) -> cq.Workplane:
+    """Limit late-added reinforcements to the rounded cosmetic footprint."""
+
+    e = p.enclosure
+    return rounded_rect_prism(
+        e.width,
+        e.depth,
+        z1 - z0,
+        e.outer_corner_radius,
+        z0,
+    )
+
+
 def shell_seam_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
     """Six hidden vertical M4 axes, three along each side wall."""
 
@@ -234,7 +247,10 @@ def lower_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
                 .translate((0, 0, z0 - 0.5))
             )
             part = part.cut(base_insert)
-    return part
+    # Every reinforcement is internal.  Clip late-added belts, webs, and bosses
+    # back to the same rounded footprint as the original shell so none can form
+    # a visible ridge in an exterior corner.
+    return part.intersect(_exterior_profile_clip(p, z0 - 1.0, e.lower_shell_top + 8.0))
 
 
 def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
@@ -409,4 +425,7 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     for x, y, sx, sy in keys:
         pocket = box_at(sx + 2.0 * clearance, sy + 2.0 * clearance, 9.0, (x, y, e.lower_shell_top + 2.0))
         part = part.cut(pocket)
-    return part
+    # The dovetail crossbars and handle-load ribs are deliberately oversized
+    # before unioning.  This final cosmetic-envelope trim prevents their ends
+    # from printing through the strongly rounded upper corners.
+    return part.intersect(_exterior_profile_clip(p, z0 - 1.0, e.shell_top + 6.0))

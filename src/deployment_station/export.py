@@ -70,7 +70,6 @@ def _print_oriented(name: str, obj: cq.Workplane) -> cq.Workplane:
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 180.0)
     elif name in {
         "rear_panel",
-        "router_interface_bezel",
         "router_rear_retainer_left",
         "router_rear_retainer_right",
         "coupon_c8_cutout",

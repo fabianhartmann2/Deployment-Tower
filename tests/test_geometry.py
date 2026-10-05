@@ -23,13 +23,14 @@ from deployment_station.router_tray import (
     router_rear_retainer_screw_positions,
     router_support_pad_positions,
 )
-from deployment_station.shell import lower_shell, shell_seam_fastener_positions
+from deployment_station.shell import lower_shell, shell_seam_fastener_positions, upper_shell
 from deployment_station.validation import (
     ASSEMBLY_INTERFERENCE_ALLOWLIST,
     _intersection_volume,
     _sampled_translation_clearance,
     apv_top_service_mount_check,
     cap_dovetail_engagement_check,
+    c8_insert_mount_check,
     c8_terminal_passage_check,
     extension_mount_hole_checks,
     fastener_stack_checks,
@@ -48,6 +49,7 @@ from deployment_station.validation import (
     router_bulkhead_geometry_check,
     router_support_stack_check,
     shell_seam_access_check,
+    shell_exterior_profile_check,
 )
 
 
@@ -68,7 +70,6 @@ def test_required_printable_part_breakdown_exists():
         "power_compartment",
         "power_compartment_cover",
         "rear_panel",
-        "router_interface_bezel",
         "upper_cap",
         "removable_handle",
         "logo_panel_left",
@@ -211,8 +212,14 @@ def test_screw_mounted_parts_require_no_interference_allowance():
 
 
 def test_c8_terminal_tunnel_opens_into_main_compartment():
-    result = c8_terminal_passage_check(DEFAULT, power_compartment())
-    assert result.status == "PASS", result.detail
+    compartment = power_compartment()
+    checks = (
+        c8_terminal_passage_check(DEFAULT, compartment),
+        c8_insert_mount_check(DEFAULT, compartment),
+    )
+    assert all(result.status == "PASS" for result in checks), "\n".join(
+        f"{result.name}: {result.detail}" for result in checks
+    )
 
 
 def test_power_compartment_has_sealed_ties_top_service_mounts_and_cover_columns():
@@ -306,6 +313,11 @@ def test_lower_shell_rear_sill_is_tied_to_internal_angle_beam(validation_parts):
     assert result.status == "PASS", result.detail
 
 
+def test_shell_reinforcements_stay_inside_rounded_exterior():
+    result = shell_exterior_profile_check(DEFAULT, lower_shell(), upper_shell())
+    assert result.status == "PASS", result.detail
+
+
 def test_logo_magnet_check_rejects_a_blocked_panel_pocket(validation_parts):
     assert logo_magnet_mount_check(DEFAULT, validation_parts).status == "PASS"
     panel = validation_parts["logo_panel_right"]
@@ -326,7 +338,7 @@ def test_logo_magnet_check_rejects_a_blocked_panel_pocket(validation_parts):
 
 def test_new_cap_and_bulkhead_interfaces_validate(validation_parts):
     cap_result = cap_dovetail_engagement_check(DEFAULT, validation_parts)
-    rf_result = router_bulkhead_geometry_check(DEFAULT, validation_parts["router_interface_bezel"])
+    rf_result = router_bulkhead_geometry_check(DEFAULT, validation_parts["rear_panel"])
     assert cap_result.status == "PASS", cap_result.detail
     assert rf_result.status == "PASS", rf_result.detail
 
@@ -402,7 +414,6 @@ def test_pad_support_and_extension_mount_witnesses_reject_missing_geometry(valid
     extension_mounts = extension_mount_hole_checks(
         DEFAULT,
         validation_parts["rear_panel"],
-        validation_parts["router_interface_bezel"],
     )
     assert mac_pad.status == "PASS", mac_pad.detail
     assert router_support.status == "PASS", router_support.detail
@@ -443,7 +454,6 @@ def test_pad_support_and_extension_mount_witnesses_reject_missing_geometry(valid
     assert extension_mount_hole_checks(
         DEFAULT,
         blocked_panel,
-        validation_parts["router_interface_bezel"],
     )[0].status == "FAIL"
 
 
@@ -461,6 +471,8 @@ def test_full_geometry_validation_has_no_failures():
     assert "top-cap selected dovetail engagement" in result_names
     assert "six screw-mounted RF bulkhead interfaces" in result_names
     assert "C8 terminal tunnel/main-compartment passage" in result_names
+    assert "C8 dual M3 insert mounts" in result_names
+    assert "shell rounded-exterior containment" in result_names
     assert "sealed-floor raised power tie bridges" in result_names
     assert "Mac AC nominal gland aperture" in result_names
     assert "APV top-service blind insert mounts" in result_names
@@ -485,8 +497,7 @@ def test_full_geometry_validation_has_no_failures():
         "accepted external-Ethernet two-fastener flange holes",
         "accepted HDMI top-down blind M3 mounts",
         "accepted dual USB-C rear-mounted blind bosses",
-        "provisional dual-RJ45 two-fastener extension holes",
-        "rear panel+bezel sampled +Y service sweep",
+        "rear panel sampled +Y service sweep",
         "Mac+cradle sampled downward service sweep",
         "RUTM30 sampled rearward service sweep (screw retainers removed)",
         "six screw-mounted RF bulkhead interfaces",
@@ -510,9 +521,8 @@ def test_full_geometry_validation_has_no_failures():
         "accepted external-Ethernet two-fastener flange holes",
         "accepted HDMI top-down blind M3 mounts",
         "accepted dual USB-C rear-mounted blind bosses",
-        "provisional dual-RJ45 two-fastener extension holes",
     } <= result_names
-    assert "rear panel+bezel sampled +Y service sweep" in result_names
+    assert "rear panel sampled +Y service sweep" in result_names
     assert "Mac+cradle sampled downward service sweep" in result_names
     assert "RUTM30 sampled rearward service sweep (screw retainers removed)" in result_names
     assert "six screw-mounted RF bulkhead interfaces" in result_names

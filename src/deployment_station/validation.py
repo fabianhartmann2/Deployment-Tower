@@ -15,7 +15,7 @@ import trimesh
 from .assembly import part_definitions, printable_parts
 from .components import ReferenceModel, build_reference_model, mac_intake_exclusion, router_source_kind
 from .coupons import fit_coupons
-from .geometry import bbox_dimensions, box_at, compound, cylinder_axis
+from .geometry import bbox_dimensions, box_at, compound, cylinder_axis, rounded_rect_prism
 from .handle import (
     cap_dovetail_groove,
     cap_dovetail_rail,
@@ -44,7 +44,6 @@ from .rear_panel import (
     hdmi_mount_positions,
     mac_extension_mount_positions,
     router_bulkhead_positions,
-    router_extension_mount_positions,
 )
 from .router_tray import (
     router_rear_retainer_screw_positions,
@@ -646,6 +645,43 @@ def rear_sill_reinforcement_check(
         f"flange={flange_volume:.2f}/{expected_flange:.2f}, web={web_volume:.2f}/{expected_web:.2f}, "
         f"boss ties={tie_volumes}/{expected_tie:.2f} mm^3",
     )
+
+
+def shell_exterior_profile_check(
+    p: StationParameters,
+    lower_shell: cq.Workplane,
+    upper_shell: cq.Workplane,
+) -> CheckResult:
+    """Reject any internal reinforcement protruding through a rounded exterior."""
+
+    e = p.enclosure
+    lower_clip = rounded_rect_prism(
+        e.width,
+        e.depth,
+        e.lower_shell_top - e.base_height + 12.0,
+        e.outer_corner_radius,
+        e.base_height - 2.0,
+    )
+    upper_clip = rounded_rect_prism(
+        e.width,
+        e.depth,
+        e.shell_top - e.lower_shell_top + 12.0,
+        e.outer_corner_radius,
+        e.lower_shell_top - 2.0,
+    )
+    outside = {
+        "lower_shell": lower_shell.val().cut(lower_clip.val()).Volume(),
+        "upper_shell": upper_shell.val().cut(upper_clip.val()).Volume(),
+    }
+    passed = max(outside.values()) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+    return _check(
+        "shell rounded-exterior containment",
+        passed,
+        "all seam belts, bosses, ribs, and dovetail reinforcements remain inside the nominal rounded exterior",
+        f"reinforcement protrusion volumes={outside}",
+    )
+
+
 def logo_magnet_mount_check(
     p: StationParameters,
     parts: Mapping[str, cq.Workplane],
@@ -781,13 +817,14 @@ def cap_dovetail_engagement_check(
 
 def router_bulkhead_geometry_check(
     p: StationParameters,
-    router_bezel: cq.Workplane,
+    rear_panel: cq.Workplane,
 ) -> CheckResult:
-    """Verify six thinned-wall RF bulkhead holes and their clamping lands."""
+    """Verify six direct, thinned-wall RF bulkhead holes and clamping lands."""
 
     e = p.enclosure
     i = p.interfaces
     v = p.prototype_v4
+    panel_y0 = e.depth / 2.0 - e.rear_panel_thickness
     y_outer_land = e.depth / 2.0 - v.rf_bulkhead_wall_selected
     hole_obstructions: list[float] = []
     land_witnesses: list[float] = []
@@ -798,8 +835,8 @@ def router_bulkhead_geometry_check(
     for x, z in router_bulkhead_positions(p):
         hole = cylinder_axis(
             v.rf_bulkhead_hole_selected / 2.0 - 0.05,
-            i.router_bezel_thickness + 0.2,
-            (x, e.depth / 2.0 - i.router_bezel_thickness - 0.1, z),
+            e.rear_panel_thickness + 0.2,
+            (x, panel_y0 - 0.1, z),
             (0, 1, 0),
         )
         land = _annular_axis_witness(
@@ -809,8 +846,8 @@ def router_bulkhead_geometry_check(
             (x, y_outer_land + 0.1, z),
             (0, 1, 0),
         )
-        hole_obstructions.append(_intersection_volume(hole, router_bezel))
-        land_witnesses.append(_intersection_volume(land, router_bezel))
+        hole_obstructions.append(_intersection_volume(hole, rear_panel))
+        land_witnesses.append(_intersection_volume(land, rear_panel))
 
     positions = router_bulkhead_positions(p)
     passed = (
@@ -827,7 +864,7 @@ def router_bulkhead_geometry_check(
     return _check(
         "six screw-mounted RF bulkhead interfaces",
         passed,
-        "six Ø6.6 mm holes at 20 mm pitch retain 2.0 mm outer clamping lands for the four mobile and two Wi-Fi bulkheads",
+        "six direct Ø6.6 mm rear-panel holes at 20 mm pitch retain 2.0 mm outer clamping lands for the four mobile and two Wi-Fi bulkheads",
         f"positions={positions}, hole obstructions={hole_obstructions}, land witnesses={land_witnesses}, "
         f"expected land={expected_land:.2f}",
     )
@@ -870,6 +907,53 @@ def c8_terminal_passage_check(
         barrier_volume <= INTERSECTION_VOLUME_TOLERANCE_MM3,
         f"{interface.c8_cutout_width:.1f} x {interface.c8_cutout_height:.1f} mm passage is continuous; obstruction {barrier_volume:.4f} mm^3",
         f"compartment material obstructs the intended passage by {barrier_volume:.3f} mm^3",
+    )
+
+
+def c8_insert_mount_check(
+    p: StationParameters,
+    compartment: cq.Workplane,
+) -> CheckResult:
+    """Verify two clear Ø4.2 mm C8 insert pockets and supporting boss rings."""
+
+    e = p.enclosure
+    f = p.fasteners
+    i = p.interfaces
+    panel_outer_y = e.depth / 2.0
+    pocket_obstructions: list[float] = []
+    boss_witnesses: list[float] = []
+    outer_radius = 3.9
+    inner_radius = f.m3_insert_hole_diameter / 2.0 + 0.1
+    witness_length = 1.0
+    expected_ring = pi * (outer_radius**2 - inner_radius**2) * witness_length
+    for x in (i.c8_position_x - i.c8_hole_pitch / 2.0, i.c8_position_x + i.c8_hole_pitch / 2.0):
+        pocket = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0 - 0.05,
+            f.insert_depth - 0.2,
+            (x, panel_outer_y + 0.05, i.c8_position_z),
+            (0, -1, 0),
+        )
+        ring = _annular_axis_witness(
+            outer_radius,
+            inner_radius,
+            witness_length,
+            (x, panel_outer_y - f.insert_depth + 0.2, i.c8_position_z),
+            (0, -1, 0),
+        )
+        pocket_obstructions.append(_intersection_volume(pocket, compartment))
+        boss_witnesses.append(_intersection_volume(ring, compartment))
+
+    passed = (
+        len(pocket_obstructions) == 2
+        and abs(f.m3_insert_hole_diameter - 4.2) <= 1e-6
+        and max(pocket_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(boss_witnesses) >= 0.90 * expected_ring
+    )
+    return _check(
+        "C8 dual M3 insert mounts",
+        passed,
+        "two clear Ø4.2 mm pockets provide full-depth M3 heat-set insert support behind the fixed C8 island",
+        f"pocket obstructions={pocket_obstructions}, boss witnesses={boss_witnesses}, expected={expected_ring:.2f}",
     )
 
 
@@ -1171,20 +1255,24 @@ def rear_service_removal_sweep_check(
     parts: Mapping[str, cq.Workplane],
     model: ReferenceModel | None = None,
 ) -> CheckResult:
-    """Move the rear panel, bezel, and placeholder extensions together along +Y."""
+    """Move the rear panel and its attached interface hardware together along +Y."""
 
     if model is None:
         model = build_reference_model(p)
     moving = {
         "rear_panel": parts["rear_panel"],
-        "router_interface_bezel": parts["router_interface_bezel"],
         "external_ethernet_panel_extension": model.hardware["external_ethernet_panel_extension"],
         "mac_hdmi_panel_extension": model.hardware["mac_hdmi_panel_extension"],
         "mac_usbc_panel_extension_1": model.hardware["mac_usbc_panel_extension_1"],
         "mac_usbc_panel_extension_2": model.hardware["mac_usbc_panel_extension_2"],
-        "router_lan_panel_extension": model.hardware["router_lan_panel_extension"],
-        "router_wan_panel_extension": model.hardware["router_wan_panel_extension"],
     }
+    moving.update(
+        {
+            name: obj
+            for name, obj in model.hardware.items()
+            if name.startswith("rf_bulkhead_antenna_")
+        }
+    )
     stationary_names = (
         "base",
         "mac_cradle",
@@ -1208,11 +1296,11 @@ def rear_service_removal_sweep_check(
     )
     translations = tuple((0.0, distance, 0.0) for distance in distances)
     return _sampled_translation_clearance(
-        "rear panel+bezel sampled +Y service sweep",
+        "rear panel sampled +Y service sweep",
         moving,
         stationary,
         translations,
-        "+Y from 0 to 80 mm with the six disconnected extension placeholders moving with the panel/bezel",
+        "+Y from 0 to 80 mm with four connector placeholders and six SMA/antenna references moving with the panel",
     )
 
 
@@ -1240,7 +1328,6 @@ def mac_cradle_downward_removal_sweep_check(
         "power_compartment",
         "power_compartment_cover",
         "rear_panel",
-        "router_interface_bezel",
         "upper_cap",
         "removable_handle",
         "logo_panel_left",
@@ -1295,7 +1382,7 @@ def router_rearward_removal_sweep_check(
         stationary,
         translations,
         "+Y from 0 to 112 mm; a conservative 100 x 93.7 x 30 mm router body envelope alone moves, "
-        "panel/bezel and both screw-mounted rear corner retainers are removed",
+        "rear panel and both screw-mounted rear corner retainers are removed",
     )
 
 
@@ -1894,7 +1981,6 @@ def router_screw_retainer_check(
 def extension_mount_hole_checks(
     p: StationParameters,
     rear_panel: cq.Workplane,
-    router_bezel: cq.Workplane,
 ) -> list[CheckResult]:
     """Prove the accepted rear-I/O mounting axes and surrounding material."""
 
@@ -1998,18 +2084,7 @@ def extension_mount_hole_checks(
         f"axis obstructions={usb_axis_obstructions}, ring witnesses={usb_ring_witnesses}",
     )
 
-    bezel_face_thickness = 2.4
-    bezel_face_y0 = e.depth / 2.0 - bezel_face_thickness
-    router_positions = router_extension_mount_positions(p)
-    router_result = through_panel_result(
-        "provisional dual-RJ45 two-fastener extension holes",
-        router_bezel,
-        router_positions,
-        bezel_face_y0,
-        bezel_face_thickness,
-        4,
-    )
-    return [ethernet_result, hdmi_result, usb_result, router_result]
+    return [ethernet_result, hdmi_result, usb_result]
 
 
 def _exterior_parts(parts: Mapping[str, cq.Workplane]) -> list[cq.Workplane]:
@@ -2020,7 +2095,6 @@ def _exterior_parts(parts: Mapping[str, cq.Workplane]) -> list[cq.Workplane]:
             "lower_shell",
             "upper_shell",
             "rear_panel",
-            "router_interface_bezel",
             "upper_cap",
             "logo_panel_left",
             "logo_panel_right",
@@ -2141,13 +2215,10 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
     results.append(router_screw_retainer_check(p, parts, model))
     results.extend(fastener_stack_checks(p, parts))
     results.extend(
-        extension_mount_hole_checks(
-            p,
-            parts["rear_panel"],
-            parts["router_interface_bezel"],
-        )
+        extension_mount_hole_checks(p, parts["rear_panel"])
     )
     results.append(c8_terminal_passage_check(p, parts["power_compartment"]))
+    results.append(c8_insert_mount_check(p, parts["power_compartment"]))
     results.append(power_tie_bridge_floor_check(p, parts["power_compartment"]))
     results.append(mac_ac_gland_passage_check(p, parts["power_compartment"]))
     results.append(apv_top_service_mount_check(p, parts["power_compartment"]))
@@ -2209,7 +2280,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         )
     )
 
-    results.append(router_bulkhead_geometry_check(p, parts["router_interface_bezel"]))
+    results.append(router_bulkhead_geometry_check(p, parts["rear_panel"]))
 
     for name in ("logo_panel_left", "logo_panel_right"):
         dims = bbox_dimensions(parts[name])
@@ -2227,6 +2298,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
     results.append(cap_dovetail_engagement_check(p, parts))
     results.append(shell_seam_access_check(p, parts))
     results.append(rear_sill_reinforcement_check(p, parts["lower_shell"]))
+    results.append(shell_exterior_profile_check(p, parts["lower_shell"], parts["upper_shell"]))
     results.append(logo_magnet_mount_check(p, parts))
 
     results.append(
@@ -2239,8 +2311,8 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
     results.append(
         CheckResult(
             "Ethernet topology concurrency",
-            "WARN",
-            "Two native router ports exist; one is normally occupied by the internal Mac link. Both extension positions are serviceable, but two simultaneous external links plus the Mac require an approved active switch/topology change.",
+            "PASS",
+            "One native router port serves the internal Mac link and the second serves the single user-requested external Ethernet extension; no third-link topology is modeled.",
         )
     )
     for pending in (

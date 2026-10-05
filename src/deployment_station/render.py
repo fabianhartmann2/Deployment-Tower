@@ -151,7 +151,6 @@ def _assembled_items(p: StationParameters, exploded: bool = False) -> list[Rende
         "router_rear_retainer_right": (18.0, 42.0, 28.0),
         "upper_shell": (0.0, 0.0, 36.0),
         "rear_panel": (0.0, 90.0, 0.0),
-        "router_interface_bezel": (0.0, 116.0, 0.0),
         "upper_cap": (0.0, 0.0, 78.0),
         "removable_handle": (0.0, 0.0, 118.0),
         "logo_panel_left": (-48.0, 0.0, 0.0),

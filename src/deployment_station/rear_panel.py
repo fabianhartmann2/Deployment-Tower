@@ -1,4 +1,4 @@
-"""Removable rear service panel and replaceable router-interface bezel."""
+"""Single removable rear service panel with all external interfaces."""
 
 from __future__ import annotations
 
@@ -28,8 +28,11 @@ def mac_extension_mount_positions(
     i = p.interfaces
     half_pitch = p.prototype_v4.usbc_mount_pitch / 2.0
     return tuple(
-        (x + dx, i.usbc_position_z)
-        for x in (i.usbc_position_x, i.usbc_second_position_x)
+        (x + dx, z)
+        for x, z in (
+            (i.usbc_position_x, i.usbc_position_z),
+            (i.usbc_second_position_x, i.usbc_second_position_z),
+        )
         for dx in (-half_pitch, half_pitch)
     )
 
@@ -66,21 +69,6 @@ def router_bulkhead_positions(p: StationParameters = DEFAULT) -> tuple[tuple[flo
     )
 
 
-def router_extension_mount_positions(
-    p: StationParameters = DEFAULT,
-) -> tuple[tuple[float, float], ...]:
-    """Provisional two-screw flange pattern for each Ethernet extension."""
-
-    i = p.interfaces
-    half_pitch = i.router_extension_mount_horizontal_pitch / 2.0
-    z = i.router_interface_center_z + 18.0
-    return tuple(
-        (x + dx, z)
-        for x in (i.router_interface_center_x - 17.0, i.router_interface_center_x + 17.0)
-        for dx in (-half_pitch, half_pitch)
-    )
-
-
 def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
     e = p.enclosure
     i = p.interfaces
@@ -100,30 +88,7 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
     cut_y = y0 - 1.0
     cut_d = e.rear_panel_thickness + 2.0
 
-    # Through aperture and shallow outer rebate for the replaceable snap-in
-    # router bezel.  Its broad face is flush without occupying panel material.
-    bezel = _rounded_cutout_xz(
-        i.router_bezel_aperture_width + 0.6,
-        i.router_bezel_aperture_height + 0.6,
-        5.0,
-        i.router_bezel_center_x,
-        i.router_interface_center_z,
-        cut_y,
-        cut_d,
-    )
-    part = part.cut(bezel)
-    bezel_seat = _rounded_cutout_xz(
-        i.router_bezel_width + 0.5,
-        i.router_bezel_height + 0.5,
-        5.0,
-        i.router_bezel_center_x,
-        i.router_interface_center_z,
-        e.depth / 2.0 - 2.5,
-        2.6,
-    )
-    part = part.cut(bezel_seat)
-
-    # V7 rear-I/O geometry: one Ethernet flange, one horizontal top-down HDMI
+    # Accepted rear-I/O geometry: one Ethernet flange, one horizontal top-down HDMI
     # board, and two identical inside-mounted USB-C boards.  Only connector
     # mouths and the Ethernet flange screws penetrate the cosmetic panel.
     v = p.prototype_v4
@@ -177,12 +142,15 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
         )
 
     usb_boss_face_y = y0 - v.usbc_board_standoff_selected
-    for usb_x in (i.usbc_position_x, i.usbc_second_position_x):
+    for usb_x, usb_z in (
+        (i.usbc_position_x, i.usbc_position_z),
+        (i.usbc_second_position_x, i.usbc_second_position_z),
+    ):
         bridge = box_at(
             v.usbc_mount_bridge_width,
             v.usbc_board_standoff_selected,
             v.usbc_mount_bridge_height,
-            (usb_x, y0 - v.usbc_board_standoff_selected / 2.0, i.usbc_position_z),
+            (usb_x, y0 - v.usbc_board_standoff_selected / 2.0, usb_z),
         )
         part = part.union(bridge)
         connector_tunnel = _rounded_cutout_xz(
@@ -190,7 +158,7 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
             i.usbc_cutout_height,
             i.usbc_cutout_height / 2.0 - 0.1,
             usb_x,
-            i.usbc_position_z,
+            usb_z,
             usb_boss_face_y - 1.0,
             e.depth / 2.0 - usb_boss_face_y + 2.0,
         )
@@ -200,13 +168,13 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
             boss = cylinder_axis(
                 f.m3_boss_diameter / 2.0,
                 v.usbc_board_standoff_selected,
-                (boss_x, usb_boss_face_y, i.usbc_position_z),
+                (boss_x, usb_boss_face_y, usb_z),
                 (0, 1, 0),
             )
             insert = cylinder_axis(
                 f.m3_insert_hole_diameter / 2.0,
                 f.insert_depth + 0.2,
-                (boss_x, usb_boss_face_y - 0.01, i.usbc_position_z),
+                (boss_x, usb_boss_face_y - 0.01, usb_z),
                 (0, 1, 0),
             )
             part = part.union(boss).cut(insert)
@@ -217,10 +185,25 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
             (
                 usb_x,
                 usb_boss_face_y + (v.usbc_reinforcement_pocket_depth_selected - 0.2) / 2.0,
-                i.usbc_position_z,
+                usb_z,
             ),
         )
         part = part.cut(reinforcement_pocket)
+
+    # Six individual SMA/RP-SMA bulkheads mount directly in the rear panel.
+    # An inside Ø12 rebate leaves the physically selected 2.0 mm exterior
+    # clamping land; no separate bezel, snap hooks, or second Ethernet outlet
+    # is required.
+    rebate_depth = e.rear_panel_thickness - v.rf_bulkhead_wall_selected + 0.1
+    for x, z in router_bulkhead_positions(p):
+        rebate = cylinder_axis(6.0, rebate_depth, (x, y0 - 0.1, z), (0, 1, 0))
+        hole = cylinder_axis(
+            v.rf_bulkhead_hole_selected / 2.0,
+            cut_d,
+            (x, cut_y, z),
+            (0, 1, 0),
+        )
+        part = part.cut(rebate).cut(hole)
 
     # Clearance around the *fixed* C8 island, which belongs to the closed power
     # compartment.  Rear-panel removal therefore does not move or uncover live
@@ -246,76 +229,6 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
             hole = cylinder_axis(f.m3_clearance_diameter / 2.0, cut_d, (x, cut_y, z), (0, 1, 0))
             counterbore = cylinder_axis(6.2 / 2.0, 1.6, (x, y0 + e.rear_panel_thickness - 1.1, z), (0, 1, 0))
             part = part.cut(hole).cut(counterbore)
-    return part
-
-
-def router_interface_bezel(p: StationParameters = DEFAULT) -> cq.Workplane:
-    e = p.enclosure
-    i = p.interfaces
-    c = p.components
-    f = p.fasteners
-    y0 = e.depth / 2.0 - i.router_bezel_thickness
-    face_thickness = 2.4
-    face = rounded_panel_xz(
-        i.router_bezel_width,
-        i.router_bezel_height,
-        face_thickness,
-        4.5,
-        e.depth / 2.0 - face_thickness,
-        i.router_bezel_center_x,
-        i.router_interface_center_z,
-        1,
-    )
-    insert = rounded_panel_xz(
-        i.router_bezel_aperture_width - 0.2,
-        i.router_bezel_aperture_height - 0.2,
-        i.router_bezel_thickness - face_thickness,
-        4.0,
-        y0,
-        i.router_bezel_center_x,
-        i.router_interface_center_z,
-        1,
-    )
-    part = face.union(insert)
-    cut_y = y0 - 1.0
-    cut_d = i.router_bezel_thickness + 2.0
-    # Six screw-mounted bulkheads replace the former direct RF window and both
-    # side antenna docks.  The row preserves the router's Mobile/Wi-Fi sequence
-    # at a wider 20 mm service pitch.  Inner Ø12 rebates leave the physically
-    # selected 2.0 mm clamping land for the 6.6 mm holes.
-    for x, z in router_bulkhead_positions(p):
-        rebate = cylinder_axis(
-            6.0,
-            i.router_bezel_thickness - p.prototype_v4.rf_bulkhead_wall_selected + 0.1,
-            (x, y0 - 0.1, z),
-            (0, 1, 0),
-        )
-        hole = cylinder_axis(
-            p.prototype_v4.rf_bulkhead_hole_selected / 2.0,
-            cut_d,
-            (x, cut_y, z),
-            (0, 1, 0),
-        )
-        part = part.cut(rebate).cut(hole)
-    # Ethernet jacks use provisional two-screw flanged extensions because the
-    # native LAN/WAN face points toward the enclosure front, opposite the six
-    # direct RF ports.  The replaceable bezel carries the explicit through-hole
-    # pattern; selected flange screws/locking hardware carry insertion loads.
-    rj_z = i.router_interface_center_z + 18.0
-    for x in (i.router_interface_center_x - 17.0, i.router_interface_center_x + 17.0):
-        rj = _rounded_cutout_xz(c.router_rj45_clearance_width, c.router_rj45_clearance_height, 1.5, x, rj_z, cut_y, cut_d)
-        part = part.cut(rj)
-    for x, z in router_extension_mount_positions(p):
-        part = part.cut(cylinder_axis(f.m3_clearance_diameter / 2.0, cut_d, (x, cut_y, z), (0, 1, 0)))
-
-    # Four concealed cantilever hooks engage the inner edge of the rear-panel
-    # aperture.  They flex inward for replacement and sit behind—not inside—the
-    # panel material in the installed model.
-    for side in (-1.0, 1.0):
-        for z in (184.0, 209.0):
-            stem = box_at(3.0, 4.0, 6.0, (side * 54.0, y0 - 2.0, z))
-            hook = box_at(5.0, 2.4, 4.0, (side * 57.0, e.depth / 2.0 - e.rear_panel_thickness - 1.3, z))
-            part = part.union(stem).union(hook)
     return part
 
 
