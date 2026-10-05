@@ -53,8 +53,10 @@ def power_tie_bridge_centres(p: StationParameters = DEFAULT) -> tuple[tuple[floa
     y = inner_front_y + pw.tie_bridge_depth / 2.0 + 0.6
     # The bridges remain in the front floor strip but are separated from the
     # relocated diameter-12 gland, APV fixing pods, and cover columns.
-    # The left bridge is kept inboard of the front-left shell-mount screw head.
-    return ((pw.center_x - 16.0, y), (pw.center_x - 1.0, y))
+    # Keep both bridges between the relocated Mac-AC gland, the diagonal APV
+    # fixing pod, and the cover columns.  These are local coordinates within
+    # the compartment, so the relationship follows any later box translation.
+    return ((pw.center_x - 7.0, y), (pw.center_x + 4.0, y))
 
 
 def power_cover_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
@@ -151,12 +153,13 @@ def power_compartment(p: StationParameters = DEFAULT) -> cq.Workplane:
 
     # DC/SELV leaves only through a fitted grommet on the front-right wall.  The
     # opening is isolated from the inlet tunnel and placed beside the data lane.
-    grommet_x = pw.center_x + pw.outer_width / 2.0
+    side = 1.0 if pw.center_x >= 0.0 else -1.0
+    grommet_x = pw.center_x - side * pw.outer_width / 2.0
     grommet = cylinder_axis(
         pw.grommet_hole_diameter / 2.0,
         pw.wall + 2.0,
-        (grommet_x + 1.0, pw.center_y - 49.0, z0 + 22.0),
-        (-1, 0, 0),
+        (grommet_x - side, pw.center_y - 49.0, z0 + 22.0),
+        (side, 0, 0),
     )
     box = box.cut(grommet)
 

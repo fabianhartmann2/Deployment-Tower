@@ -219,7 +219,8 @@ def mac_ac_branch_corridor(p: StationParameters = DEFAULT) -> cq.Workplane:
     exit_x = pw.center_x + pw.mac_ac_exit_offset_x
     exit_y = pw.center_y + pw.mac_ac_exit_offset_y
     overhead_z = pw.bottom_z - width / 2.0
-    side_x = -e.width / 2.0 + e.wall + width + 1.0
+    side = 1.0 if pw.center_x >= 0.0 else -1.0
+    side_x = side * (e.width / 2.0 - e.wall - width - 1.0)
     target_x = 39.0
     target_y = c.mac_center_y + c.mac_depth / 2.0 + 10.0
     target_z = layout.mac_center[2]
@@ -295,13 +296,19 @@ def build_reference_model(p: StationParameters = DEFAULT) -> ReferenceModel:
     y0 = e.depth / 2.0
     hardware = {
         "c8_inlet": rounded_panel_xz(i.c8_flange_width, i.c8_flange_height, 4.0, 2.0, y0, i.c8_position_x, i.c8_position_z, 1),
+        "external_ethernet_panel_extension": rounded_panel_xz(34.0, 24.0, 4.0, 2.5, y0, i.ethernet_position_x, i.ethernet_position_z, 1),
         "mac_hdmi_panel_extension": rounded_panel_xz(24.0, 26.0, 4.0, 2.5, y0, i.hdmi_position_x, i.hdmi_position_z, 1),
-        "mac_usbc_panel_extension": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_position_x, i.usbc_position_z, 1),
+        "mac_usbc_panel_extension_1": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_position_x, i.usbc_position_z, 1),
+        "mac_usbc_panel_extension_2": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_second_position_x, i.usbc_position_z, 1),
         "router_lan_panel_extension": rounded_panel_xz(34.0, 22.0, 4.0, 2.0, y0, i.router_interface_center_x - 17.0, i.router_interface_center_z + 18.0, 1),
         "router_wan_panel_extension": rounded_panel_xz(34.0, 22.0, 4.0, 2.0, y0, i.router_interface_center_x + 17.0, i.router_interface_center_z + 18.0, 1),
-        "wifi_antenna_left": wifi_antenna_reference("left", p),
-        "wifi_antenna_right": wifi_antenna_reference("right", p),
     }
+    for index in range(6):
+        x = (index - 2.5) * i.router_bulkhead_pitch + i.router_interface_center_x
+        z = i.router_bulkhead_z
+        bulkhead = cylinder_axis(4.0, 8.0, (x, y0 - 4.0, z), (0, 1, 0))
+        vertical_antenna = cylinder_axis(5.0, 170.0, (x, y0 + 12.0, z), (0, 0, 1))
+        hardware[f"rf_bulkhead_antenna_{index + 1}"] = bulkhead.union(vertical_antenna)
     return ReferenceModel(equipment=equipment, clearances=clearances, interfaces=interfaces, hardware=hardware)
 
 

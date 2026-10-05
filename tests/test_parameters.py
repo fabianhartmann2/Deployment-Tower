@@ -120,6 +120,15 @@ def test_service_joint_lengths_are_distinct_by_grip_stack():
     assert (fasteners.cradle_screw, fasteners.cradle_screw_length) == ("M3x10", 10.0)
     assert (fasteners.router_tray_screw, fasteners.router_tray_screw_length) == ("M3x6", 6.0)
     assert (fasteners.logo_screw, fasteners.logo_screw_length) == ("M3x8", 8.0)
-    assert (fasteners.handle_screw, fasteners.handle_screw_length) == ("M3x10", 10.0)
+    assert (fasteners.handle_screw, fasteners.handle_screw_length) == ("M3x14", 14.0)
+    assert (fasteners.cap_lock_screw, fasteners.cap_lock_screw_length) == ("M4x10", 10.0)
     assert (fasteners.service_screw, fasteners.service_screw_length) == ("M3x8", 8.0)
     assert (fasteners.structural_screw, fasteners.structural_screw_length) == ("M4x18", 18.0)
+
+
+def test_v4_production_layout_uses_relocated_power_and_full_height_rear_panel():
+    assert DEFAULT.power.center_x == 35.0
+    assert DEFAULT.interfaces.c8_position_x == 38.0
+    assert DEFAULT.enclosure.rear_panel_height == 250.0
+    assert DEFAULT.enclosure.rear_opening_top == 268.0
+    assert DEFAULT.interfaces.router_bulkhead_pitch == 20.0

@@ -5,7 +5,6 @@ from __future__ import annotations
 import cadquery as cq
 
 from .geometry import box_at, cylinder_axis, rounded_panel_xz, rounded_rect_prism
-from .layout import packaging_layout
 from .parameters import DEFAULT, StationParameters
 
 
@@ -24,17 +23,46 @@ def _rounded_cutout_xz(
 def mac_extension_mount_positions(
     p: StationParameters = DEFAULT,
 ) -> tuple[tuple[float, float], ...]:
-    """Provisional two-screw flange pattern for each Mac port extension."""
+    """Four blind USB-C boss axes for the two accepted identical adapters."""
 
     i = p.interfaces
-    half_pitch = i.mac_extension_mount_vertical_pitch / 2.0
+    half_pitch = p.prototype_v4.usbc_mount_pitch / 2.0
     return tuple(
-        (x, z + dz)
-        for x, z in (
-            (i.hdmi_position_x, i.hdmi_position_z),
-            (i.usbc_position_x, i.usbc_position_z),
-        )
-        for dz in (-half_pitch, half_pitch)
+        (x + dx, i.usbc_position_z)
+        for x in (i.usbc_position_x, i.usbc_second_position_x)
+        for dx in (-half_pitch, half_pitch)
+    )
+
+
+def ethernet_mount_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
+    i = p.interfaces
+    v = p.prototype_v4
+    return tuple(
+        (i.ethernet_position_x + dx, i.ethernet_position_z + v.ethernet_mount_z_offset_selected)
+        for dx in (-v.ethernet_mount_pitch / 2.0, v.ethernet_mount_pitch / 2.0)
+    )
+
+
+def hdmi_mount_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float, float], ...]:
+    """Top-down M3 insert axes in the accepted 13 mm HDMI shelf."""
+
+    e = p.enclosure
+    i = p.interfaces
+    v = p.prototype_v4
+    shelf_top = i.hdmi_position_z - (
+        v.hdmi_connector_top_above_board - v.hdmi_cutout_height / 2.0
+    ) - v.hdmi_shelf_drop_selected
+    y = e.depth / 2.0 - v.hdmi_mount_axis_setback_selected
+    return tuple((i.hdmi_position_x + dx, y, shelf_top) for dx in (-v.hdmi_mount_pitch / 2.0, v.hdmi_mount_pitch / 2.0))
+
+
+def router_bulkhead_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
+    """Mobile/Wi-Fi/Mobile/Mobile/Wi-Fi/Mobile bulkhead row."""
+
+    i = p.interfaces
+    return tuple(
+        ((index - 2.5) * i.router_bulkhead_pitch + i.router_interface_center_x, i.router_bulkhead_z)
+        for index in range(6)
     )
 
 
@@ -95,16 +123,104 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
     )
     part = part.cut(bezel_seat)
 
-    # Provisional two-screw flanged extensions are selected for HDMI and USB-C
-    # because exact Mac native-port coordinates and cable overmoulds were not
-    # supplied.  The keyed opening reacts rotation; the explicit through-holes
-    # transfer insertion loads into the removable panel through selected flange
-    # screws/locking hardware rather than into the native Mac ports.
-    hdmi = _rounded_cutout_xz(i.hdmi_cutout_width, i.hdmi_cutout_height, 2.0, i.hdmi_position_x, i.hdmi_position_z, cut_y, cut_d)
-    usbc = _rounded_cutout_xz(i.usbc_cutout_width, i.usbc_cutout_height, 2.2, i.usbc_position_x, i.usbc_position_z, cut_y, cut_d)
-    part = part.cut(hdmi).cut(usbc)
-    for x, z in mac_extension_mount_positions(p):
-        part = part.cut(cylinder_axis(f.m3_clearance_diameter / 2.0, cut_d, (x, cut_y, z), (0, 1, 0)))
+    # V7 rear-I/O geometry: one Ethernet flange, one horizontal top-down HDMI
+    # board, and two identical inside-mounted USB-C boards.  Only connector
+    # mouths and the Ethernet flange screws penetrate the cosmetic panel.
+    v = p.prototype_v4
+    ethernet = _rounded_cutout_xz(
+        v.ethernet_cutout_width + 2.0 * v.cutout_allowance,
+        v.ethernet_cutout_height + 2.0 * v.cutout_allowance,
+        1.2,
+        i.ethernet_position_x,
+        i.ethernet_position_z,
+        cut_y,
+        cut_d,
+    )
+    part = part.cut(ethernet)
+    for x, z in ethernet_mount_positions(p):
+        part = part.cut(
+            cylinder_axis(
+                (v.ethernet_mount_hole_diameter + v.mounting_hole_allowance) / 2.0,
+                cut_d,
+                (x, cut_y, z),
+                (0, 1, 0),
+            )
+        )
+
+    hdmi = _rounded_cutout_xz(
+        i.hdmi_cutout_width,
+        i.hdmi_cutout_height,
+        1.5,
+        i.hdmi_position_x,
+        i.hdmi_position_z,
+        cut_y,
+        cut_d,
+    )
+    part = part.cut(hdmi)
+    shelf_top = hdmi_mount_positions(p)[0][2]
+    shelf_depth = v.hdmi_shelf_depth_selected
+    hdmi_shelf = box_at(
+        41.5,
+        shelf_depth,
+        7.0,
+        (i.hdmi_position_x, y0 - shelf_depth / 2.0, shelf_top - 3.5),
+    )
+    part = part.union(hdmi_shelf)
+    for x, y, z in hdmi_mount_positions(p):
+        part = part.cut(
+            cylinder_axis(
+                f.m3_insert_hole_diameter / 2.0,
+                f.insert_depth + 0.2,
+                (x, y, z + 0.01),
+                (0, 0, -1),
+            )
+        )
+
+    usb_boss_face_y = y0 - v.usbc_board_standoff_selected
+    for usb_x in (i.usbc_position_x, i.usbc_second_position_x):
+        bridge = box_at(
+            v.usbc_mount_bridge_width,
+            v.usbc_board_standoff_selected,
+            v.usbc_mount_bridge_height,
+            (usb_x, y0 - v.usbc_board_standoff_selected / 2.0, i.usbc_position_z),
+        )
+        part = part.union(bridge)
+        connector_tunnel = _rounded_cutout_xz(
+            i.usbc_cutout_width,
+            i.usbc_cutout_height,
+            i.usbc_cutout_height / 2.0 - 0.1,
+            usb_x,
+            i.usbc_position_z,
+            usb_boss_face_y - 1.0,
+            e.depth / 2.0 - usb_boss_face_y + 2.0,
+        )
+        part = part.cut(connector_tunnel)
+        for dx in (-v.usbc_mount_pitch / 2.0, v.usbc_mount_pitch / 2.0):
+            boss_x = usb_x + dx
+            boss = cylinder_axis(
+                f.m3_boss_diameter / 2.0,
+                v.usbc_board_standoff_selected,
+                (boss_x, usb_boss_face_y, i.usbc_position_z),
+                (0, 1, 0),
+            )
+            insert = cylinder_axis(
+                f.m3_insert_hole_diameter / 2.0,
+                f.insert_depth + 0.2,
+                (boss_x, usb_boss_face_y - 0.01, i.usbc_position_z),
+                (0, 1, 0),
+            )
+            part = part.union(boss).cut(insert)
+        reinforcement_pocket = box_at(
+            v.usbc_reinforcement_pocket_width_selected,
+            v.usbc_reinforcement_pocket_depth_selected + 0.2,
+            v.usbc_reinforcement_pocket_height_selected,
+            (
+                usb_x,
+                usb_boss_face_y + (v.usbc_reinforcement_pocket_depth_selected - 0.2) / 2.0,
+                i.usbc_position_z,
+            ),
+        )
+        part = part.cut(reinforcement_pocket)
 
     # Clearance around the *fixed* C8 island, which belongs to the closed power
     # compartment.  Rear-panel removal therefore does not move or uncover live
@@ -163,22 +279,24 @@ def router_interface_bezel(p: StationParameters = DEFAULT) -> cq.Workplane:
     part = face.union(insert)
     cut_y = y0 - 1.0
     cut_d = i.router_bezel_thickness + 2.0
-    layout = packaging_layout(p)
-    sma_z = layout.router_center[2] - c.router_height / 2.0 + 12.0
-    # One radiused RF service window follows the six native connector centres.
-    # Separate Ø14 mm holes at the official 14.8 mm pitch would leave fragile
-    # 0.8 mm webs, below the printable wall requirement.
-    rf_window_width = 5.0 * c.router_sma_pitch + c.router_sma_clearance_diameter
-    rf_window = _rounded_cutout_xz(
-        rf_window_width,
-        i.router_rf_window_height,
-        5.0,
-        i.router_interface_center_x,
-        sma_z,
-        cut_y,
-        cut_d,
-    )
-    part = part.cut(rf_window)
+    # Six screw-mounted bulkheads replace the former direct RF window and both
+    # side antenna docks.  The row preserves the router's Mobile/Wi-Fi sequence
+    # at a wider 20 mm service pitch.  Inner Ø12 rebates leave the physically
+    # selected 2.0 mm clamping land for the 6.6 mm holes.
+    for x, z in router_bulkhead_positions(p):
+        rebate = cylinder_axis(
+            6.0,
+            i.router_bezel_thickness - p.prototype_v4.rf_bulkhead_wall_selected + 0.1,
+            (x, y0 - 0.1, z),
+            (0, 1, 0),
+        )
+        hole = cylinder_axis(
+            p.prototype_v4.rf_bulkhead_hole_selected / 2.0,
+            cut_d,
+            (x, cut_y, z),
+            (0, 1, 0),
+        )
+        part = part.cut(rebate).cut(hole)
     # Ethernet jacks use provisional two-screw flanged extensions because the
     # native LAN/WAN face points toward the enclosure front, opposite the six
     # direct RF ports.  The replaceable bezel carries the explicit through-hole

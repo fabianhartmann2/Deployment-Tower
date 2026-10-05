@@ -1,4 +1,4 @@
-"""Reinforced cap and positively screw-mounted removable handle."""
+"""Sliding top cap and positively screw-mounted removable handle."""
 
 from __future__ import annotations
 
@@ -9,17 +9,10 @@ from .parameters import DEFAULT, StationParameters
 
 
 def cap_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
-    """General cap screws plus two screws directly over the handle spines."""
+    """Two internal anti-slide lock axes; neither opens through the top face."""
 
     del p
-    return (
-        (-61.0, -61.0),
-        (61.0, -61.0),
-        (-61.0, 61.0),
-        (61.0, 61.0),
-        (-54.0, -68.0),
-        (54.0, -68.0),
-    )
+    return ((-55.0, 0.0), (55.0, 0.0))
 
 
 def handle_mount_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
@@ -31,6 +24,61 @@ def handle_mount_fastener_positions(p: StationParameters = DEFAULT) -> tuple[tup
         (anchor_x + offset_x, anchor_y)
         for anchor_x in (-h.anchor_spacing / 2.0, h.anchor_spacing / 2.0)
         for offset_x in (-h.fastener_offset_x, h.fastener_offset_x)
+    )
+
+
+def cap_dovetail_y_positions(p: StationParameters = DEFAULT) -> tuple[float, float]:
+    """Transverse rails let the cap slide on from either side."""
+
+    del p
+    return (-68.0, 68.0)
+
+
+def _dovetail_along_x(
+    bottom_width: float,
+    top_width: float,
+    height: float,
+    half_length: float,
+    z0: float,
+    y: float,
+) -> cq.Workplane:
+    """Trapezoidal rail/groove profile in YZ, extruded along X."""
+
+    points = (
+        (-bottom_width / 2.0, z0),
+        (bottom_width / 2.0, z0),
+        (top_width / 2.0, z0 + height),
+        (-top_width / 2.0, z0 + height),
+    )
+    return cq.Workplane("YZ").polyline(points).close().extrude(half_length, both=True).translate((0.0, y, 0.0))
+
+
+def cap_dovetail_rail(y: float, p: StationParameters = DEFAULT) -> cq.Workplane:
+    """Male shell rail using the physically selected dovetail profile."""
+
+    v = p.prototype_v4
+    return _dovetail_along_x(
+        v.dovetail_rail_bottom_width,
+        v.dovetail_rail_top_width,
+        v.dovetail_rail_height,
+        75.0,
+        p.enclosure.shell_top,
+        y,
+    )
+
+
+def cap_dovetail_groove(y: float, p: StationParameters = DEFAULT) -> cq.Workplane:
+    """Female cap groove with the selected 0.10 mm per-side allowance."""
+
+    v = p.prototype_v4
+    clearance = v.dovetail_clearance_selected
+    return _dovetail_along_x(
+        v.dovetail_rail_bottom_width + 2.0 * clearance,
+        v.dovetail_rail_top_width + 2.0 * clearance,
+        v.dovetail_rail_height + clearance,
+        p.enclosure.width / 2.0 + 1.0,
+        p.enclosure.shell_top - 0.1,
+        y,
     )
 
 
@@ -59,42 +107,47 @@ def upper_cap(p: StationParameters = DEFAULT) -> cq.Workplane:
         longitudinal_tie = box_at(12.0, h.foot_depth + 12.0, 8.0, (x, anchor_y, z0 + 4.0))
         cap = cap.union(bearing_pad).union(longitudinal_tie)
 
-    # Four blind top-entry M3 insert pilots sit inside full-depth bosses.  The
-    # two axes per foot are outside the leg footprint, so every low-head screw
-    # seats on the full 5 mm foot and remains accessible after installation.
+    # The handle screws enter from the cap underside.  Deep internal head
+    # pockets leave 9 mm of cap grip under each broad foot while the top face
+    # and handle feet hide every fastener from view.
     for x, y in handle_mount_fastener_positions(p):
-        boss = (
-            cq.Workplane("XY")
-            .center(x, y)
-            .circle(f.m3_boss_diameter / 2.0)
-            .extrude(e.cap_height)
-            .translate((0, 0, z0))
+        clearance = cylinder_axis(
+            f.m3_clearance_diameter / 2.0,
+            e.cap_height + 2.0,
+            (x, y, z0 - 1.0),
+            (0, 0, 1),
         )
-        insert = cylinder_axis(
-            f.m3_insert_hole_diameter / 2.0,
-            f.insert_depth + 0.2,
-            (x, y, e.height + 0.1),
-            (0, 0, -1),
+        head_access = cylinder_axis(
+            f.m3_low_head_recess_diameter / 2.0,
+            4.0,
+            (x, y, z0 - 1.0),
+            (0, 0, 1),
         )
-        cap = cap.union(boss).cut(insert)
+        cap = cap.cut(clearance).cut(head_access)
 
-    # Four perimeter screws retain the cap; two additional screws sit directly
-    # over continuous front structural spines in the upper/lower shells.  Each
-    # hole has an integral compression sleeve down to the shell-boss datum, so a
-    # tightened screw bears through solid material instead of flexing the 4 mm
-    # top skin across the hollow cap cavity.
-    sleeve_height = e.cap_height - 4.0
+    # Two blind M4 inserts lock the sideways cap motion from inside the shell.
+    # The dovetails—not these screws—carry vertical handle load.
     for x, y in cap_fastener_positions(p):
-        sleeve = (
+        lock_boss = (
             cq.Workplane("XY")
             .center(x, y)
             .circle(f.m4_boss_diameter / 2.0)
-            .extrude(sleeve_height)
+            .extrude(8.0)
             .translate((0, 0, z0))
         )
-        cap = cap.union(sleeve)
-        hole = cq.Workplane("XY").center(x, y).circle(f.m4_clearance_diameter / 2.0).extrude(e.cap_height + 2.0).translate((0, 0, z0 - 1.0))
-        cap = cap.cut(hole)
+        insert = cylinder_axis(
+            f.m4_insert_hole_diameter / 2.0,
+            f.insert_depth + 0.7,
+            (x, y, z0 - 0.1),
+            (0, 0, 1),
+        )
+        cap = cap.union(lock_boss).cut(insert)
+
+    # Selected 0.10 mm/side V-grooves retain the cap vertically.  They remain
+    # open at both side edges, so the handle can first be bolted to the detached
+    # cap and the complete subassembly then slid onto the shell.
+    for y in cap_dovetail_y_positions(p):
+        cap = cap.cut(cap_dovetail_groove(y, p))
     return cap
 
 
@@ -126,13 +179,13 @@ def removable_handle(p: StationParameters = DEFAULT) -> cq.Workplane:
             handle = handle.union(gusset)
 
     for x, y in handle_mount_fastener_positions(p):
-        clearance = cylinder_axis(
-            f.m3_clearance_diameter / 2.0,
-            h.foot_thickness + 1.0,
-            (x, y, e.height - 0.5),
+        insert = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0,
+            f.insert_depth + 0.2,
+            (x, y, e.height - 0.1),
             (0, 0, 1),
         )
-        handle = handle.cut(clearance)
+        handle = handle.cut(insert)
 
     grip_z = e.height + h.rise + h.grip_height / 2.0
     grip = rounded_rect_prism(h.grip_span, h.grip_depth, h.grip_height, min(7.0, h.grip_depth / 2.0 - 0.5), grip_z - h.grip_height / 2.0).translate((0, anchor_y, 0))
@@ -143,25 +196,25 @@ def removable_handle(p: StationParameters = DEFAULT) -> cq.Workplane:
 
 
 def handle_mount_coupon(p: StationParameters = DEFAULT) -> cq.Workplane:
-    """One-foot M3 mounting coupon with the production grip and pilot depths."""
+    """One-foot underside-screw coupon with production grip and pilot depths."""
 
     h = p.handle
     f = p.fasteners
     cap_sample = box_at(h.foot_width + 8.0, h.foot_depth + 4.0, 12.0, (0.0, 0.0, 6.0))
-    foot_sample = box_at(h.foot_width, h.foot_depth, h.foot_thickness, (54.0, 0.0, h.foot_thickness / 2.0))
+    foot_sample = box_at(h.foot_width, h.foot_depth, h.foot_thickness, (54.0, 0.0, 12.0 + h.foot_thickness / 2.0))
     for x in (-h.fastener_offset_x, h.fastener_offset_x):
         insert = cylinder_axis(
             f.m3_insert_hole_diameter / 2.0,
             f.insert_depth + 0.2,
-            (x, 0.0, 12.1),
-            (0, 0, -1),
-        )
-        cap_sample = cap_sample.cut(insert)
-        clearance = cylinder_axis(
-            f.m3_clearance_diameter / 2.0,
-            h.foot_thickness + 1.0,
-            (54.0 + x, 0.0, -0.5),
+            (54.0 + x, 0.0, 11.9),
             (0, 0, 1),
         )
-        foot_sample = foot_sample.cut(clearance)
+        clearance = cylinder_axis(
+            f.m3_clearance_diameter / 2.0,
+            13.0,
+            (x, 0.0, -0.5),
+            (0, 0, 1),
+        )
+        cap_sample = cap_sample.cut(clearance)
+        foot_sample = foot_sample.cut(insert)
     return cap_sample.union(foot_sample)

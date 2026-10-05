@@ -18,7 +18,7 @@ from deployment_station.power_compartment import (
     power_compartment_cover,
     power_mount_fastener_positions,
 )
-from deployment_station.rear_panel import mac_extension_mount_positions
+from deployment_station.rear_panel import ethernet_mount_positions, mac_extension_mount_positions
 from deployment_station.router_tray import (
     router_rear_retainer_screw_positions,
     router_support_pad_positions,
@@ -29,12 +29,13 @@ from deployment_station.validation import (
     _intersection_volume,
     _sampled_translation_clearance,
     apv_top_service_mount_check,
+    cap_dovetail_engagement_check,
     c8_terminal_passage_check,
     extension_mount_hole_checks,
     fastener_stack_checks,
     geometry_checks,
     handle_structural_mount_check,
-    logo_screw_mount_check,
+    logo_magnet_mount_check,
     mac_base_pad_stack_check,
     mac_ac_corridor_packaging_check,
     mac_ac_gland_passage_check,
@@ -44,9 +45,9 @@ from deployment_station.validation import (
     power_tie_bridge_floor_check,
     rear_sill_reinforcement_check,
     router_screw_retainer_check,
+    router_bulkhead_geometry_check,
     router_support_stack_check,
     shell_seam_access_check,
-    wifi_dock_capture_geometry_check,
 )
 
 
@@ -70,8 +71,6 @@ def test_required_printable_part_breakdown_exists():
         "router_interface_bezel",
         "upper_cap",
         "removable_handle",
-        "wifi_dock_left",
-        "wifi_dock_right",
         "logo_panel_left",
         "logo_panel_right",
         "logo_panel_blank_template",
@@ -307,25 +306,29 @@ def test_lower_shell_rear_sill_is_tied_to_internal_angle_beam(validation_parts):
     assert result.status == "PASS", result.detail
 
 
-def test_logo_mount_check_rejects_a_blocked_panel_hole(validation_parts):
-    assert logo_screw_mount_check(DEFAULT, validation_parts).status == "PASS"
+def test_logo_magnet_check_rejects_a_blocked_panel_pocket(validation_parts):
+    assert logo_magnet_mount_check(DEFAULT, validation_parts).status == "PASS"
     panel = validation_parts["logo_panel_right"]
     blocked = cylinder_axis(
-        DEFAULT.fasteners.m3_clearance_diameter / 2.0 - 0.1,
-        DEFAULT.logo.thickness + 0.2,
-        (DEFAULT.enclosure.width / 2.0 + 0.1, -DEFAULT.logo.fastener_offset_y, DEFAULT.logo.center_z),
+        DEFAULT.prototype_v4.magnet_diameter / 2.0,
+        DEFAULT.prototype_v4.panel_magnet_thickness,
+        (
+            DEFAULT.enclosure.width / 2.0 + 0.1,
+            -DEFAULT.logo.fastener_offset_y,
+            DEFAULT.logo.center_z,
+        ),
         (-1.0, 0.0, 0.0),
     )
     damaged = dict(validation_parts)
     damaged["logo_panel_right"] = panel.union(blocked)
-    assert logo_screw_mount_check(DEFAULT, damaged).status == "FAIL"
+    assert logo_magnet_mount_check(DEFAULT, damaged).status == "FAIL"
 
 
-def test_wifi_dock_capture_requires_small_bounded_arm_movement():
-    result = wifi_dock_capture_geometry_check(DEFAULT)
-    assert result.status == "PASS", result.detail
-    impossible_lips = replace(DEFAULT.wifi, clip_lip_intrusion=4.0)
-    assert wifi_dock_capture_geometry_check(replace(DEFAULT, wifi=impossible_lips)).status == "FAIL"
+def test_new_cap_and_bulkhead_interfaces_validate(validation_parts):
+    cap_result = cap_dovetail_engagement_check(DEFAULT, validation_parts)
+    rf_result = router_bulkhead_geometry_check(DEFAULT, validation_parts["router_interface_bezel"])
+    assert cap_result.status == "PASS", cap_result.detail
+    assert rf_result.status == "PASS", rf_result.detail
 
 
 def test_sampled_motion_check_detects_an_intermediate_obstruction():
@@ -351,9 +354,8 @@ def test_fastener_stack_checks_cover_all_screw_families_and_reject_wrong_lengths
         "fastener stack: removable base M3x14",
         "fastener stack: Mac cradle M3x10",
         "fastener stack: router tray M3x6",
-        "fastener stack: reinforced handle M3x10",
-        "fastener stack: logo panels M3x8",
-        "fastener stack: upper cap M4x18",
+        "fastener stack: underside-mounted handle M3x14",
+        "fastener stack: hidden sliding-cap lock M4x10",
         "fastener stack: structural shell seam M4x18",
         "fastener stack: power-compartment cover M3x8",
     }
@@ -366,10 +368,10 @@ def test_fastener_stack_checks_cover_all_screw_families_and_reject_wrong_lengths
         cradle_screw_length=8.0,
         router_tray_screw="M3x8",
         router_tray_screw_length=8.0,
-        logo_screw="M3x6",
-        logo_screw_length=6.0,
         handle_screw="M3x8",
         handle_screw_length=8.0,
+        cap_lock_screw="M4x8",
+        cap_lock_screw_length=8.0,
         structural_screw="M4x12",
         structural_screw_length=12.0,
     )
@@ -380,9 +382,8 @@ def test_fastener_stack_checks_cover_all_screw_families_and_reject_wrong_lengths
     assert wrong_results["fastener stack: removable base M3x14"] == "FAIL"
     assert wrong_results["fastener stack: Mac cradle M3x10"] == "FAIL"
     assert wrong_results["fastener stack: router tray M3x6"] == "FAIL"
-    assert wrong_results["fastener stack: reinforced handle M3x10"] == "FAIL"
-    assert wrong_results["fastener stack: logo panels M3x8"] == "FAIL"
-    assert wrong_results["fastener stack: upper cap M4x18"] == "FAIL"
+    assert wrong_results["fastener stack: underside-mounted handle M3x14"] == "FAIL"
+    assert wrong_results["fastener stack: hidden sliding-cap lock M4x10"] == "FAIL"
     assert wrong_results["fastener stack: structural shell seam M4x18"] == "FAIL"
     assert wrong_results["fastener stack: power-compartment cover M3x8"] == "PASS"
 
@@ -430,7 +431,7 @@ def test_pad_support_and_extension_mount_witnesses_reject_missing_geometry(valid
         validation_parts["router_compliant_pad_template"],
     ).status == "FAIL"
 
-    mount_x, mount_z = mac_extension_mount_positions(DEFAULT)[0]
+    mount_x, mount_z = ethernet_mount_positions(DEFAULT)[0]
     panel_y0 = DEFAULT.enclosure.depth / 2.0 - DEFAULT.enclosure.rear_panel_thickness
     blocked_axis = cylinder_axis(
         DEFAULT.fasteners.m3_clearance_diameter / 2.0 - 0.1,
@@ -456,8 +457,9 @@ def test_full_geometry_validation_has_no_failures():
     assert "handle four-screw reinforced mounting stack" in result_names
     assert "six-M4 hidden structural shell seam access" in result_names
     assert "rear-panel lower sill angle-beam reinforcement" in result_names
-    assert "logo panels four-screw replaceable mounting stack" in result_names
-    assert "Wi-Fi dock rounded-lip insertion geometry" in result_names
+    assert "logo panels concealed magnet retention geometry" in result_names
+    assert "top-cap selected dovetail engagement" in result_names
+    assert "six screw-mounted RF bulkhead interfaces" in result_names
     assert "C8 terminal tunnel/main-compartment passage" in result_names
     assert "sealed-floor raised power tie bridges" in result_names
     assert "Mac AC nominal gland aperture" in result_names
@@ -476,17 +478,18 @@ def test_full_geometry_validation_has_no_failures():
         "fastener stack: removable base M3x14",
         "fastener stack: Mac cradle M3x10",
         "fastener stack: router tray M3x6",
-        "fastener stack: reinforced handle M3x10",
-        "fastener stack: logo panels M3x8",
-        "fastener stack: upper cap M4x18",
+        "fastener stack: underside-mounted handle M3x14",
+        "fastener stack: hidden sliding-cap lock M4x10",
         "fastener stack: structural shell seam M4x18",
         "fastener stack: power-compartment cover M3x8",
-        "provisional HDMI/USB-C two-fastener extension holes",
+        "accepted external-Ethernet two-fastener flange holes",
+        "accepted HDMI top-down blind M3 mounts",
+        "accepted dual USB-C rear-mounted blind bosses",
         "provisional dual-RJ45 two-fastener extension holes",
         "rear panel+bezel sampled +Y service sweep",
         "Mac+cradle sampled downward service sweep",
         "RUTM30 sampled rearward service sweep (screw retainers removed)",
-        "RF aperture analytic connector-centre span",
+        "six screw-mounted RF bulkhead interfaces",
         "as-built cable/forbidden-geometry routing and bend mock-up",
         "physical RF plug/finger/tool access",
         "local minimum-wall scan of all generated geometry",
@@ -498,20 +501,21 @@ def test_full_geometry_validation_has_no_failures():
         "fastener stack: removable base M3x14",
         "fastener stack: Mac cradle M3x10",
         "fastener stack: router tray M3x6",
-        "fastener stack: reinforced handle M3x10",
-        "fastener stack: logo panels M3x8",
-        "fastener stack: upper cap M4x18",
+        "fastener stack: underside-mounted handle M3x14",
+        "fastener stack: hidden sliding-cap lock M4x10",
         "fastener stack: structural shell seam M4x18",
         "fastener stack: power-compartment cover M3x8",
     } <= result_names
     assert {
-        "provisional HDMI/USB-C two-fastener extension holes",
+        "accepted external-Ethernet two-fastener flange holes",
+        "accepted HDMI top-down blind M3 mounts",
+        "accepted dual USB-C rear-mounted blind bosses",
         "provisional dual-RJ45 two-fastener extension holes",
     } <= result_names
     assert "rear panel+bezel sampled +Y service sweep" in result_names
     assert "Mac+cradle sampled downward service sweep" in result_names
     assert "RUTM30 sampled rearward service sweep (screw retainers removed)" in result_names
-    assert "RF aperture analytic connector-centre span" in result_names
+    assert "six screw-mounted RF bulkhead interfaces" in result_names
     assert "physical RF plug/finger/tool access" in result_names
     assert "local minimum-wall scan of all generated geometry" in result_names
     assert "as-built cable/forbidden-geometry routing and bend mock-up" in result_names

@@ -16,8 +16,14 @@ from .assembly import part_definitions, printable_parts
 from .components import ReferenceModel, build_reference_model, mac_intake_exclusion, router_source_kind
 from .coupons import fit_coupons
 from .geometry import bbox_dimensions, box_at, compound, cylinder_axis
-from .handle import cap_fastener_positions, handle_mount_fastener_positions
-from .logo_panel import logo_mount_positions
+from .handle import (
+    cap_dovetail_groove,
+    cap_dovetail_rail,
+    cap_dovetail_y_positions,
+    cap_fastener_positions,
+    handle_mount_fastener_positions,
+)
+from .logo_panel import logo_magnet_positions
 from .mac_mount import (
     mac_cradle_fastener_positions,
     mac_release_rail_datums,
@@ -33,7 +39,13 @@ from .power_compartment import (
     power_mount_fastener_positions,
     power_tie_bridge_centres,
 )
-from .rear_panel import mac_extension_mount_positions, router_extension_mount_positions
+from .rear_panel import (
+    ethernet_mount_positions,
+    hdmi_mount_positions,
+    mac_extension_mount_positions,
+    router_bulkhead_positions,
+    router_extension_mount_positions,
+)
 from .router_tray import (
     router_rear_retainer_screw_positions,
     router_support_pad_positions,
@@ -399,7 +411,7 @@ def handle_structural_mount_check(
     p: StationParameters,
     parts: Mapping[str, cq.Workplane],
 ) -> CheckResult:
-    """Verify the four-screw handle load path and broad cap bearing interfaces."""
+    """Verify the four hidden underside screws and broad bearing interfaces."""
 
     handle = parts["removable_handle"]
     cap = parts["upper_cap"]
@@ -408,34 +420,34 @@ def handle_structural_mount_check(
     e = p.enclosure
     axes = handle_mount_fastener_positions(p)
     axis_obstructions: list[float] = []
-    boss_witnesses: list[float] = []
+    insert_witnesses: list[float] = []
     outer_radius = f.m3_boss_diameter / 2.0 - 0.1
     inner_radius = f.m3_insert_hole_diameter / 2.0 + 0.1
     expected_ring = pi * (outer_radius**2 - inner_radius**2)
     for x, y in axes:
-        handle_axis = cylinder_axis(
+        cap_axis = cylinder_axis(
             f.m3_clearance_diameter / 2.0 - 0.05,
-            h.foot_thickness + 0.2,
-            (x, y, e.height - 0.1),
+            e.cap_height + 0.2,
+            (x, y, e.shell_top - 0.1),
             (0, 0, 1),
         )
-        cap_axis = cylinder_axis(
+        handle_axis = cylinder_axis(
             f.m3_insert_hole_diameter / 2.0 - 0.05,
             f.insert_depth - 0.2,
-            (x, y, e.height - f.insert_depth + 0.1),
+            (x, y, e.height + 0.1),
             (0, 0, 1),
         )
         ring = _annular_axis_witness(
             outer_radius,
             inner_radius,
             1.0,
-            (x, y, e.height - 3.5),
+            (x, y, e.height + 1.0),
             (0, 0, 1),
         )
         axis_obstructions.append(
-            _intersection_volume(handle_axis, handle) + _intersection_volume(cap_axis, cap)
+            _intersection_volume(cap_axis, cap) + _intersection_volume(handle_axis, handle)
         )
-        boss_witnesses.append(_intersection_volume(ring, cap))
+        insert_witnesses.append(_intersection_volume(ring, handle))
 
     # Sample each foot over nearly its full plan area on both sides of the
     # contact plane.  The small bore deductions are acceptable; a missing foot
@@ -455,14 +467,15 @@ def handle_structural_mount_check(
         )
 
     installed_overlap = _intersection_volume(handle, cap)
-    screw_penetration = f.handle_screw_length - h.foot_thickness
+    cap_grip = e.cap_height - 3.0
+    screw_penetration = f.handle_screw_length - cap_grip
     design_load_n = h.provisional_complete_mass_kg * 9.80665 * h.design_static_factor
     nominal_per_screw_n = design_load_n / len(axes)
     sufficient = (
         len(axes) == 4
         and installed_overlap <= INTERSECTION_VOLUME_TOLERANCE_MM3
         and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
-        and min(boss_witnesses) >= 0.95 * expected_ring
+        and min(insert_witnesses) >= 0.95 * expected_ring
         and min(bearing_witnesses) >= 0.85 * expected_bearing
         and f.minimum_thread_engagement <= screw_penetration <= f.insert_depth
         and h.design_static_factor >= 4.0
@@ -470,12 +483,12 @@ def handle_structural_mount_check(
     return _check(
         "handle four-screw reinforced mounting stack",
         sufficient,
-        f"four clear M3 axes, two {h.foot_width:.0f} x {h.foot_depth:.0f} x {h.foot_thickness:.0f} mm feet, "
-        f"full-depth cap bosses/pads, and {screw_penetration:.1f} mm nominal engagement; "
+        f"four hidden underside M3 axes, two {h.foot_width:.0f} x {h.foot_depth:.0f} x {h.foot_thickness:.0f} mm feet, "
+        f"broad cap pads, and {screw_penetration:.1f} mm nominal handle-insert engagement; "
         f"CAD design target {design_load_n:.1f} N total ({nominal_per_screw_n:.1f} N/screw) at "
         f"{h.design_static_factor:.0f}x provisional assembled mass",
         f"axes={len(axes)}, installed overlap={installed_overlap:.3f}, axis obstructions={axis_obstructions}, "
-        f"boss witnesses={boss_witnesses}, bearing witnesses={bearing_witnesses}, engagement={screw_penetration:.2f}, "
+        f"insert witnesses={insert_witnesses}, bearing witnesses={bearing_witnesses}, engagement={screw_penetration:.2f}, "
         f"factor={h.design_static_factor:.2f}",
     )
 
@@ -633,67 +646,68 @@ def rear_sill_reinforcement_check(
         f"flange={flange_volume:.2f}/{expected_flange:.2f}, web={web_volume:.2f}/{expected_web:.2f}, "
         f"boss ties={tie_volumes}/{expected_tie:.2f} mm^3",
     )
-def logo_screw_mount_check(
+def logo_magnet_mount_check(
     p: StationParameters,
     parts: Mapping[str, cq.Workplane],
 ) -> CheckResult:
-    """Verify both logo panels have two clear, supported screw axes."""
+    """Verify the four paired blind magnet pockets and installed panel gaps."""
 
     e = p.enclosure
-    f = p.fasteners
     logo = p.logo
+    v = p.prototype_v4
     shell = parts["upper_shell"]
-    axis_obstructions: list[float] = []
-    boss_witnesses: list[float] = []
+    pocket_obstructions: list[float] = []
+    receiver_witnesses: list[float] = []
     installed_overlaps: list[float] = []
-    outer_radius = f.m3_boss_diameter / 2.0 - 0.1
-    inner_radius = f.m3_insert_hole_diameter / 2.0 + 0.1
+    pocket_radius = (v.magnet_diameter + v.magnet_pocket_diametral_clearance) / 2.0
+    outer_radius = pocket_radius + 1.8
+    inner_radius = pocket_radius + 0.1
     expected_ring = pi * (outer_radius**2 - inner_radius**2)
     pocket_inner = e.width / 2.0 - logo.thickness - p.fits.logo_panel_per_side
     for side_name, side in (("left", -1.0), ("right", 1.0)):
         panel = parts[f"logo_panel_{side_name}"]
         installed_overlaps.append(_intersection_volume(panel, shell))
-        for _x, y, z in logo_mount_positions(side_name, p):
-            panel_axis = cylinder_axis(
-                f.m3_clearance_diameter / 2.0 - 0.05,
-                logo.thickness + 0.2,
-                (side * (e.width / 2.0 + 0.1), y, z),
-                (-side, 0, 0),
+        panel_inner = side * (e.width / 2.0 - logo.thickness)
+        for _x, y, z in logo_magnet_positions(side_name, p):
+            panel_pocket = cylinder_axis(
+                pocket_radius - 0.05,
+                v.panel_magnet_thickness + 0.05,
+                (panel_inner + side * 0.05, y, z),
+                (side, 0, 0),
             )
-            shell_axis = cylinder_axis(
-                f.m3_insert_hole_diameter / 2.0 - 0.05,
-                f.insert_depth - 0.2,
-                (side * (e.width / 2.0 - logo.thickness + 0.1), y, z),
+            shell_pocket = cylinder_axis(
+                pocket_radius - 0.05,
+                v.magnet_thickness + 0.05,
+                (side * (pocket_inner - 0.05), y, z),
                 (-side, 0, 0),
             )
             ring = _annular_axis_witness(
                 outer_radius,
                 inner_radius,
                 1.0,
-                (side * (pocket_inner - 3.5), y, z),
+                (side * (pocket_inner - 1.8), y, z),
                 (side, 0, 0),
             )
-            axis_obstructions.append(
-                _intersection_volume(panel_axis, panel) + _intersection_volume(shell_axis, shell)
+            pocket_obstructions.append(
+                _intersection_volume(panel_pocket, panel) + _intersection_volume(shell_pocket, shell)
             )
-            boss_witnesses.append(_intersection_volume(ring, shell))
+            receiver_witnesses.append(_intersection_volume(ring, shell))
 
-    penetration = f.logo_screw_length - logo.thickness
     passed = (
-        len(axis_obstructions) == 4
+        len(pocket_obstructions) == 4
         and max(installed_overlaps) <= INTERSECTION_VOLUME_TOLERANCE_MM3
-        and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
-        and min(boss_witnesses) >= 0.95 * expected_ring
-        and min(penetration, f.insert_depth) >= f.minimum_thread_engagement
-        and penetration <= f.insert_depth + 0.7
+        and max(pocket_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(receiver_witnesses) >= 0.90 * expected_ring
+        and logo.thickness - (v.panel_magnet_thickness + v.magnet_pocket_depth_allowance) >= 0.6
+        and v.magnet_cover_skin >= 0.6
     )
     return _check(
-        "logo panels four-screw replaceable mounting stack",
+        "logo panels concealed magnet retention geometry",
         passed,
-        f"two outward-accessible M3 screws per panel; four clear axes, solid shell-webbed bosses, "
-        f"{min(penetration, f.insert_depth):.1f} mm nominal insert overlap, and zero installed interference",
-        f"axis obstructions={axis_obstructions}, boss witnesses={boss_witnesses}, "
-        f"panel/shell overlaps={installed_overlaps}, penetration={penetration:.2f}",
+        "two Ø6.2 blind magnet pockets per panel and shell receiver; 3.0 mm shell magnets, "
+        "1.5 mm panel magnets, >=0.6 mm skins, recessed location, and zero installed interference",
+        f"pocket obstructions={pocket_obstructions}, receiver witnesses={receiver_witnesses}, "
+        f"panel/shell overlaps={installed_overlaps}",
     )
 
 
@@ -725,6 +739,97 @@ def wifi_dock_capture_geometry_check(p: StationParameters) -> CheckResult:
         f"base cavity={base_cavity:.2f}, base mouth={base_mouth:.2f}, base arm movement={base_arm_movement:.2f}, "
         f"stem cavity={stem_cavity:.2f}, stem mouth={stem_mouth:.2f}, stem arm movement={stem_arm_movement:.2f}, "
         f"lip radius/intrusion={w.clip_lip_radius:.2f}/{w.clip_lip_intrusion:.2f}",
+    )
+
+
+def cap_dovetail_engagement_check(
+    p: StationParameters,
+    parts: Mapping[str, cq.Workplane],
+) -> CheckResult:
+    """Verify both selected sliding rails are present and clear their cap grooves."""
+
+    shell = parts["upper_shell"]
+    cap = parts["upper_cap"]
+    v = p.prototype_v4
+    rail_witnesses: list[float] = []
+    groove_obstructions: list[float] = []
+    for y in cap_dovetail_y_positions(p):
+        rail = cap_dovetail_rail(y, p)
+        groove = cap_dovetail_groove(y, p)
+        rail_witnesses.append(_intersection_volume(rail, shell))
+        groove_obstructions.append(_intersection_volume(groove, cap))
+
+    installed_overlap = _intersection_volume(shell, cap)
+    expected_rail = cap_dovetail_rail(0.0, p).val().Volume()
+    passed = (
+        len(rail_witnesses) == 2
+        and min(rail_witnesses) >= 0.95 * expected_rail
+        and max(groove_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and installed_overlap <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and abs(v.dovetail_clearance_selected - 0.10) <= 1e-6
+        and len(cap_fastener_positions(p)) == 2
+    )
+    return _check(
+        "top-cap selected dovetail engagement",
+        passed,
+        "two full-width transverse rails use the physically selected 0.10 mm/side clearance; "
+        "the cap slides laterally without modeled interference and two concealed M4 locks prevent drift",
+        f"rail witnesses={rail_witnesses}, groove obstructions={groove_obstructions}, "
+        f"installed overlap={installed_overlap:.3f}, clearance={v.dovetail_clearance_selected:.3f}",
+    )
+
+
+def router_bulkhead_geometry_check(
+    p: StationParameters,
+    router_bezel: cq.Workplane,
+) -> CheckResult:
+    """Verify six thinned-wall RF bulkhead holes and their clamping lands."""
+
+    e = p.enclosure
+    i = p.interfaces
+    v = p.prototype_v4
+    y_outer_land = e.depth / 2.0 - v.rf_bulkhead_wall_selected
+    hole_obstructions: list[float] = []
+    land_witnesses: list[float] = []
+    land_outer = 5.8
+    land_inner = v.rf_bulkhead_hole_selected / 2.0 + 0.1
+    land_length = v.rf_bulkhead_wall_selected - 0.2
+    expected_land = pi * (land_outer**2 - land_inner**2) * land_length
+    for x, z in router_bulkhead_positions(p):
+        hole = cylinder_axis(
+            v.rf_bulkhead_hole_selected / 2.0 - 0.05,
+            i.router_bezel_thickness + 0.2,
+            (x, e.depth / 2.0 - i.router_bezel_thickness - 0.1, z),
+            (0, 1, 0),
+        )
+        land = _annular_axis_witness(
+            land_outer,
+            land_inner,
+            land_length,
+            (x, y_outer_land + 0.1, z),
+            (0, 1, 0),
+        )
+        hole_obstructions.append(_intersection_volume(hole, router_bezel))
+        land_witnesses.append(_intersection_volume(land, router_bezel))
+
+    positions = router_bulkhead_positions(p)
+    passed = (
+        len(positions) == 6
+        and max(hole_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(land_witnesses) >= 0.90 * expected_land
+        and abs(v.rf_bulkhead_hole_selected - 6.6) <= 1e-6
+        and abs(v.rf_bulkhead_wall_selected - 2.0) <= 1e-6
+        and all(
+            abs(positions[index + 1][0] - positions[index][0] - i.router_bulkhead_pitch) <= 1e-6
+            for index in range(5)
+        )
+    )
+    return _check(
+        "six screw-mounted RF bulkhead interfaces",
+        passed,
+        "six Ø6.6 mm holes at 20 mm pitch retain 2.0 mm outer clamping lands for the four mobile and two Wi-Fi bulkheads",
+        f"positions={positions}, hole obstructions={hole_obstructions}, land witnesses={land_witnesses}, "
+        f"expected land={expected_land:.2f}",
     )
 
 
@@ -1073,8 +1178,10 @@ def rear_service_removal_sweep_check(
     moving = {
         "rear_panel": parts["rear_panel"],
         "router_interface_bezel": parts["router_interface_bezel"],
+        "external_ethernet_panel_extension": model.hardware["external_ethernet_panel_extension"],
         "mac_hdmi_panel_extension": model.hardware["mac_hdmi_panel_extension"],
-        "mac_usbc_panel_extension": model.hardware["mac_usbc_panel_extension"],
+        "mac_usbc_panel_extension_1": model.hardware["mac_usbc_panel_extension_1"],
+        "mac_usbc_panel_extension_2": model.hardware["mac_usbc_panel_extension_2"],
         "router_lan_panel_extension": model.hardware["router_lan_panel_extension"],
         "router_wan_panel_extension": model.hardware["router_wan_panel_extension"],
     }
@@ -1090,8 +1197,6 @@ def rear_service_removal_sweep_check(
         "power_compartment_cover",
         "upper_cap",
         "removable_handle",
-        "wifi_dock_left",
-        "wifi_dock_right",
         "logo_panel_left",
         "logo_panel_right",
     )
@@ -1107,7 +1212,7 @@ def rear_service_removal_sweep_check(
         moving,
         stationary,
         translations,
-        "+Y from 0 to 80 mm with the four disconnected extension placeholders moving with the panel/bezel",
+        "+Y from 0 to 80 mm with the six disconnected extension placeholders moving with the panel/bezel",
     )
 
 
@@ -1138,8 +1243,6 @@ def mac_cradle_downward_removal_sweep_check(
         "router_interface_bezel",
         "upper_cap",
         "removable_handle",
-        "wifi_dock_left",
-        "wifi_dock_right",
         "logo_panel_left",
         "logo_panel_right",
     )
@@ -1176,8 +1279,6 @@ def router_rearward_removal_sweep_check(
         "power_compartment",
         "power_compartment_cover",
         "upper_cap",
-        "wifi_dock_left",
-        "wifi_dock_right",
     )
     stationary = {name: parts[name] for name in stationary_names}
     stationary["router_tray_with_rear_stops_removed"] = parts["router_tray"]
@@ -1388,90 +1489,44 @@ def fastener_stack_checks(
 
     handle_axis_obstructions: list[float] = []
     handle_boss_witnesses: list[float] = []
-    handle_grip = p.handle.foot_thickness
+    handle_grip = e.cap_height - 3.0
     handle_pilot_depth = f.insert_depth + 0.2
     for x, y in handle_mount_fastener_positions(p):
         clearance_axis = cylinder_axis(
             f.m3_clearance_diameter / 2.0 - 0.05,
-            handle_grip + 0.2,
-            (x, y, e.height - 0.1),
+            e.cap_height + 0.2,
+            (x, y, e.shell_top - 0.1),
             (0, 0, 1),
         )
         insert_axis = cylinder_axis(
             f.m3_insert_hole_diameter / 2.0 - 0.05,
             f.insert_depth - 0.2,
-            (x, y, e.height - f.insert_depth + 0.1),
+            (x, y, e.height + 0.1),
             (0, 0, 1),
         )
         boss_ring = _annular_axis_witness(
             base_outer_radius,
             base_inner_radius,
             1.0,
-            (x, y, e.height - 3.5),
+            (x, y, e.height + 1.0),
             (0, 0, 1),
         )
         handle_axis_obstructions.append(
-            _intersection_volume(clearance_axis, parts["removable_handle"])
-            + _intersection_volume(insert_axis, parts["upper_cap"])
+            _intersection_volume(clearance_axis, parts["upper_cap"])
+            + _intersection_volume(insert_axis, parts["removable_handle"])
         )
-        handle_boss_witnesses.append(_intersection_volume(boss_ring, parts["upper_cap"]))
+        handle_boss_witnesses.append(_intersection_volume(boss_ring, parts["removable_handle"]))
     results.append(
         stack_result(
-            "fastener stack: reinforced handle M3x10",
-            "M3x10",
+            "fastener stack: underside-mounted handle M3x14",
+            "M3x14",
             f.handle_screw,
             f.handle_screw_length,
-            10.0,
+            14.0,
             handle_grip,
             handle_pilot_depth,
             handle_axis_obstructions,
             handle_boss_witnesses,
-            base_expected_ring,
-        )
-    )
-
-    logo_axis_obstructions: list[float] = []
-    logo_boss_witnesses: list[float] = []
-    logo_pilot_depth = f.insert_depth + 0.7
-    pocket_inner = e.width / 2.0 - p.logo.thickness - p.fits.logo_panel_per_side
-    for side_name, side in (("left", -1.0), ("right", 1.0)):
-        panel = parts[f"logo_panel_{side_name}"]
-        for _axis_x, y, z in logo_mount_positions(side_name, p):
-            clearance_axis = cylinder_axis(
-                f.m3_clearance_diameter / 2.0 - 0.05,
-                p.logo.thickness + 0.2,
-                (side * (e.width / 2.0 + 0.1), y, z),
-                (-side, 0, 0),
-            )
-            insert_axis = cylinder_axis(
-                f.m3_insert_hole_diameter / 2.0 - 0.05,
-                f.insert_depth - 0.2,
-                (side * (e.width / 2.0 - p.logo.thickness + 0.1), y, z),
-                (-side, 0, 0),
-            )
-            boss_ring = _annular_axis_witness(
-                base_outer_radius,
-                base_inner_radius,
-                1.0,
-                (side * (pocket_inner - 3.5), y, z),
-                (side, 0, 0),
-            )
-            logo_axis_obstructions.append(
-                _intersection_volume(clearance_axis, panel)
-                + _intersection_volume(insert_axis, parts["upper_shell"])
-            )
-            logo_boss_witnesses.append(_intersection_volume(boss_ring, parts["upper_shell"]))
-    results.append(
-        stack_result(
-            "fastener stack: logo panels M3x8",
-            "M3x8",
-            f.logo_screw,
-            f.logo_screw_length,
-            8.0,
-            p.logo.thickness,
-            logo_pilot_depth,
-            logo_axis_obstructions,
-            logo_boss_witnesses,
             base_expected_ring,
         )
     )
@@ -1484,37 +1539,37 @@ def fastener_stack_checks(
     for x, y in cap_fastener_positions(p):
         clearance_axis = cylinder_axis(
             f.m4_clearance_diameter / 2.0 - 0.05,
-            e.cap_height + 0.2,
-            (x, y, e.shell_top - 0.1),
+            4.2,
+            (x, y, e.shell_top - 4.1),
             (0, 0, 1),
         )
         insert_axis = cylinder_axis(
             f.m4_insert_hole_diameter / 2.0 - 0.05,
-            6.8,
-            (x, y, e.shell_top - 6.9),
+            5.8,
+            (x, y, e.shell_top + 0.1),
             (0, 0, 1),
         )
         sleeve_ring = _annular_axis_witness(
             m4_outer_radius,
             m4_inner_radius,
             1.0,
-            (x, y, e.shell_top + 1.0),
+            (x, y, e.shell_top + 1.5),
             (0, 0, 1),
         )
         cap_axis_obstructions.append(
-            _intersection_volume(clearance_axis, parts["upper_cap"])
-            + _intersection_volume(insert_axis, parts["upper_shell"])
+            _intersection_volume(clearance_axis, parts["upper_shell"])
+            + _intersection_volume(insert_axis, parts["upper_cap"])
         )
         cap_boss_witnesses.append(_intersection_volume(sleeve_ring, parts["upper_cap"]))
     results.append(
         stack_result(
-            "fastener stack: upper cap M4x18",
-            "M4x18",
-            f.structural_screw,
-            f.structural_screw_length,
-            18.0,
-            e.cap_height,
-            7.0,
+            "fastener stack: hidden sliding-cap lock M4x10",
+            "M4x10",
+            f.cap_lock_screw,
+            f.cap_lock_screw_length,
+            10.0,
+            4.0,
+            f.insert_depth + 0.7,
             cap_axis_obstructions,
             cap_boss_witnesses,
             m4_expected_ring,
@@ -1841,7 +1896,7 @@ def extension_mount_hole_checks(
     rear_panel: cq.Workplane,
     router_bezel: cq.Workplane,
 ) -> list[CheckResult]:
-    """Prove two clear, materially supported M3 axes per provisional extension."""
+    """Prove the accepted rear-I/O mounting axes and surrounding material."""
 
     e = p.enclosure
     f = p.fasteners
@@ -1849,12 +1904,13 @@ def extension_mount_hole_checks(
     ring_outer = f.m3_clearance_diameter / 2.0 + 1.2
     ring_inner = f.m3_clearance_diameter / 2.0 + 0.1
 
-    def panel_result(
+    def through_panel_result(
         name: str,
         part: cq.Workplane,
         positions: tuple[tuple[float, float], ...],
         y0: float,
         thickness: float,
+        expected_count: int,
     ) -> CheckResult:
         axis_obstructions: list[float] = []
         ring_witnesses: list[float] = []
@@ -1872,40 +1928,88 @@ def extension_mount_hole_checks(
             axis_obstructions.append(_intersection_volume(axis, part))
             ring_witnesses.append(_intersection_volume(ring, part))
         passed = (
-            len(positions) == 4
+            len(positions) == expected_count
             and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
             and min(ring_witnesses) >= 0.90 * expected_ring
         )
         return _check(
             name,
             passed,
-            f"four clear M3 axes form two two-fastener patterns; surrounding panel annuli retain "
+            f"{expected_count} clear M3 axes; surrounding panel annuli retain "
             f">=90% of a {ring_length:.1f} mm witness",
             f"positions={positions}, axis obstructions={axis_obstructions}, ring witnesses={ring_witnesses}, "
             f"expected ring={expected_ring:.3f}",
         )
 
     panel_y0 = e.depth / 2.0 - e.rear_panel_thickness
-    mac_positions = mac_extension_mount_positions(p)
-    mac_result = panel_result(
-        "provisional HDMI/USB-C two-fastener extension holes",
+    ethernet_result = through_panel_result(
+        "accepted external-Ethernet two-fastener flange holes",
         rear_panel,
-        mac_positions,
+        ethernet_mount_positions(p),
         panel_y0,
         e.rear_panel_thickness,
+        2,
+    )
+
+    insert_outer = f.m3_boss_diameter / 2.0 - 0.1
+    insert_inner = f.m3_insert_hole_diameter / 2.0 + 0.1
+    expected_insert_ring = pi * (insert_outer**2 - insert_inner**2)
+
+    hdmi_axis_obstructions: list[float] = []
+    hdmi_ring_witnesses: list[float] = []
+    for x, y, z in hdmi_mount_positions(p):
+        axis = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0 - 0.05,
+            f.insert_depth - 0.2,
+            (x, y, z - f.insert_depth + 0.1),
+            (0, 0, 1),
+        )
+        ring = _annular_axis_witness(insert_outer, insert_inner, 1.0, (x, y, z - 2.0), (0, 0, 1))
+        hdmi_axis_obstructions.append(_intersection_volume(axis, rear_panel))
+        hdmi_ring_witnesses.append(_intersection_volume(ring, rear_panel))
+    hdmi_result = _check(
+        "accepted HDMI top-down blind M3 mounts",
+        len(hdmi_axis_obstructions) == 2
+        and max(hdmi_axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(hdmi_ring_witnesses) >= 0.90 * expected_insert_ring,
+        "two top-down blind M3 insert axes are supported in the accepted 13 mm-deep shelf",
+        f"axis obstructions={hdmi_axis_obstructions}, ring witnesses={hdmi_ring_witnesses}",
+    )
+
+    usb_axis_obstructions: list[float] = []
+    usb_ring_witnesses: list[float] = []
+    usb_face_y = panel_y0 - p.prototype_v4.usbc_board_standoff_selected
+    for x, z in mac_extension_mount_positions(p):
+        axis = cylinder_axis(
+            f.m3_insert_hole_diameter / 2.0 - 0.05,
+            f.insert_depth - 0.2,
+            (x, usb_face_y + 0.1, z),
+            (0, 1, 0),
+        )
+        ring = _annular_axis_witness(insert_outer, insert_inner, 1.0, (x, usb_face_y + 2.0, z), (0, 1, 0))
+        usb_axis_obstructions.append(_intersection_volume(axis, rear_panel))
+        usb_ring_witnesses.append(_intersection_volume(ring, rear_panel))
+    usb_result = _check(
+        "accepted dual USB-C rear-mounted blind bosses",
+        len(usb_axis_obstructions) == 4
+        and max(usb_axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(usb_ring_witnesses) >= 0.89 * expected_insert_ring,
+        "four blind M3 axes support two inside-mounted USB-C boards on 6 mm standoffs",
+        f"axis obstructions={usb_axis_obstructions}, ring witnesses={usb_ring_witnesses}",
     )
 
     bezel_face_thickness = 2.4
     bezel_face_y0 = e.depth / 2.0 - bezel_face_thickness
     router_positions = router_extension_mount_positions(p)
-    router_result = panel_result(
+    router_result = through_panel_result(
         "provisional dual-RJ45 two-fastener extension holes",
         router_bezel,
         router_positions,
         bezel_face_y0,
         bezel_face_thickness,
+        4,
     )
-    return [mac_result, router_result]
+    return [ethernet_result, hdmi_result, usb_result, router_result]
 
 
 def _exterior_parts(parts: Mapping[str, cq.Workplane]) -> list[cq.Workplane]:
@@ -1918,8 +2022,6 @@ def _exterior_parts(parts: Mapping[str, cq.Workplane]) -> list[cq.Workplane]:
             "rear_panel",
             "router_interface_bezel",
             "upper_cap",
-            "wifi_dock_left",
-            "wifi_dock_right",
             "logo_panel_left",
             "logo_panel_right",
         )
@@ -1995,8 +2097,8 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
     results.append(
         _check(
             "minimum configured walls",
-            min(e.wall, p.power.wall, p.wifi.clip_wall, p.logo.thickness) >= e.minimum_wall,
-            f"minimum controlled wall is {min(e.wall, p.power.wall, p.wifi.clip_wall, p.logo.thickness):.2f} mm",
+            min(e.wall, p.power.wall, p.logo.thickness) >= e.minimum_wall,
+            f"minimum controlled wall is {min(e.wall, p.power.wall, p.logo.thickness):.2f} mm",
             "a controlled wall parameter is below the 2.4 mm limit",
         )
     )
@@ -2107,16 +2209,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         )
     )
 
-    rf_window = 5.0 * c.router_sma_pitch + c.router_sma_clearance_diameter
-    results.append(
-        _check(
-            "RF aperture analytic connector-centre span",
-            rf_window >= 88.0 and c.router_connector_depth >= 30.0,
-            f"radiused {rf_window:.1f} mm opening spans all six official connector axes; "
-            "this does not establish plug, finger, or tool access",
-            "RF opening does not span the six official connector axes",
-        )
-    )
+    results.append(router_bulkhead_geometry_check(p, parts["router_interface_bezel"]))
 
     for name in ("logo_panel_left", "logo_panel_right"):
         dims = bbox_dimensions(parts[name])
@@ -2131,10 +2224,10 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         )
 
     results.append(handle_structural_mount_check(p, parts))
+    results.append(cap_dovetail_engagement_check(p, parts))
     results.append(shell_seam_access_check(p, parts))
     results.append(rear_sill_reinforcement_check(p, parts["lower_shell"]))
-    results.append(logo_screw_mount_check(p, parts))
-    results.append(wifi_dock_capture_geometry_check(p))
+    results.append(logo_magnet_mount_check(p, parts))
 
     results.append(
         CheckResult(
@@ -2157,8 +2250,8 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         "APV lead bends and internal branch-hardware packaging",
         "physical RF plug/finger/tool access",
         "local minimum-wall scan of all generated geometry",
-        "Wi-Fi dock carry/shake/cable-load and 20-cycle test",
-        "logo panel M3 joint torque/rattle/service-cycle test",
+        "RF bulkhead nut torque, antenna bending-load, and coax strain-relief test",
+        "logo magnet pull-off/rattle/polarity and service-cycle test",
         "Mac AC branch hardware, protected conduit/restraint, and qualified separation proof",
         "thermal comparison under representative load",
         "4x measured assembled-mass handle proof-load/creep test",

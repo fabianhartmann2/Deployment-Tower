@@ -30,6 +30,6 @@ def packaging_layout(p: StationParameters = DEFAULT) -> PackagingLayout:
         router_center=(c.router_center_x, c.router_center_y, router_z),
         router_tray_z=c.router_tray_z,
         mains_center=(pw.center_x, pw.center_y, pw.bottom_z + pw.outer_height / 2.0),
-        low_voltage_lane_center_x=48.0,
+        low_voltage_lane_center_x=-48.0,
         handle_anchor_z=p.enclosure.shell_top - 8.0,
     )

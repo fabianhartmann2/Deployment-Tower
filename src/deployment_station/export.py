@@ -85,12 +85,11 @@ def _print_oriented(name: str, obj: cq.Workplane) -> cq.Workplane:
         "coupon_rf_bulkhead_v1",
     }:
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 90.0)
-    elif name in {"logo_panel_left", "wifi_dock_left"}:
+    elif name == "logo_panel_left":
         obj = obj.rotate((0, 0, 0), (0, 1, 0), -90.0)
     elif name in {
         "logo_panel_right",
         "logo_panel_blank_template",
-        "wifi_dock_right",
         "coupon_wifi_dock_v2",
         "coupon_logo_magnet_v1",
         "coupon_logo_magnet_v2",

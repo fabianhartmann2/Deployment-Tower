@@ -5,8 +5,8 @@ from __future__ import annotations
 import cadquery as cq
 
 from .geometry import box_at, cylinder_axis, rounded_panel_xz, rounded_rect_prism, rounded_rect_ring
-from .handle import cap_fastener_positions
-from .logo_panel import logo_mount_positions
+from .handle import cap_dovetail_rail, cap_dovetail_y_positions, cap_fastener_positions
+from .logo_panel import logo_magnet_positions
 from .mac_mount import mac_cradle_fastener_positions
 from .parameters import DEFAULT, StationParameters
 from .power_compartment import power_mount_fastener_positions
@@ -160,8 +160,8 @@ def lower_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
 
     # Two shell-tied rails and four insert bosses support the closed power box.
     pw = p.power
-    rail_left_x = -(e.width / 2.0 - e.wall + 0.7)
-    rail_right_x = pw.center_x + pw.outer_width / 2.0 + 0.5
+    rail_left_x = pw.center_x - pw.outer_width / 2.0 - 0.5
+    rail_right_x = e.width / 2.0 - e.wall + 0.7
     rail_center_x = (rail_left_x + rail_right_x) / 2.0
     rail_width = rail_right_x - rail_left_x
     power_positions = power_mount_fastener_positions(p)
@@ -248,9 +248,10 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     part = part.cut(_rear_opening_cut(p, z0, height))
     part = part.cut(_rear_panel_seat_cut(p))
 
-    # Full-depth shallow pockets seat the panels with 0.25 mm face clearance.
-    # Two blind M3 insert bosses per side are webbed to the intact shell outside
-    # the pocket; visible screws provide an unambiguous, reversible load path.
+    # Full-depth shallow pockets position the magnetic logo panels.  Local
+    # internal receiver pads hold 6 x 3 mm magnets behind a 0.6 mm skin; there
+    # are no exterior screws, locating lips, finger notches, or old antenna-dock
+    # recesses on either side wall.
     for side in (-1, 1):
         pocket_inner = e.width / 2.0 - logo.thickness - p.fits.logo_panel_per_side
         pocket_outer = e.width / 2.0 + 1.0
@@ -262,81 +263,25 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
             (side * ((pocket_inner + pocket_outer) / 2.0), 0.0, logo.center_z),
         )
         part = part.cut(pocket)
-        # The boss face reaches the panel's inner face, eliminating clamp-up
-        # bending while the surrounding pocket retains 0.25 mm assembly relief.
-        boss_length = 7.0 + p.fits.logo_panel_per_side
-        for _axis_x, y, z in logo_mount_positions("right" if side > 0 else "left", p):
-            boss_start_x = side * (pocket_inner - boss_length)
-            boss = cylinder_axis(
-                f.m3_boss_diameter / 2.0,
-                boss_length,
-                (boss_start_x, y, z),
+        v = p.prototype_v4
+        receiver_depth = v.magnet_thickness + v.magnet_pocket_depth_allowance + v.magnet_cover_skin
+        magnet_depth = v.magnet_thickness + v.magnet_pocket_depth_allowance
+        magnet_diameter = v.magnet_diameter + v.magnet_pocket_diametral_clearance
+        for _axis_x, y, z in logo_magnet_positions("right" if side > 0 else "left", p):
+            receiver_start_x = side * (pocket_inner - receiver_depth)
+            receiver = cylinder_axis(
+                (magnet_diameter + 4.0) / 2.0,
+                receiver_depth,
+                (receiver_start_x, y, z),
                 (side, 0, 0),
             )
-            pilot = cylinder_axis(
-                f.m3_insert_hole_diameter / 2.0,
-                f.insert_depth + 0.7,
+            magnet_pocket = cylinder_axis(
+                magnet_diameter / 2.0,
+                magnet_depth + 0.1,
                 (side * (pocket_inner + 0.1), y, z),
                 (-side, 0, 0),
             )
-            web_y = 31.5 if y > 0.0 else -31.5
-            web = box_at(
-                boss_length,
-                14.0,
-                f.m3_boss_diameter,
-                (side * (pocket_inner - boss_length / 2.0), web_y, z),
-            )
-            part = part.union(boss).union(web).cut(pilot)
-        notch = cylinder_axis(
-            logo.finger_notch_diameter / 2.0 + 0.4,
-            e.wall + 2.0,
-            (side * (e.width / 2.0 + 1.0), 0.0, logo.center_z - logo.size / 2.0 + 2.0),
-            (-side, 0, 0),
-        )
-        part = part.cut(notch)
-
-        # Flush-recessed Wi-Fi dock pocket at the rear side edge.  The dock's
-        # backing plate restores the surface while the clips project inward and
-        # capture an antenna centred on the exterior side datum.
-        w = p.wifi
-        dock_depth = w.antenna_base_diameter / 2.0 + p.fits.wifi_clip_radial + w.clip_wall + 0.6
-        dock_pocket = box_at(
-            dock_depth,
-            w.backplate_width + 1.0,
-            w.backplate_height + 1.0,
-            (side * (e.width / 2.0 - dock_depth / 2.0), w.dock_center_y, w.dock_center_z),
-        )
-        part = part.cut(dock_pocket)
-
-        # Two M3 insert bosses retain each dock.  They stop 0.4 mm short of the
-        # dock backplate and are webbed to the upper/lower pocket boundaries.
-        pocket_inner_x = e.width / 2.0 - dock_depth
-        boss_length = dock_depth - w.backplate_thickness - 0.4
-        for z, toward_top in ((171.0, False), (258.0, True)):
-            start_x = side * pocket_inner_x
-            boss = cylinder_axis(f.m3_boss_diameter / 2.0, boss_length, (start_x, 41.0, z), (side, 0, 0))
-            hole = cylinder_axis(
-                f.m3_insert_hole_diameter / 2.0,
-                min(7.0, boss_length),
-                (side * (e.width / 2.0 - w.backplate_thickness - 0.2), 41.0, z),
-                (-side, 0, 0),
-            )
-            edge_z = w.dock_center_z + (w.backplate_height + 1.0) / 2.0 if toward_top else w.dock_center_z - (w.backplate_height + 1.0) / 2.0
-            web_center_z = (edge_z + z) / 2.0
-            inner_web = box_at(
-                boss_length,
-                9.0,
-                abs(edge_z - z) + 1.5,
-                (side * (pocket_inner_x + boss_length / 2.0), 41.0, web_center_z),
-            )
-            anchor_z = edge_z + (1.0 if toward_top else -1.0)
-            anchor = box_at(
-                dock_depth,
-                9.0,
-                2.0,
-                (side * (e.width / 2.0 - dock_depth / 2.0), 41.0, anchor_z),
-            )
-            part = part.union(boss).union(inner_web).union(anchor).cut(hole)
+            part = part.union(receiver).cut(magnet_pocket)
 
     # Matching seam-key pockets.
     clearance = p.fits.sliding_fit_per_side
@@ -412,24 +357,23 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
         tie = box_at(24.0, 24.0, 54.0, (x, -68.0, e.shell_top - 27.0))
         part = part.union(rib).union(tie)
 
-    # All cap clearances now have matching insert bosses; the two front positions
-    # lie directly on the handle spines and the four perimeter bosses stabilize
-    # the removable cap.
+    # Two full-width crossbars carry the selected dovetail rails into both side
+    # walls.  The detached cap/handle subassembly slides sideways over them.
+    for y in cap_dovetail_y_positions(p):
+        part = part.union(box_at(e.width - 4.0, 16.0, 4.0, (0.0, y, e.shell_top - 2.0)))
+        part = part.union(cap_dovetail_rail(y, p))
+
+    # A central crossbar carries two internal M4 anti-slide screws.  The screws
+    # enter blind inserts in the cap from below and never pierce its top face.
+    part = part.union(box_at(e.width - 4.0, 10.0, 4.0, (0.0, 0.0, e.shell_top - 2.0)))
     for x, y in cap_fastener_positions(p):
-        boss = cq.Workplane("XY").center(x, y).circle(f.m4_boss_diameter / 2.0).extrude(12.0).translate((0, 0, e.shell_top - 12.0))
-        insert = cq.Workplane("XY").center(x, y).circle(f.m4_insert_hole_diameter / 2.0).extrude(7.0).translate((0, 0, e.shell_top - 7.0))
-        # Short orthogonal ties reach whichever substantial wall/rib is nearest.
-        tie_x_width = 22.0 if abs(x) > 58.0 else 18.0
-        tie_x_offset = 8.0 if abs(x) > 58.0 else 7.0
-        tie_x = box_at(tie_x_width, 6.0, 10.0, (x + (tie_x_offset if x > 0 else -tie_x_offset), y, e.shell_top - 5.0))
-        if y < -65.0:
-            tie_y = box_at(6.0, 10.0, 10.0, (x, -74.0, e.shell_top - 5.0))
-        else:
-            tie_y = box_at(6.0, 22.0, 10.0, (x, y + (8.0 if y > 0 else -8.0), e.shell_top - 5.0))
-        part = part.union(boss).union(tie_y)
-        if y <= 0.0:
-            part = part.union(tie_x)
-        part = part.cut(insert)
+        clearance_hole = cylinder_axis(
+            f.m4_clearance_diameter / 2.0,
+            6.0,
+            (x, y, e.shell_top - 5.0),
+            (0, 0, 1),
+        )
+        part = part.cut(clearance_hole)
     part = _rear_bosses(part, p, z0, e.shell_top)
 
     # Recut every seam fastener volume after all rails, receivers, cap bosses,

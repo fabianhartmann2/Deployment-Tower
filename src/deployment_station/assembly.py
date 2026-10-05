@@ -18,7 +18,6 @@ from .power_compartment import power_compartment, power_compartment_cover
 from .rear_panel import rear_panel, router_interface_bezel
 from .router_tray import router_compliant_pad_template, router_rear_retainer, router_tray
 from .shell import lower_shell, upper_shell
-from .wifi_dock import wifi_dock
 
 
 Builder = Callable[[StationParameters], cq.Workplane]
@@ -57,8 +56,6 @@ def part_definitions() -> OrderedDict[str, PartDefinition]:
             PartDefinition("router_interface_bezel", router_interface_bezel, "ASA, dark", (0.12, 0.13, 0.14)),
             PartDefinition("upper_cap", upper_cap, "ASA, matte white", white),
             PartDefinition("removable_handle", removable_handle, "ASA/PA-CF after load test", dark),
-            PartDefinition("wifi_dock_left", lambda p: wifi_dock("left", p), "ASA or PA", dark),
-            PartDefinition("wifi_dock_right", lambda p: wifi_dock("right", p), "ASA or PA", dark),
             PartDefinition("logo_panel_left", lambda p: logo_panel("left", p), "ASA, matte white", white),
             PartDefinition("logo_panel_right", lambda p: logo_panel("right", p), "ASA, matte white", white),
             PartDefinition("logo_panel_blank_template", blank_logo_panel, "ASA", white, False, "Reusable panel template"),
@@ -134,8 +131,6 @@ def exploded_assembly(p: StationParameters = DEFAULT) -> cq.Assembly:
         "router_interface_bezel": (0.0, 116.0, 0.0),
         "upper_cap": (0.0, 0.0, 78.0),
         "removable_handle": (0.0, 0.0, 118.0),
-        "wifi_dock_left": (-42.0, 0.0, 18.0),
-        "wifi_dock_right": (42.0, 0.0, 18.0),
         "logo_panel_left": (-48.0, 0.0, 0.0),
         "logo_panel_right": (48.0, 0.0, 0.0),
     }

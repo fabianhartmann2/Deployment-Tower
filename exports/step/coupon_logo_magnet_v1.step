@@ -1,7 +1,7 @@
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('Open CASCADE Model'),'2;1');
-FILE_NAME('Open CASCADE Shape Model','2026-10-04T12:14:16',('Author'),(
+FILE_NAME('Open CASCADE Shape Model','2026-10-05T08:14:18',('Author'),(
     'Open CASCADE'),'Open CASCADE STEP processor 7.8','Open CASCADE 7.8'
   ,'Unknown');
 FILE_SCHEMA(('AUTOMOTIVE_DESIGN { 1 0 10303 214 1 1 1 1 }'));
@@ -15,8 +15,8 @@ DATA;
 #4 = PRODUCT_DEFINITION_SHAPE('','',#5);
 #5 = PRODUCT_DEFINITION('design','',#6,#9);
 #6 = PRODUCT_DEFINITION_FORMATION('','',#7);
-#7 = PRODUCT('Open CASCADE STEP translator 7.8 33',
-  'Open CASCADE STEP translator 7.8 33','',(#8));
+#7 = PRODUCT('Open CASCADE STEP translator 7.8 37',
+  'Open CASCADE STEP translator 7.8 37','',(#8));
 #8 = PRODUCT_CONTEXT('',#2,'mechanical');
 #9 = PRODUCT_DEFINITION_CONTEXT('part definition',#2,'design');
 #10 = SHAPE_REPRESENTATION('',(#11,#15,#19),#23);
@@ -46,8 +46,8 @@ GLOBAL_UNCERTAINTY_ASSIGNED_CONTEXT((#27)) GLOBAL_UNIT_ASSIGNED_CONTEXT(
 #30 = PRODUCT_DEFINITION_SHAPE('','',#31);
 #31 = PRODUCT_DEFINITION('design','',#32,#35);
 #32 = PRODUCT_DEFINITION_FORMATION('','',#33);
-#33 = PRODUCT('Open CASCADE STEP translator 7.8 33.1',
-  'Open CASCADE STEP translator 7.8 33.1','',(#34));
+#33 = PRODUCT('Open CASCADE STEP translator 7.8 37.1',
+  'Open CASCADE STEP translator 7.8 37.1','',(#34));
 #34 = PRODUCT_CONTEXT('',#2,'mechanical');
 #35 = PRODUCT_DEFINITION_CONTEXT('part definition',#2,'design');
 #36 = ADVANCED_BREP_SHAPE_REPRESENTATION('',(#11,#37),#865);
@@ -1024,8 +1024,8 @@ SHAPE_REPRESENTATION_RELATIONSHIP() );
 #877 = PRODUCT_DEFINITION_SHAPE('','',#878);
 #878 = PRODUCT_DEFINITION('design','',#879,#882);
 #879 = PRODUCT_DEFINITION_FORMATION('','',#880);
-#880 = PRODUCT('Open CASCADE STEP translator 7.8 33.2',
-  'Open CASCADE STEP translator 7.8 33.2','',(#881));
+#880 = PRODUCT('Open CASCADE STEP translator 7.8 37.2',
+  'Open CASCADE STEP translator 7.8 37.2','',(#881));
 #881 = PRODUCT_CONTEXT('',#2,'mechanical');
 #882 = PRODUCT_DEFINITION_CONTEXT('part definition',#2,'design');
 #883 = ADVANCED_BREP_SHAPE_REPRESENTATION('',(#11,#884),#2160);
