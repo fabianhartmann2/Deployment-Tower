@@ -4,7 +4,7 @@
     "kind": "printable STEP",
     "path": "exports/step/base.step",
     "bytes": 97308,
-    "sha256": "5e0bf8838cf6abf2cee0e0c2c4515bf808c201d000f0225fa9aa668a51a8d97e",
+    "sha256": "40b0f14b5643a7364e46302ce4cf236939e20ee49e6b7a6b66394ae058156a21",
     "design_bbox_mm": [
       162.0,
       162.0,
@@ -23,7 +23,7 @@
     "kind": "printable STEP",
     "path": "exports/step/mac_cradle.step",
     "bytes": 480150,
-    "sha256": "c0ea0e07ae5d5b8d7724c50c41be09198aef5799dd490daca723b6b29a259f18",
+    "sha256": "895e9804a502fdf77732b9de23b84a2f680959286596889a74a52f577ae71f40",
     "design_bbox_mm": [
       152.0,
       137.0,
@@ -42,7 +42,7 @@
     "kind": "printable STEP",
     "path": "exports/step/lower_shell.step",
     "bytes": 933182,
-    "sha256": "7d839d6fca35ee07260d020c47fef0ef97eb21e8a7296f4d44167c68c3817804",
+    "sha256": "768be73d0bff99477acb94e0c58402d7aff13b6a251416ef3887b11b6255e711",
     "design_bbox_mm": [
       165.0,
       165.0,
@@ -61,7 +61,7 @@
     "kind": "printable STEP",
     "path": "exports/step/upper_shell.step",
     "bytes": 994848,
-    "sha256": "38a3ba9f4505d9ea239e93b130b1f9b3a8661bf381cc5f9e456dfbcb4a913dd2",
+    "sha256": "898f6dd7b1eb32229ae6a11a37a54527af8d4f902a01d1937a66883750dc456f",
     "design_bbox_mm": [
       165.0,
       164.9531,
@@ -80,7 +80,7 @@
     "kind": "printable STEP",
     "path": "exports/step/router_tray.step",
     "bytes": 383676,
-    "sha256": "06a94268927d54c47c96087fdf81093920f008644e27d796418bb820b3e0cd8d",
+    "sha256": "e920445b90d4a9ce553844db3abdc30139cc1e6ba5c060ac52b5505c776a743f",
     "design_bbox_mm": [
       120.0,
       98.85,
@@ -99,7 +99,7 @@
     "kind": "printable STEP",
     "path": "exports/step/router_rear_retainer_left.step",
     "bytes": 54837,
-    "sha256": "a326970b9386761ad31e5e3fed8a5a52c580e44d64b6587a263aa6d960b6e50b",
+    "sha256": "18735fee197975d2a0045ed32975b7a39aedbee9eee4e85df8f883d8fd363785",
     "design_bbox_mm": [
       15.0,
       8.7,
@@ -118,7 +118,7 @@
     "kind": "printable STEP",
     "path": "exports/step/router_rear_retainer_right.step",
     "bytes": 54763,
-    "sha256": "87cb01d7169c5a048c53218bb1023963c0f9735b5f3662694d1dfbaa82f318d2",
+    "sha256": "1136822c627c007bf87d934e7abdb6acfc7ea866ad4dc3e99982095ff37d2890",
     "design_bbox_mm": [
       15.0,
       8.7,
@@ -137,7 +137,7 @@
     "kind": "printable STEP",
     "path": "exports/step/power_compartment.step",
     "bytes": 332095,
-    "sha256": "78f389bb46ca9d8fe42c4bd689b0aac6535d17274763c8bb4485e5cd4c8bc79a",
+    "sha256": "faeeee04502f32f8f7df52d3bcd437ae062b2b542296611e6b4eff3c16a033d2",
     "design_bbox_mm": [
       72.0,
       137.5,
@@ -156,7 +156,7 @@
     "kind": "printable STEP",
     "path": "exports/step/power_compartment_cover.step",
     "bytes": 184927,
-    "sha256": "91581984ad911c98177982fa4a92bfab5489f399b3d1589560a4805e99032aee",
+    "sha256": "deda05c17481be911084d295a2174fb0794874b576b94352c969160937d33f1e",
     "design_bbox_mm": [
       72.0,
       120.0,
@@ -168,14 +168,14 @@
     "kind": "print-oriented STL",
     "path": "exports/stl/power_compartment_cover.stl",
     "bytes": 239484,
-    "sha256": "642c74581ab489525ce4186a800a4ec79e666abe3555b2cec1b4aec06476affb"
+    "sha256": "8aada8d3beeeb1b3fbf93f1b5988f960f5493b76e2a5f76b3288300e1d12e49d"
   },
   {
     "name": "rear_panel",
     "kind": "printable STEP",
     "path": "exports/step/rear_panel.step",
     "bytes": 2704861,
-    "sha256": "16f90fe18b3f1fd5734247e4297b91eac9cdf0f90c96b5a588426f80d6091a02",
+    "sha256": "797918f8bab271167bd2f5a6e6371c2dee5ec033c06779de0b5e1df05852f5b3",
     "design_bbox_mm": [
       132.0,
       16.2,
@@ -186,15 +186,15 @@
     "name": "rear_panel",
     "kind": "print-oriented STL",
     "path": "exports/stl/rear_panel.stl",
-    "bytes": 1676184,
-    "sha256": "759b0d79cc14f55548647c0a8eba60370c80632798fa59723df1f66cd4ac1263"
+    "bytes": 1673084,
+    "sha256": "cd1a5659c6c38d922591c56e4fd8519dd4e9ca260d491bff9ea838e031b44421"
   },
   {
     "name": "upper_cap",
     "kind": "printable STEP",
     "path": "exports/step/upper_cap.step",
     "bytes": 304861,
-    "sha256": "dd17103921eab03b562645d03cf67d05fe630d20378223fb56bc3adc084ca2b4",
+    "sha256": "a2493383020059329c98a7463e8aef9ed4372e19e09fdb59d0af9ca10bf88afc",
     "design_bbox_mm": [
       165.0,
       165.0,
@@ -206,14 +206,14 @@
     "kind": "print-oriented STL",
     "path": "exports/stl/upper_cap.stl",
     "bytes": 320084,
-    "sha256": "6ca04cb0f27798b2b11685f474ce85e240a782fb35eeb4b3e98be1e0560cffec"
+    "sha256": "bbed8edf76bbd6f1c6ea0f89b65150e0279ca2b0c4f68039fbaa1600ac61a2be"
   },
   {
     "name": "removable_handle",
     "kind": "printable STEP",
     "path": "exports/step/removable_handle.step",
     "bytes": 273681,
-    "sha256": "88d8f4ae3fb54d3f0f903e28467d1d34e5ef1a319dc3ccc59b41fc743862cd9e",
+    "sha256": "7c79e9c2c126fa7e86b5722651359a2c37e7e0a48f4d9f1211af8f92a8171bef",
     "design_bbox_mm": [
       150.0,
       32.0,
@@ -232,7 +232,7 @@
     "kind": "printable STEP",
     "path": "exports/step/logo_panel_left.step",
     "bytes": 39833,
-    "sha256": "789898065dd2665be9f50e3e5eea8cbf47116484732906451fa8c212765194c9",
+    "sha256": "e98bfcbc7b0bbf9b1f5816577114713893ad4dfd5eb32c9b1fa97f6ad86c6472",
     "design_bbox_mm": [
       2.4,
       70.0,
@@ -251,7 +251,7 @@
     "kind": "printable STEP",
     "path": "exports/step/logo_panel_right.step",
     "bytes": 37501,
-    "sha256": "c189b9953d6f99197c325a91d77786bce95d06ef98abd0615ad27d8a4d391a10",
+    "sha256": "2f97a952cb11505325f04f92aeb3c785912cee2ce35d633dacd93f488bbca017",
     "design_bbox_mm": [
       2.4,
       70.0,
@@ -270,7 +270,7 @@
     "kind": "printable STEP",
     "path": "exports/step/logo_panel_blank_template.step",
     "bytes": 37501,
-    "sha256": "d47a64b718502edcd203ce867202b2363b879a35279f351f9673aaaea044575a",
+    "sha256": "17d8de3aac307b64dc43f223ed37d3b9a1b2211c69813d49c4db9c6b9d4320c2",
     "design_bbox_mm": [
       2.4,
       70.0,
@@ -289,7 +289,7 @@
     "kind": "printable STEP",
     "path": "exports/step/logo_panel_example_embossed.step",
     "bytes": 80493,
-    "sha256": "fdcf1550439b6a8ee05b4c98e953c247e9354ce333aa0112821f5470444b3951",
+    "sha256": "e10aa3015806981563216b0532a6a6b1d190b16846e2ba5d4462bb76465f1639",
     "design_bbox_mm": [
       3.2,
       70.0,
@@ -308,7 +308,7 @@
     "kind": "printable STEP",
     "path": "exports/step/compliant_pad_template.step",
     "bytes": 29595,
-    "sha256": "e057b159c617a0ac3f50c84669312ccc9c28ec2b89a9622da1a254b60d4ed3ee",
+    "sha256": "c868b67f9ac7959d819e0925ec181ab791fe6f4d21bdab54120868696d4730cf",
     "design_bbox_mm": [
       14.6,
       14.6,
@@ -327,7 +327,7 @@
     "kind": "printable STEP",
     "path": "exports/step/router_compliant_pad_template.step",
     "bytes": 29591,
-    "sha256": "a7291d892c4477e87a4de85b323d594dc03cc9585228ae0091dcef251bd1d03b",
+    "sha256": "cbc7beacbbbf9f386585436d327fca883d84f42e29910ccd8e544c6b2dac5881",
     "design_bbox_mm": [
       8.0,
       16.0,
@@ -346,7 +346,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_c8_cutout.step",
     "bytes": 67032,
-    "sha256": "5dc90b6d42d299df21ff28c9234ff2011dce4c8dedf3745efc1813bbb7226c35"
+    "sha256": "a040e196d9bd47ec1f62949e880a3e536403c94981d4b3e9f619209686b5c0ff"
   },
   {
     "name": "coupon_c8_cutout",
@@ -360,7 +360,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_insert_boss.step",
     "bytes": 55218,
-    "sha256": "e9f7416af37825f00c9119589e04656c0fee5701f5366a5e28c8b699ef4e5cad"
+    "sha256": "44a56340cf5498ed3c7bf6027d0342da7bc05085fe491e6ce9d159479d6de5ca"
   },
   {
     "name": "coupon_insert_boss",
@@ -374,7 +374,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_m4_seam_insert.step",
     "bytes": 144708,
-    "sha256": "52f731501031e6bcd8791d6f3f68ed43f748145a2b531124488cb371daf5075c"
+    "sha256": "13e1562e0c92b3aa2d2925fc87a5a3165c904285dc7a98bf2c8040e2e298f2ee"
   },
   {
     "name": "coupon_m4_seam_insert",
@@ -388,7 +388,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_panel_fit_v2.step",
     "bytes": 106231,
-    "sha256": "49c68ec7b710bb868ede61c98b851ade3a89de962105d6fd08e12c7febeb6592"
+    "sha256": "3a0d214400190cd25a004644c54eb06731fec717e21d28393da967b24e62c0c0"
   },
   {
     "name": "coupon_rear_panel_fit_v2",
@@ -402,7 +402,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_logo_mount.step",
     "bytes": 48837,
-    "sha256": "0e61a04cb548c2368beb6ee4f1e12f3ff7a0869cac97f3669fa2295738cfe99a"
+    "sha256": "0e9edc9a506d90d89becbd3ab84ee28c3c3b6ff60a7966e10fa933a5d83c4dc5"
   },
   {
     "name": "coupon_logo_mount",
@@ -416,7 +416,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_handle_mount.step",
     "bytes": 47961,
-    "sha256": "f7454c63ade68255ed4e3abdaf9d8588c72e726d2b321cf53fa849577704df6c"
+    "sha256": "b39fbee620041d5f66140b2aaaa27e4dcb570dbcee00b461df4ff83abe09cffd"
   },
   {
     "name": "coupon_handle_mount",
@@ -430,7 +430,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_wifi_dock_v2.step",
     "bytes": 120050,
-    "sha256": "bf64fa7cbe2725ce9d7b9569e9d9c960edfbb637e6e16709e27210e8a54e69ed"
+    "sha256": "2e693d269e78ba97018803168c463d6757250c4a080fee55b96d74f52d616a0b"
   },
   {
     "name": "coupon_wifi_dock_v2",
@@ -444,7 +444,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_mac_button_recess.step",
     "bytes": 45156,
-    "sha256": "83524ca3ccdc82b17395e5f63879ce0a10475ab1c491b7b1031c310ddf6e765a"
+    "sha256": "ff318504d1b741d77b09f9e8ddbe34c4638557a985fed33a4b52a65273851213"
   },
   {
     "name": "coupon_mac_button_recess",
@@ -458,7 +458,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_router_rf_access.step",
     "bytes": 59101,
-    "sha256": "755c12fd017db4ca4d402f1a9939e56cedd0138822858d7266ba6cc4b837bbb9"
+    "sha256": "a8ac3caad4a61d9f74b8cf497acf8c56e3d6946a585d8f74240db7a26cd63e00"
   },
   {
     "name": "coupon_router_rf_access",
@@ -472,7 +472,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_io_v1.step",
     "bytes": 234188,
-    "sha256": "024abb60dbb2c727e3f47a93c1bdd2cf975bb533df0a3dd8f8c54d01fda68434"
+    "sha256": "f9ce54af2d4ebe13114199e8e2fdf53e3384f713a3efc8439c7245e86af1c67c"
   },
   {
     "name": "coupon_rear_io_v1",
@@ -486,7 +486,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_io_mount_v2.step",
     "bytes": 246172,
-    "sha256": "50ffd8d989f77cfa0303195a68af97fe375e58348325fe7c3952363d0c5ad004"
+    "sha256": "61f0f1c5b43940024a04f002573cdb5b37eece01debac7c6bfc1a26d98f42b6f"
   },
   {
     "name": "coupon_rear_io_mount_v2",
@@ -500,7 +500,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_io_mount_v3.step",
     "bytes": 246172,
-    "sha256": "381f454990eae738516b58aec0ab1b7063346714f51d0e79199654aa2afb2fe2"
+    "sha256": "96d1ed094f01198d78e43727243b1924fdd4b8537def3391d2c5f8f8303893bc"
   },
   {
     "name": "coupon_rear_io_mount_v3",
@@ -514,7 +514,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_io_mount_v4.step",
     "bytes": 245987,
-    "sha256": "dde5a28e49eff4e53d1ea6b8a046cb993000f5c98493fc48cdb259f9d98ef33a"
+    "sha256": "bf4f1e0cd979126cd268827df99b212d756920ecfb29ef97ff428d2795444a16"
   },
   {
     "name": "coupon_rear_io_mount_v4",
@@ -528,7 +528,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_io_mount_v5.step",
     "bytes": 259019,
-    "sha256": "fdc276314a727c315274719a8ad8db77d7edc7fc8935b075026c73b6bea1146f"
+    "sha256": "a9fb3f982c9b460afad521f599aba1a4449cd73bfb901b638986a81ad5a269c1"
   },
   {
     "name": "coupon_rear_io_mount_v5",
@@ -542,7 +542,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_io_mount_v6.step",
     "bytes": 258958,
-    "sha256": "4f2d22ff435cebf4551e8e863589d7edcaaedee0abaa70f980b37f4c8f1a8a2f"
+    "sha256": "9fd2a01d283c7d227f95ca31e00bf472b07f78cfd34cfbe73bc37e7711d84640"
   },
   {
     "name": "coupon_rear_io_mount_v6",
@@ -556,7 +556,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rear_io_mount_v7.step",
     "bytes": 242993,
-    "sha256": "61dfce39de03cbdda12c38f8877ac899099acab909c9e75fcff7f1b4f8b517b2"
+    "sha256": "ebb7c6b5019f2adbfa1598b83f7343676ae447ac9ef521b367a08d88c8d5aadb"
   },
   {
     "name": "coupon_rear_io_mount_v7",
@@ -570,7 +570,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_rf_bulkhead_v1.step",
     "bytes": 246675,
-    "sha256": "dc2fa56cce2126e389d0649ef9c26cd52cd50ed358b706690fc274fb463ceb8e"
+    "sha256": "53ae95857e80f90cc58e1a71c8fccab3b29e94a6dac7ec2cc56138a48ef93307"
   },
   {
     "name": "coupon_rf_bulkhead_v1",
@@ -584,7 +584,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_logo_magnet_v1.step",
     "bytes": 99884,
-    "sha256": "1bd4020ac5c526cf73e48df86dfaf01e34679d1a470dda701bf94a1d989f274d"
+    "sha256": "590b2cce59f3cd5910188f060111ba2057aaabb529bbdead06063e1d0b69a96a"
   },
   {
     "name": "coupon_logo_magnet_v1",
@@ -598,7 +598,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_logo_magnet_v2.step",
     "bytes": 77864,
-    "sha256": "1e012b0efb4db3942f7d7f9fba3cdc715077754e6999dbd743c8faf9c233d213"
+    "sha256": "92e6734981e9f9208f73774df2ed2042457ba53ae7048938435ed3bd6ae98ae2"
   },
   {
     "name": "coupon_logo_magnet_v2",
@@ -612,7 +612,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_cap_dovetail_v1.step",
     "bytes": 305481,
-    "sha256": "b85bf068e7b85f0ec36a79a9574768a58037c12071b6ba1d503c76b7418dfd63"
+    "sha256": "e6ee4dfc056d424e5dde921bdb34a04502409ded801b4ad13a4720432bb50c5b"
   },
   {
     "name": "coupon_cap_dovetail_v1",
@@ -626,7 +626,7 @@
     "kind": "coupon STEP",
     "path": "exports/step/coupon_cap_dovetail_v2.step",
     "bytes": 305409,
-    "sha256": "a0eac5a3e5eb132c926e7476d3468af21564a9f20d412b364aea94c37b04a8cf"
+    "sha256": "c8bc93a60716cd9c55ea257ea11b5dc7ce310a32065e982d34b3b0d9e991c1f8"
   },
   {
     "name": "coupon_cap_dovetail_v2",
@@ -640,28 +640,28 @@
     "kind": "assembly STEP",
     "path": "exports/step/complete_assembly.step",
     "bytes": 36816338,
-    "sha256": "aca8649edc391f2c64f7d70922f8e32f2b3b1bef027e2c366de4760cf3b6ecbd"
+    "sha256": "568fbcc578bfbaf76f08f905b6c5eb30d28f66c888a9b84325c1378b905474a5"
   },
   {
     "name": "exploded_assembly",
     "kind": "assembly STEP",
     "path": "exports/step/exploded_assembly.step",
     "bytes": 6960883,
-    "sha256": "4a43ae71f2b5bc9565b31746d2b85772d531c20acfa1ccea7e5b9bc33d1c3e07"
+    "sha256": "dac2a4d75d6af13d4f36df423f8c6236726d3d941cf5497109153dd4d48c2f08"
   },
   {
     "name": "packaging_study",
     "kind": "assembly STEP",
     "path": "exports/step/packaging_study.step",
     "bytes": 29813570,
-    "sha256": "6007f4bb3efab4e213cc165ffe0d205a1e4fdaecc02f1fc2bea940c2038518ac"
+    "sha256": "ceddba54cc1e75f15434708d768f264aeda5aef30cbee3b87074bd496b4c0322"
   },
   {
     "name": "component_envelopes",
     "kind": "reference STEP",
     "path": "exports/step/component_envelopes.step",
     "bytes": 29895535,
-    "sha256": "071754aed2ac166f38b99d13c5f55b95d84191ff92d3b0c5848c081656450923"
+    "sha256": "77d55e3dafcfd68bb4ed11cdc629c086aed5296d08f78c260a6201b9a387df3d"
   },
   {
     "name": "assembled_three_quarter",

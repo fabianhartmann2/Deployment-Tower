@@ -68,8 +68,13 @@ def _print_oriented(name: str, obj: cq.Workplane) -> cq.Workplane:
         # Put the broad upper skin on the plate; assembly orientation would
         # suspend it 5 mm above the bed on four small feet.
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 180.0)
+    elif name == "rear_panel":
+        # Put the flat cosmetic face on the plate.  The opposite orientation
+        # rested on the HDMI shelf and USB bosses, suspending almost the entire
+        # 132 x 250 mm panel and forcing a large support raft.  STEP/assembly
+        # geometry is unchanged; only the print-oriented STL is flipped.
+        obj = obj.rotate((0, 0, 0), (1, 0, 0), -90.0)
     elif name in {
-        "rear_panel",
         "router_rear_retainer_left",
         "router_rear_retainer_right",
         "coupon_c8_cutout",
@@ -100,6 +105,11 @@ def _print_oriented(name: str, obj: cq.Workplane) -> cq.Workplane:
         pass
     elif name == "removable_handle":
         obj = obj.rotate((0, 0, 0), (1, 0, 0), 90.0)
+    elif name in {"upper_cap", "power_compartment_cover"}:
+        # Print the uninterrupted cosmetic face on the plate so the hollow cap
+        # and locating lip open upward.  This removes broad internal ceilings
+        # without changing any mating face, hole, dovetail, or assembled datum.
+        obj = obj.rotate((0, 0, 0), (1, 0, 0), 180.0)
     return _ground_and_pack_print_solids(obj)
 
 

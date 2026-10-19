@@ -1582,7 +1582,7 @@
   {
     "name": "grounded STL components: power_compartment_cover.stl",
     "status": "PASS",
-    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
   },
   {
     "name": "grounded STL components: rear_panel.stl",
@@ -1617,7 +1617,7 @@
   {
     "name": "grounded STL components: upper_cap.stl",
     "status": "PASS",
-    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
+    "detail": "1 independently grounded watertight component(s); Z minima [-0.00000] mm"
   },
   {
     "name": "grounded STL components: upper_shell.stl",

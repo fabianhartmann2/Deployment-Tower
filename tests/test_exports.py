@@ -1,4 +1,5 @@
 from pathlib import Path
+from math import cos, radians
 
 import cadquery as cq
 import pytest
@@ -75,6 +76,30 @@ def test_every_print_oriented_solid_and_stl_component_contacts_the_bed(tmp_path:
         cq.exporters.export(oriented, str(stl), exportType="STL", tolerance=0.08, angularTolerance=0.12)
         result = _stl_component_check(stl)
         assert result.status == "PASS", f"{name}: {result.detail}"
+
+
+def test_support_reduced_flat_parts_do_not_export_with_broad_suspended_faces(tmp_path: Path):
+    """Lock the print-only flips without changing any production CAD volume."""
+
+    parts = printable_parts()
+    limits_mm2 = {
+        "rear_panel": 500.0,
+        "upper_cap": 10.0,
+        "power_compartment_cover": 10.0,
+    }
+    for name, limit in limits_mm2.items():
+        source = parts[name]
+        oriented = _print_oriented(name, source)
+        assert oriented.val().Volume() == pytest.approx(source.val().Volume(), rel=1e-8)
+
+        stl = tmp_path / f"{name}.stl"
+        cq.exporters.export(oriented, str(stl), exportType="STL", tolerance=0.08, angularTolerance=0.12)
+        mesh = trimesh.load(stl, force="mesh")
+        triangle_min_z = mesh.triangles[:, :, 2].min(axis=1)
+        downward_45 = mesh.face_normals[:, 2] < -cos(radians(45.0))
+        above_first_layer = triangle_min_z > 0.25
+        estimated_area = float(mesh.area_faces[downward_45 & above_first_layer].sum())
+        assert estimated_area <= limit, (name, estimated_area)
 
 
 def test_stl_component_check_rejects_a_lifted_secondary_body(tmp_path: Path):

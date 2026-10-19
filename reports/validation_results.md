@@ -322,14 +322,14 @@ Summary: 312 PASS, 1 WARN, 12 PENDING, 0 FAIL.
 | grounded STL components: lower_shell.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 | grounded STL components: mac_cradle.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 | grounded STL components: power_compartment.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
-| grounded STL components: power_compartment_cover.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
+| grounded STL components: power_compartment_cover.stl | PASS | 1 independently grounded watertight component(s); Z minima [-0.00000] mm |
 | grounded STL components: rear_panel.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 | grounded STL components: removable_handle.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 | grounded STL components: router_compliant_pad_template.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 | grounded STL components: router_rear_retainer_left.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 | grounded STL components: router_rear_retainer_right.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 | grounded STL components: router_tray.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
-| grounded STL components: upper_cap.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
+| grounded STL components: upper_cap.stl | PASS | 1 independently grounded watertight component(s); Z minima [-0.00000] mm |
 | grounded STL components: upper_shell.stl | PASS | 1 independently grounded watertight component(s); Z minima [0.00000] mm |
 
 A PASS is a computational geometry/mesh result only. PENDING tests require physical hardware or competent electrical review. WARN records a known design decision or unresolved system-level conflict and is not silently promoted to PASS.
