@@ -132,6 +132,8 @@ def test_v4_production_layout_uses_relocated_power_and_full_height_rear_panel():
     assert DEFAULT.enclosure.rear_panel_height == 250.0
     assert DEFAULT.enclosure.rear_opening_top == 268.0
     assert DEFAULT.interfaces.router_bulkhead_pitch == 20.0
+    assert DEFAULT.interfaces.router_bulkhead_z == 178.0
+    assert DEFAULT.interfaces.router_wifi_bulkhead_z == 198.0
 
 
 def test_v5_rear_connector_centres_match_edge_dimensioned_feedback():

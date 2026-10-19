@@ -212,7 +212,12 @@ class InterfaceParameters:
     router_interface_center_z: float = 178.0
     router_rf_window_height: float = 30.0
     router_bulkhead_pitch: float = 20.0
-    router_bulkhead_z: float = 158.0
+    # Four numbered 5G bulkheads form the lower row.  Two unnumbered Wi-Fi
+    # bulkheads sit 20 mm higher, directly above 5G positions 1 and 4.
+    router_bulkhead_z: float = 178.0
+    router_wifi_bulkhead_z: float = 198.0
+    router_bulkhead_label_depth: float = 0.6
+    router_bulkhead_label_height: float = 4.4
     rear_panel_screw_x: float = 63.0
     rear_panel_screw_z: tuple[float, ...] = (31.0, 92.0, 218.0, 244.0)
     finger_well_width: float = 26.0

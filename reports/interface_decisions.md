@@ -6,8 +6,8 @@ The handoff prefers direct native access when the device orientation, hand clear
 
 | Required interface | Qty | Decision | Current CAD implementation | Rationale | Required physical closure |
 | --- | ---: | --- | --- | --- | --- |
-| Cellular RF | 4 | **Rear SMA bulkhead extensions** | Four Ø6.6 positions in a six-port rear row with 2.0 mm clamping lands | Allows standard screw-on enclosure antennas while short pigtails connect to the four native Mobile ports | Select exact SMA pigtails/bulkheads; verify gender, torque, strain relief, bends, antenna load, spacing, and RF performance |
-| Wi-Fi RF | 2 | **Rear RP-SMA bulkhead extensions** | Two Ø6.6 positions in the same row accept the Type-15 screw-on antennas; side docks are removed | Avoids the failed/obsolete body-dock concept and provides standard external antenna mounting | Verify exact RP-SMA gender, pigtails, hinge clearance, torque, spacing, handling load, and RF performance |
+| Cellular RF | 4 | **Rear SMA bulkhead extensions** | Four Ø6.6 positions form the lower Z=178 row at 20 mm pitch, engraved `5G 1` to `5G 4` from left to right in the outside rear view; 2.0 mm clamping lands | Allows standard screw-on enclosure antennas while short pigtails connect to the four native Mobile ports | Select exact SMA pigtails/bulkheads; verify gender, torque, strain relief, bends, antenna load, spacing, and RF performance |
+| Wi-Fi RF | 2 | **Rear RP-SMA bulkhead extensions** | Two Ø6.6 positions at Z=198 sit above 5G 1 and 4 and are each engraved `Wi-Fi`; side docks are removed | Avoids the failed/obsolete body-dock concept and visually separates Wi-Fi from 5G | Verify exact RP-SMA gender, pigtails, hinge clearance, torque, spacing, handling load, and RF performance |
 | External Ethernet from RUTM30 | 1 | **Replaceable rear extension** | One accepted 17 x 14 opening at `(-42,108)` with 27.6 mm two-hole pitch and corrected vertical hole offset, directly in the rear panel | Stacks above the rear-view right USB-C and reserves its 42 mm inner body, 18 mm angled plug, and 20 mm bend in the -X low-voltage lane, away from the +X power box; the other native router port serves the internal Mac | Verify the measured adapter, latch access, cable bend, insertion load, link rate, screws, and replacement |
 | Internal Mac-to-router Ethernet | 1 | **Internal patch lead** | Provisional 20 x 34 x 24 plug/service envelope in the low-voltage lane | Uses the router's second native Ethernet port | Select actual lead and verify bend/service path and link performance |
 | Mac HDMI | 1 | **Replaceable rear extension on horizontal internal shelf** | V7 geometry is transferred into the full rear panel: 13 mm shelf, top-down M3 mounts, axes 9 mm behind the connector datum | The HDMI lead route is fixed by the Mac mini; the power compartment moved instead | Verify strain support, 45 mm bend/service loop, tool access, Mac removal, and function |
@@ -24,9 +24,11 @@ An opening, two-hole M3 pattern, or reference body is not a released extension m
 
 The official service-face sequence is:
 
-`Mobile 1 — Wi-Fi 1 — Mobile 2 — Mobile 3 — Wi-Fi 2 — Mobile 4`
+Upper: `Wi-Fi` above 5G 1, and `Wi-Fi` above 5G 4.
 
-The native router centres remain at 14.8 mm pitch, but the rear bulkheads are redistributed to 20 mm pitch at `Z=158` for washer/nut and antenna clearance. The sequence is preserved through six short internal pigtails. Every rear hole is Ø6.6 and the inner rebate leaves a 2.0 mm exterior clamping land.
+Lower, viewed from outside the rear: `5G 1 — 5G 2 — 5G 3 — 5G 4`.
+
+The native router centres remain at 14.8 mm pitch, but the four 5G rear bulkheads are redistributed to 20 mm pitch at `Z=178`. The Wi-Fi pair is at `Z=198`, aligned over the outer 5G positions. Every rear hole is Ø6.6, the inner rebate leaves a 2.0 mm exterior clamping land, and 0.6 mm-deep engravings identify the connections.
 
 The generated check proves six open axes, 20 mm pitch, and surrounding clamping material. It does not prove connector gender, nut torque, anti-rotation, coax routing, strain relief, antenna loads, spacing, detuning, or RF performance. The selected Ø6.6/2.0 coupon geometry must be repeated if hardware or print process changes.
 

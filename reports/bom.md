@@ -14,7 +14,7 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `router_rear_retainer_left`, `router_rear_retainer_right` | 1 each | ASA | Rigid slotted rear-corner stops, installed after the router with one M3x8 screw each; remain outside the SMA envelopes |
 | `power_compartment` | 1 | Reviewed flame-/temperature-suitable engineering material | Mechanical APV/mains box, fixed C8 island/tunnel, raised sealed-floor tie bridges, two top-service blind APV pilots, four open lower-shell mounting corridors, four upper wall-tied cover bosses, and exits; not an approved electrical enclosure |
 | `power_compartment_cover` | 1 | Same reviewed material | Separate deliberate-access cover with four column-aligned M3 clearance axes |
-| `rear_panel` | 1 | Dark ASA | Full-height one-piece service face with one Ethernet, relocated HDMI/dual USB-C, six direct Ø6.6 SMA bulkheads with 2.0 mm lands, and fixed C8-island clearance |
+| `rear_panel` | 1 | Dark ASA | Full-height one-piece service face with one Ethernet, relocated HDMI/dual USB-C, four engraved lower 5G and two engraved upper Wi-Fi Ø6.6 bulkheads with 2.0 mm lands, and fixed C8-island clearance |
 | `upper_cap` | 1 | Matte white ASA | Selected 0.10 mm/side dovetail grooves, crossmember, bearing pads, underside handle clearances, and two blind M4 lock inserts |
 | `removable_handle` | 1 | Candidate ASA/PA-CF after tests | Continuous cylindrical grip, spherical shoulders, round legs, flared roots, two rounded 42 x 32 x 8 mm feet, and four underside M3 insert pockets; no load rating |
 | `logo_panel_left`, `logo_panel_right` | 1 each | ASA or approved variant | Recessed 70 mm faces with two blind 6 x 1.5 mm magnet pockets each |

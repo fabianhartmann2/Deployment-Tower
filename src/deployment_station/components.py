@@ -16,6 +16,7 @@ import cadquery as cq
 from .geometry import box_at, compound, cylinder_axis, rounded_panel_xz, rounded_rect_prism
 from .layout import packaging_layout
 from .parameters import DEFAULT, StationParameters
+from .rear_panel import router_bulkhead_positions
 
 
 @dataclass(frozen=True)
@@ -351,12 +352,10 @@ def build_reference_model(p: StationParameters = DEFAULT) -> ReferenceModel:
         "mac_usbc_panel_extension_2": rounded_panel_xz(21.0, 26.0, 4.0, 2.5, y0, i.usbc_second_position_x, i.usbc_second_position_z, 1),
         **external_ethernet_envelopes(p),
     }
-    for index in range(6):
-        x = (index - 2.5) * i.router_bulkhead_pitch + i.router_interface_center_x
-        z = i.router_bulkhead_z
+    for index, (x, z) in enumerate(router_bulkhead_positions(p), start=1):
         bulkhead = cylinder_axis(4.0, 8.0, (x, y0 - 4.0, z), (0, 1, 0))
         vertical_antenna = cylinder_axis(5.0, 170.0, (x, y0 + 12.0, z), (0, 0, 1))
-        hardware[f"rf_bulkhead_antenna_{index + 1}"] = bulkhead.union(vertical_antenna)
+        hardware[f"rf_bulkhead_antenna_{index}"] = bulkhead.union(vertical_antenna)
     return ReferenceModel(equipment=equipment, clearances=clearances, interfaces=interfaces, hardware=hardware)
 
 

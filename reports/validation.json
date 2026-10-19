@@ -1115,9 +1115,14 @@
     "detail": "modeled APV/mains and Mac-AC corridor envelopes overlap the low-voltage keep-out by 0.0000 mm^3; disjoint geometry is packaging evidence only, not proof of a physical barrier, insulation system, conductor restraint, or regulatory separation"
   },
   {
-    "name": "six screw-mounted RF bulkhead interfaces",
+    "name": "four 5G plus two upper Wi-Fi RF bulkhead interfaces",
     "status": "PASS",
-    "detail": "six direct \u00d86.6 mm rear-panel holes at 20 mm pitch retain 2.0 mm outer clamping lands for the four mobile and two Wi-Fi bulkheads"
+    "detail": "four numbered 5G holes form a 20 mm-pitch lower row at Z=178; Wi-Fi holes sit at Z=198 above positions 1 and 4; all retain 2.0 mm clamping lands"
+  },
+  {
+    "name": "rear RF connector engraving labels",
+    "status": "PASS",
+    "detail": "rear-readable engravings are 5G 1-4 below the lower row and unnumbered Wi-Fi above both upper holes, with solid backing"
   },
   {
     "name": "square replaceable panel: logo_panel_left",

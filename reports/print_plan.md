@@ -27,7 +27,7 @@ STEP remains in assembly coordinates. `export.py` applies these transformations 
 | --- | --- | --- |
 | Base | Rotate 180 degrees about X, then ground | Broad upper skin on the plate instead of suspending it on four feet; inspect intake/button edges and foot overhangs |
 | Cradle, shells, router tray, power box/cover, cap, both pad templates, M3/M4 insert coupons, Mac-button coupon, logo-mount coupon, handle-mount coupon, rear-panel-fit-v2 coupon | Modeled orientation, then ground | Warp/adhesion, tie and retention bridges, boss roads, elephant foot, openings, shell stability, pad thickness, vertical insert axes, and the v2 coupon's upright receiver/flat insert |
-| Rear panel, both router rear retainers, C8 coupon, RF-access coupon | Rotate 90 degrees about X | Visible face, connector-edge quality, direct SMA-hole roundness/lands, retainer slots, and support scars |
+| Rear panel, both router rear retainers, C8 coupon, RF-access coupon | Rotate 90 degrees about X | Visible face, connector-edge quality, legible 0.6 mm RF engravings, direct SMA-hole roundness/lands, retainer slots, and support scars |
 | Left logo panel | Rotate -90 degrees about Y | Handed face/back orientation, reveal, blind 1.5 mm magnet pockets, and flat seating |
 | Right logo panel, blank logo template, legacy Wi-Fi coupon | Rotate +90 degrees about Y | Mirrored panel orientation; the Wi-Fi coupon is retained only as historical calibration evidence |
 | Example embossed logo panel | No rotation; edge-print the 70 mm face | Face-down would rest on the emboss; use supports/brim only after preview and cosmetic review |

@@ -60,12 +60,71 @@ def hdmi_mount_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, f
 
 
 def router_bulkhead_positions(p: StationParameters = DEFAULT) -> tuple[tuple[float, float], ...]:
-    """Mobile/Wi-Fi/Mobile/Mobile/Wi-Fi/Mobile bulkhead row."""
+    """Four lower 5G positions followed by two upper Wi-Fi positions."""
 
     i = p.interfaces
+    cellular = tuple(
+        ((index - 1.5) * i.router_bulkhead_pitch + i.router_interface_center_x, i.router_bulkhead_z)
+        for index in range(4)
+    )
+    wifi = (
+        (cellular[0][0], i.router_wifi_bulkhead_z),
+        (cellular[-1][0], i.router_wifi_bulkhead_z),
+    )
+    return cellular + wifi
+
+
+def router_bulkhead_labels(p: StationParameters = DEFAULT) -> tuple[tuple[str, float, float], ...]:
+    """Rear-view-readable engraved labels for the six antenna bulkheads."""
+
+    positions = router_bulkhead_positions(p)
+    lower_label_z = p.interfaces.router_bulkhead_z - 12.5
+    upper_label_z = p.interfaces.router_wifi_bulkhead_z + 11.5
+    # Number 1..4 from left to right in the user's outside rear view.  That
+    # visible direction is global +X to -X, hence the reversed position tuple.
+    cellular = tuple(
+        (f"5G {index}", x, lower_label_z)
+        for index, (x, _z) in enumerate(reversed(positions[:4]), start=1)
+    )
+    wifi = tuple(("Wi-Fi", x, upper_label_z) for x, _z in reversed(positions[4:]))
+    return cellular + wifi
+
+
+def _rear_panel_engraving(
+    text: str,
+    x: float,
+    z: float,
+    p: StationParameters,
+) -> cq.Workplane:
+    """Create text readable from outside while looking directly at the rear."""
+
+    e = p.enclosure
+    i = p.interfaces
+    # From the rear, screen-right is station -X.  Reversing the local text X
+    # axis keeps the glyphs readable to an observer standing behind the unit.
+    plane = cq.Plane(
+        origin=(x, e.depth / 2.0 - i.router_bulkhead_label_depth, z),
+        xDir=(-1.0, 0.0, 0.0),
+        normal=(0.0, 1.0, 0.0),
+    )
+    return cq.Workplane(plane).text(
+        text,
+        i.router_bulkhead_label_height,
+        i.router_bulkhead_label_depth + 0.2,
+        halign="center",
+        valign="center",
+        font="Arial",
+    )
+
+
+def router_bulkhead_label_engravings(
+    p: StationParameters = DEFAULT,
+) -> tuple[cq.Workplane, ...]:
+    """Return the six production label cutting solids."""
+
     return tuple(
-        ((index - 2.5) * i.router_bulkhead_pitch + i.router_interface_center_x, i.router_bulkhead_z)
-        for index in range(6)
+        _rear_panel_engraving(label, x, z, p)
+        for label, x, z in router_bulkhead_labels(p)
     )
 
 
@@ -190,10 +249,9 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
         )
         part = part.cut(reinforcement_pocket)
 
-    # Six individual SMA/RP-SMA bulkheads mount directly in the rear panel.
-    # An inside Ø12 rebate leaves the physically selected 2.0 mm exterior
-    # clamping land; no separate bezel, snap hooks, or second Ethernet outlet
-    # is required.
+    # Four cellular SMA bulkheads form the lower row; two Wi-Fi RP-SMA
+    # bulkheads sit directly above positions 1 and 4.  An inside Ø12 rebate
+    # leaves the physically selected 2.0 mm exterior clamping land.
     rebate_depth = e.rear_panel_thickness - v.rf_bulkhead_wall_selected + 0.1
     for x, z in router_bulkhead_positions(p):
         rebate = cylinder_axis(6.0, rebate_depth, (x, y0 - 0.1, z), (0, 1, 0))
@@ -204,6 +262,8 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
             (0, 1, 0),
         )
         part = part.cut(rebate).cut(hole)
+    for engraving in router_bulkhead_label_engravings(p):
+        part = part.cut(engraving)
 
     # Clearance around the *fixed* C8 island, which belongs to the closed power
     # compartment.  Rear-panel removal therefore does not move or uncover live

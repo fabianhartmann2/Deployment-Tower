@@ -48,6 +48,7 @@ from deployment_station.validation import (
     rear_sill_reinforcement_check,
     router_screw_retainer_check,
     router_bulkhead_geometry_check,
+    router_bulkhead_label_check,
     router_support_stack_check,
     shell_seam_access_check,
     shell_exterior_profile_check,
@@ -340,8 +341,10 @@ def test_logo_magnet_check_rejects_a_blocked_panel_pocket(validation_parts):
 def test_new_cap_and_bulkhead_interfaces_validate(validation_parts):
     cap_result = cap_dovetail_engagement_check(DEFAULT, validation_parts)
     rf_result = router_bulkhead_geometry_check(DEFAULT, validation_parts["rear_panel"])
+    label_result = router_bulkhead_label_check(DEFAULT, validation_parts["rear_panel"])
     assert cap_result.status == "PASS", cap_result.detail
     assert rf_result.status == "PASS", rf_result.detail
+    assert label_result.status == "PASS", label_result.detail
 
 
 def test_external_ethernet_measured_body_plug_and_bend_are_clear(validation_parts):
@@ -479,7 +482,8 @@ def test_full_geometry_validation_has_no_failures():
     assert "rear-panel lower sill angle-beam reinforcement" in result_names
     assert "logo panels concealed magnet retention geometry" in result_names
     assert "top-cap selected dovetail engagement" in result_names
-    assert "six screw-mounted RF bulkhead interfaces" in result_names
+    assert "four 5G plus two upper Wi-Fi RF bulkhead interfaces" in result_names
+    assert "rear RF connector engraving labels" in result_names
     assert "C8 terminal tunnel/main-compartment passage" in result_names
     assert "C8 dual M3 insert mounts" in result_names
     assert "external Ethernet measured body/plug/bend clearance" in result_names
@@ -511,7 +515,8 @@ def test_full_geometry_validation_has_no_failures():
         "rear panel sampled +Y service sweep",
         "Mac+cradle sampled downward service sweep",
         "RUTM30 sampled rearward service sweep (screw retainers removed)",
-        "six screw-mounted RF bulkhead interfaces",
+        "four 5G plus two upper Wi-Fi RF bulkhead interfaces",
+        "rear RF connector engraving labels",
         "as-built cable/forbidden-geometry routing and bend mock-up",
         "physical RF plug/finger/tool access",
         "local minimum-wall scan of all generated geometry",
@@ -536,7 +541,8 @@ def test_full_geometry_validation_has_no_failures():
     assert "rear panel sampled +Y service sweep" in result_names
     assert "Mac+cradle sampled downward service sweep" in result_names
     assert "RUTM30 sampled rearward service sweep (screw retainers removed)" in result_names
-    assert "six screw-mounted RF bulkhead interfaces" in result_names
+    assert "four 5G plus two upper Wi-Fi RF bulkhead interfaces" in result_names
+    assert "rear RF connector engraving labels" in result_names
     assert "physical RF plug/finger/tool access" in result_names
     assert "local minimum-wall scan of all generated geometry" in result_names
     assert "as-built cable/forbidden-geometry routing and bend mock-up" in result_names

@@ -90,8 +90,8 @@ This convenience visualization is generated separately from the fail-gated STEP/
 
 | Interface | Decision | CAD implementation | Verification boundary |
 | --- | --- | --- | --- |
-| Four cellular SMA connections | Rear bulkhead extensions | Four of six Ø6.6 rear holes with thinned 2.0 mm clamping lands; row sequence Mobile / Wi-Fi / Mobile / Mobile / Wi-Fi / Mobile | Exact pigtails, nut torque, strain relief, first bends, and antenna load test pending |
-| Two Wi-Fi RP-SMA connections | Rear bulkhead extensions | Two of the same six screw-clamped rear positions; former side docks removed | Exact RP-SMA gender, coax routing, antenna spacing, RF performance, and load test pending |
+| Four cellular SMA connections | Rear bulkhead extensions | Four Ø6.6 holes at `X=30,10,-10,-30`, `Z=178`, numbered `5G 1` through `5G 4` from left to right in the outside rear view; 2.0 mm clamping lands | Exact pigtails, nut torque, strain relief, first bends, and antenna load test pending |
+| Two Wi-Fi RP-SMA connections | Rear bulkhead extensions | Two Ø6.6 holes at `X=30,-30`, `Z=198`, directly above 5G 1 and 4 and engraved `Wi-Fi`; former side docks removed | Exact RP-SMA gender, coax routing, antenna spacing, RF performance, and load test pending |
 | External Ethernet | One replaceable extension | One accepted 17 x 14 opening with 27.6 mm mounting pitch directly in the rear panel | Exact screws/locking, latch access, bend space, strain support, and link performance pending |
 | Internal Mac Ethernet | Internal patch lead | Placeholder plug volume in low-voltage lane | Consumes one native router port; actual lead fit pending |
 | Mac HDMI | Replaceable extension | Accepted V7 mount relocated to `(-6,108)`—60 mm from the right and 90 mm from the bottom when viewed from behind—with a 13 mm shelf and two top-down blind M3 mounts | Cable bend, strain support, access, and functional test pending |

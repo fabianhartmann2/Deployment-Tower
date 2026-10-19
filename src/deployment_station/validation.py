@@ -43,6 +43,8 @@ from .rear_panel import (
     ethernet_mount_positions,
     hdmi_mount_positions,
     mac_extension_mount_positions,
+    router_bulkhead_label_engravings,
+    router_bulkhead_labels,
     router_bulkhead_positions,
 )
 from .router_tray import (
@@ -850,6 +852,8 @@ def router_bulkhead_geometry_check(
         land_witnesses.append(_intersection_volume(land, rear_panel))
 
     positions = router_bulkhead_positions(p)
+    cellular = positions[:4]
+    wifi = positions[4:]
     passed = (
         len(positions) == 6
         and max(hole_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
@@ -857,16 +861,59 @@ def router_bulkhead_geometry_check(
         and abs(v.rf_bulkhead_hole_selected - 6.6) <= 1e-6
         and abs(v.rf_bulkhead_wall_selected - 2.0) <= 1e-6
         and all(
-            abs(positions[index + 1][0] - positions[index][0] - i.router_bulkhead_pitch) <= 1e-6
-            for index in range(5)
+            abs(cellular[index + 1][0] - cellular[index][0] - i.router_bulkhead_pitch) <= 1e-6
+            for index in range(3)
+        )
+        and all(abs(z - i.router_bulkhead_z) <= 1e-6 for _x, z in cellular)
+        and wifi
+        == (
+            (cellular[0][0], i.router_wifi_bulkhead_z),
+            (cellular[-1][0], i.router_wifi_bulkhead_z),
         )
     )
     return _check(
-        "six screw-mounted RF bulkhead interfaces",
+        "four 5G plus two upper Wi-Fi RF bulkhead interfaces",
         passed,
-        "six direct Ø6.6 mm rear-panel holes at 20 mm pitch retain 2.0 mm outer clamping lands for the four mobile and two Wi-Fi bulkheads",
+        "four numbered 5G holes form a 20 mm-pitch lower row at Z=178; Wi-Fi holes sit at Z=198 above positions 1 and 4; all retain 2.0 mm clamping lands",
         f"positions={positions}, hole obstructions={hole_obstructions}, land witnesses={land_witnesses}, "
         f"expected land={expected_land:.2f}",
+    )
+
+
+def router_bulkhead_label_check(
+    p: StationParameters,
+    rear_panel: cq.Workplane,
+) -> CheckResult:
+    """Verify exact label text, engraving cuts, and backing material."""
+
+    expected = (
+        ("5G 1", 30.0, 165.5),
+        ("5G 2", 10.0, 165.5),
+        ("5G 3", -10.0, 165.5),
+        ("5G 4", -30.0, 165.5),
+        ("Wi-Fi", 30.0, 209.5),
+        ("Wi-Fi", -30.0, 209.5),
+    )
+    labels = router_bulkhead_labels(p)
+    engravings = router_bulkhead_label_engravings(p)
+    remaining_material = [
+        _intersection_volume(engraving, rear_panel) for engraving in engravings
+    ]
+    backing_witnesses = [
+        _intersection_volume(engraving.translate((0.0, -0.9, 0.0)), rear_panel)
+        for engraving in engravings
+    ]
+    passed = (
+        labels == expected
+        and len(engravings) == 6
+        and max(remaining_material) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(backing_witnesses) > INTERSECTION_VOLUME_TOLERANCE_MM3
+    )
+    return _check(
+        "rear RF connector engraving labels",
+        passed,
+        "rear-readable engravings are 5G 1-4 below the lower row and unnumbered Wi-Fi above both upper holes, with solid backing",
+        f"labels={labels}, engraving obstructions={remaining_material}, backing witnesses={backing_witnesses}",
     )
 
 
@@ -2332,6 +2379,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
     )
 
     results.append(router_bulkhead_geometry_check(p, parts["rear_panel"]))
+    results.append(router_bulkhead_label_check(p, parts["rear_panel"]))
 
     for name in ("logo_panel_left", "logo_panel_right"):
         dims = bbox_dimensions(parts[name])

@@ -54,8 +54,8 @@ The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled p
 | Cap | `Z=268..280`, 12 high; two transverse dovetail grooves and two blind M4 lock inserts |
 | Rear shell opening | 120 wide, `Z=18..268` |
 | Rear service panel | 132 x 250 x 3.2; radius 8; eight M3 positions |
-| Rear SMA row | six direct Ø6.6 holes at X `-50,-30,-10,10,30,50`, Z `158`; inner Ø12 rebates leave 2.0 mm exterior lands |
-| RF bulkhead row | Six Ø6.6 holes at 20 pitch, centre `Z=158`; 2.0 mm outer clamping lands; Mobile/Wi-Fi/Mobile/Mobile/Wi-Fi/Mobile |
+| Lower 5G SMA row | four direct Ø6.6 holes at X `30,10,-10,-30`, Z `178` when listed left-to-right in the outside rear view; engraved `5G 1` through `5G 4` below; inner Ø12 rebates leave 2.0 mm exterior lands |
+| Upper Wi-Fi RP-SMA row | two direct Ø6.6 holes at X `30,-30`, Z `198`, directly above 5G 1 and 4; each engraved `Wi-Fi` above; same 2.0 mm clamping lands |
 | External Ethernet opening | 17 x 14; centre `(X,Z)=(-42,108)`, or 24 mm from the visible right edge and 90 mm from the bottom when viewed from behind; 27.6 mm horizontal M3 pitch with accepted 1 mm vertical correction |
 | External Ethernet inner service envelope | 22 x 23 x 42 adapter body; 18 mm angled plug; 6 mm cable with a reserved 20 mm bend toward the -X low-voltage lane |
 | C8 fixed island | 42 x 28 nominal island; inlet centre `(X,Z)=(38,116)` on relocated +X power compartment |
@@ -205,7 +205,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Complete mass / proof-load factor | 1.8 kg provisional / 4.0 | 70.6 N provisional test target; not a rating |
 | Cap dovetails | two rails at Y `±68`; 0.10 mm clearance per side | Physical v2 coupon selection; cap slides laterally |
 | Cap locks | two M4x10 axes at X `±55`, Y `0` | Blind cap inserts and internal shell clearances; prevents sideways escape |
-| Rear antenna bulkheads | six Ø6.6 holes, 20 pitch, 2.0 clamping land | Four SMA mobile plus two RP-SMA Wi-Fi positions |
+| Rear antenna bulkheads | lower 5G row: four Ø6.6 holes at 20 pitch and Z=178; upper Wi-Fi pair: X ±30 at Z=198; 2.0 clamping lands and 0.6-deep engraved labels | Four SMA mobile plus two RP-SMA Wi-Fi positions |
 | Wi-Fi antenna length | 170 | Type-15 screw-on antenna reference; hinge sweep and RF validation pending |
 | Logo size/thickness/radius | 70/2.4/6 | Face geometry |
 | Logo pocket depth/reveal/emboss | 1.6/0.8/0.8 | Appearance parameters |
