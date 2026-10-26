@@ -33,13 +33,14 @@ The generated fixed-envelope result is `165.00 x 165.00 x 280.00`. Non-default p
 | --- | ---: | ---: | --- |
 | Mac mini placeholder | `(0,-8,41)` | 127 x 127 x 50 overall | X `-63.5..63.5`; Y `-71.5..55.5`; Z `16..66`; 42 mm retained square body above support plane plus 8 mm central underside drop |
 | Mac support plane | `Z=24` | — | 10 above nominal base top `Z=14` |
-| APV case placeholder | `(35,8,103.55)` | 57 X x 84 Y x 29.5 Z | Relocated with the complete power assembly to +X so the Mac-determined low-voltage cables remain on the opposite side |
+| APV case placeholder | `(35,5,103.55)` | 57 X x 84 Y x 29.5 Z | Relocated with the complete power assembly to +X so the Mac-determined low-voltage cables remain on the opposite side |
 | APV/mains box | centre `(35,5,105)` | nominal 72 x 120 x 44 | X `-1..71`, Y `-55..65`; the box, C8 island/tunnel, cover, mounts, exits, and mains envelopes move as one assembly |
 | Low-voltage lane | `(-48,0,116)` | 34 x 122 x 76 | X `-65..-31`; Y `-61..61`; Z `78..154` |
 | Mac-AC reserved corridor | gland datum `(55,-33.5,83)` toward provisional Mac AC | stepped 6 wide packaging solid | Mirrored side run remains a reserved envelope only; no physical conduit or electrical release implied |
 | Router tray datum | `Z=151` | 3 thick plate | Shell-supported fasteners; guide/retainer geometry extends above the plate |
-| RUTM30 official STEP | `(0,28,170.5)` | 100 x 93.7 x 30 | X `-50..50`; Y `-18.85..74.85`; Z `155.5..185.5` |
-| Handle anchor reference | `Z=260` | centres at X `+/-54`, Y `-42` | Cap lock geometry near fixed-body top |
+| RUTM30 official STEP | `(0,0,170.5)` | 100 x 93.7 x 30 | X `-50..50`; Y `-46.85..46.85`; Z `155.5..185.5`; 32.45 mm nominal service space at both connector faces |
+| Rigid-handle anchor reference | cap top `Z=280` | centres at X `+/-54`, Y `0` | Centred on the enclosure balance line |
+| Leather-strap anchors | side walls at `(X,Y,Z)=(+/-82.5,0,232)` | 40 wide x 2 thick strap; printed M18x2.5-style screws | Ø30 internal bosses/load plates; Ø34 knurled heads; physical thread/load test mandatory |
 
 The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled placeholders. Only the RUTM30 body is imported from official STEP.
 
@@ -54,14 +55,15 @@ The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled p
 | Cap | `Z=268..280`, 12 high; two transverse dovetail grooves and two blind M4 lock inserts |
 | Rear shell opening | 120 wide, `Z=18..268` |
 | Rear service panel | 132 x 250 x 3.2; radius 8; eight M3 positions |
-| Lower 5G SMA row | four direct Ø6.6 holes at X `30,10,-10,-30`, Z `178` when listed left-to-right in the outside rear view; engraved `5G 1` through `5G 4` below; inner Ø12 rebates leave 2.0 mm exterior lands |
-| Upper Wi-Fi RP-SMA row | two direct Ø6.6 holes at X `30,-30`, Z `198`, directly above 5G 1 and 4; each engraved `Wi-Fi` above; same 2.0 mm clamping lands |
+| Lower 5G SMA row | four direct Ø6.6 holes at X `30,10,-10,-30`, Z `178` when listed left-to-right in the outside rear view; 5.5 mm-high, 0.8 mm-deep engravings `5G 1` through `5G 4`; inner Ø12 rebates leave 2.0 mm exterior lands |
+| Upper Wi-Fi RP-SMA row | two direct Ø6.6 holes at X `30,-30`, Z `198`, directly above 5G 1 and 4; each has the enlarged `Wi-Fi` engraving; same 2.0 mm clamping lands |
 | External Ethernet opening | 17 x 14; centre `(X,Z)=(-42,108)`, or 24 mm from the visible right edge and 90 mm from the bottom when viewed from behind; 27.6 mm horizontal M3 pitch with accepted 1 mm vertical correction |
 | External Ethernet inner service envelope | 22 x 23 x 42 adapter body; 18 mm angled plug; 6 mm cable with a reserved 20 mm bend toward the -X low-voltage lane |
 | C8 fixed island | 42 x 28 nominal island; inlet centre `(X,Z)=(38,116)` on relocated +X power compartment |
 | C8 controlled cutout | 21 x 12.5 plus 0.40 profile allowance; two full-depth Ø4.2 M3 insert pockets at 30 pitch |
-| HDMI extension opening | 16.4 x 6.4; centre `(X,Z)=(-6,108)`; equivalently 60 mm from the visible right edge and 90 mm from the bottom when viewed from behind; 13 mm shelf; two top-down blind M3 axes |
-| USB-C extension openings | 10.4 x 4.4; centres `(X,Z)=(-24,68),(-41,78)`; equivalently rear-view right/bottom offsets `(42,50)` and `(25,60)`; 6 mm rear boss bridges and sharp 14 x 6.5 x 2.5 pockets |
+| HDMI extension opening | 16.4 x 6.4; centre `(X,Z)=(-42,135)`, stacked above Ethernet and clear of the +X power compartment; 13 mm shelf; two top-down blind M3 axes; engraved `HDMI` |
+| USB-C extension openings | 10.4 x 4.4; centres `(X,Z)=(-19,68),(-41,78)`; the inner connector alone moved 5 mm toward panel centre; 6 mm rear boss bridges, sharp 14 x 6.5 x 2.5 pockets, and `USB 1`/`USB 2` engravings |
+| Data-port labels | 5.0 mm high, 0.8 mm deep | `HDMI`, `LAN / WAN`, `USB 1`, and `USB 2`, readable from outside at the rear |
 | Mac button approach | 26 wide; installed base run follows the button-to-rear distance (42.5 before the rounded end); continuous swept path validated with diameter-11 probe |
 | Base intake opening | diameter 116 at Mac Y centre |
 | Logo faces | 70 x 70 x 2.4, radius 6, centre `Z=156`, 0.8 reveal; two blind Ø6.2 x 1.7 panel pockets and two Ø6.2 x 3.2 shell pockets per side |
@@ -77,14 +79,15 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `base` | 162 x 162 x 14 |
 | `mac_cradle` | 152 x 137 x 51.2, including four lowered Z-retention clips and two extended release rails |
 | `lower_shell` | 165 x 165 x 97 |
-| `upper_shell` | 165 x 164.9531 x 162.6 |
-| `router_tray` | approximately 120 x 98.9 x 37.5, including the two rear insert towers |
+| `upper_shell` | 165 x 165 x 166.6, including the two side strap receivers |
+| `router_tray` | approximately 120 x 98.8 x 37.5, including the two rear insert towers |
 | each `router_rear_retainer_*` | approximately 15 x 8.7 x 10.5; separate slotted rear corner stop |
-| `power_compartment` | 72 x 134.5 x 44 |
+| `power_compartment` | 72 x 137.5 x 47 |
 | `power_compartment_cover` | 72 x 120 x 4.8 |
 | `rear_panel` | 132 x 16.2 x 250, including internal HDMI/USB supports |
 | `upper_cap` | 165 x 165 x 12 |
 | `removable_handle` | 150 x 32 x 80 |
+| `leather_strap_screw` | approximately 34 x 34 x 23; print two |
 | each installed/blank logo panel | 2.4 x 70 x 70 |
 | example embossed logo panel | 3.2 x 70 x 70 |
 | Mac compliant-pad template | 14.6 x 14.6 x 2 |
@@ -99,7 +102,8 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_m4_seam_insert` | 54 x 24 x 16; three vertical Ø5.4/5.6/5.8 pilot bosses |
 | `coupon_rear_panel_fit_v2` | 120 x 22.5 x 37; upright receiver plus flat insert |
 | `coupon_logo_mount` | 23.2 x 32 x 18 |
-| `coupon_handle_mount` | 100 x 36 x 12 |
+| `coupon_handle_mount` | 100 x 36 x 20 |
+| `coupon_leather_strap_thread` | approximately 78 x 34 x 23; separate threaded receiver and screw |
 | `coupon_wifi_dock_v2` | 17.9 x 120 x 42 |
 | `coupon_mac_button_recess` | 54 x 58 x 12 |
 | `coupon_router_rf_access` | 110 x 3.2 x 46 |
@@ -166,12 +170,12 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Mac base pad seat/pad thickness | 1 / 2 | Three active seats; actual pad compression/contact pending |
 | Mac Z-retention stations | Y offsets -17/+17 on both X sides | Four clip/cams lowered 8 mm to the 42 mm retained body; 1.2 nominal top gap; two linked bottom-release rails with 7.5 mm outreach |
 | Router `width/depth/height/mass` | 100/93.7/30; 0.319 kg | Official body envelope / published mass |
-| Router centre X/Y and tray Z | 0/28; 151 | Rear-biased packaging |
+| Router centre X/Y and tray Z | 0/0; 151 | Centred packaging; SMA face toward rear, Ethernet/power face toward front |
 | RF connector depth/pitch/access diameter | 36/14.8/14 | Official centres; provisional connected access volume |
 | RJ45 clearance W/H/depth | 18/16/40 | Provisional extension/plug volume |
 | Router support pad W/D/T/compression | 8/16/1.3/0.4 | Four provisional compliant pads/lands; underside and preload unverified |
 | Router physical fit corrections | side guides inward 1.0; top ledges down 0.6 | Responds to measured 1.3 mm side play per side and 1.0 mm top play; predicts about 0.3 mm physical side clearance |
-| Router rear stops | two separate 4 mm-thick corner stops; ±1.0 adjustment | Screw-retained after router insertion; rear contact datum corrected about 4.2 mm forward from the broken flexure centre while preserving 0.3 mm clearance to the official chassis |
+| Router stops | two separate 10 mm-wide front corner pads plus two 4 mm-thick rear stops with ±1.0 adjustment | The centre 80 mm of the native Ethernet/power face remains open; rear stops install after insertion without entering the SMA envelope |
 | APV case L/W/H | 84/57/29.5 | Datasheet placeholder |
 | APV longitudinal mounting delta / fixing hole | 98.6 / diameter 3.6 | Supplier drawing coordinates; actual unit check required |
 | APV leads | 150 +/-10 long; 3.5 controlled diameter | Datasheet length; simplified clearance solids |
@@ -183,7 +187,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | --- | --- | --- |
 | Outer W/D/H | 72/120/44 | Nominal closed box; rear island/tunnel adds depth to bbox |
 | Wall/bottom/cover | 2.4/2.8/2.8 | Mechanical containment geometry only |
-| Centre X/Y; bottom Z | 35/8; 83 | Relocated +X placement |
+| Centre X/Y; bottom Z | 35/5; 83 | Relocated +X placement |
 | DC grommet / Mac AC gland openings | diameter 9 / 12 | Hardware selection pending |
 | Mac AC gland datum / reserved route | X 55, Y -33.5 / 6 wide stepped solid | Packaging reservation only; no selected conduit, branch hardware, protection, or electrical acceptance |
 | Raised tie bridges | 14 x 7 x 5 outer; 8 x 3 strap tunnel | Two internal bridges over continuous nominal floor; physical restraint/electrical suitability pending |
@@ -200,12 +204,13 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Rise; leg/root radii | 58; 12/16 | Round legs and flared load-spreading roots |
 | Anchor spacing | 108 | Leg/foot centres at X `+/-54` |
 | Foot W/D/T | 42/32/8 | Broad cap bearing area; four M3 insert pockets open from the hidden underside |
-| Fastener offset | `+/-14` from each anchor | Four M3 axes at X `-68,-40,+40,+68`, Y `-42` |
+| Fastener offset | `+/-14` from each anchor | Four M3 axes at X `-68,-40,+40,+68`, Y `0` |
 | Rib thickness | 5 | Structural geometry |
 | Complete mass / proof-load factor | 1.8 kg provisional / 4.0 | 70.6 N provisional test target; not a rating |
-| Cap dovetails | two rails at Y `±68`; 0.10 mm clearance per side | Physical v2 coupon selection; cap slides laterally |
+| Cap dovetails | two rounded-full-edge rails at Y `±68`; 0.10 mm clearance per side | Physical v2 coupon selection; rails now continue into the shell corner profile without four end gaps |
+| Leather strap mounts | Y `0`, Z `232`; strap 40 x 2; M18x2.5-style thread; Ø34 x 8 head | Two pre-threaded Ø30 bosses and 64 mm-high side load plates; print two identical screws; coupon and proof-load tests required |
 | Cap locks | two M4x10 axes at X `±55`, Y `0` | Blind cap inserts and internal shell clearances; prevents sideways escape |
-| Rear antenna bulkheads | lower 5G row: four Ø6.6 holes at 20 pitch and Z=178; upper Wi-Fi pair: X ±30 at Z=198; 2.0 clamping lands and 0.6-deep engraved labels | Four SMA mobile plus two RP-SMA Wi-Fi positions |
+| Rear antenna bulkheads | lower 5G row: four Ø6.6 holes at 20 pitch and Z=178; upper Wi-Fi pair: X ±30 at Z=198; 2.0 clamping lands and 0.8-deep, 5.5-high engraved labels | Four SMA mobile plus two RP-SMA Wi-Fi positions |
 | Wi-Fi antenna length | 170 | Type-15 screw-on antenna reference; hinge sweep and RF validation pending |
 | Logo size/thickness/radius | 70/2.4/6 | Face geometry |
 | Logo pocket depth/reveal/emboss | 1.6/0.8/0.8 | Appearance parameters |

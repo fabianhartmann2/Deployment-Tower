@@ -11,8 +11,8 @@ The stack from bottom to top is:
 1. a removable dark base with 5 mm feet, a 116 mm intake opening, and a continuous lower-rear Mac-button path;
 2. a horizontal Mac mini on a physically calibrated Ø112 open-ring, three-pad cradle with 0.30 mm side clearance, four lowered positive-Z clip/cam retainers, and two bottom-operated release rails;
 3. a shell-supported, separately covered APV/mains compartment, a distinct low-voltage/data lane, and a provisional reserved Mac-AC route;
-4. a horizontal RUTM30 on four replaceable compliant support pads and a shell-supported removable tray at `Z=151`, retained at the rear corners by two adjustable M3-screwed stops rather than brittle flexure clips; and
-5. a reinforced upper shell and laterally sliding cap with a removable handle fastened from the cap underside by four hidden M3 screws, broad feet, full-depth handle inserts, two selected dovetail rails, and shell-tied load paths.
+4. a front-to-rear centred horizontal RUTM30 on four replaceable compliant support pads and a shell-supported removable tray at `Z=151`, retained by two 10 mm front corner stops and two adjustable M3-screwed rear stops while leaving the native connector face open; and
+5. a reinforced upper shell and laterally sliding cap with a centred removable rigid handle, plus optional Y=0 side mounts for a 40 mm x 2 mm leather strap using two printed M18x2.5-style, Ø34 knurled-head screws.
 
 The lower and upper shell modules fit the Bambu Lab X1 Carbon's 256 mm build cube. Their load-bearing split uses six hidden M4 joints, an internal U-shaped belt in each shell, and three locating keys; all screw heads, tool corridors, and insert openings remain inside the closed exterior skin. A physical v3 assembly found the original Ø7.6 head pockets tight for measured Ø7.0 heads, so the current source uses Ø8.2 pockets plus 8.4 mm internal-only entry slots. The formerly unsupported 4 mm rear sill is tied into the lower shell by an internal angle beam. The upper shell carries two recessed 70 x 70 mm logo panels using concealed 6 x 3 mm shell magnets opposed by 6 x 1.5 mm panel magnets. The former side antenna docks and their shell bosses are removed; four cellular and two Wi-Fi antennas now mount on six screw-clamped rear bulkheads. The C8 island and closed terminal tunnel move with the complete power compartment to +X; the full-height rear service panel removes around the island. Raised cable-tie bridges preserve a solid box floor, the two APV axes use top-service blind insert pilots, and four wall-tied bosses support the cover. These are mechanical provisions only and do not authorize wiring or energization.
 
@@ -31,7 +31,7 @@ All dimensions are millimetres.
 - Fixed body: approximately `X=-82.5..82.5`, `Y=-82.5..82.5`, `Z=0..280`.
 - Equipment positions in `layout.py` are reference-envelope centres.
 
-The principal centres are Mac `(0,-8,41)`, APV `(35,5,103.55)`, and RUTM30 `(0,28,170.5)`. The Mac reference preserves 50 mm overall height while representing the physically observed 8 mm underside drop below its retained square body. Full datums, packaging ranges, and parameter defaults are in [dimensions.md](reports/dimensions.md).
+The principal centres are Mac `(0,-8,41)`, APV `(35,5,103.55)`, and RUTM30 `(0,0,170.5)`. The Mac reference preserves 50 mm overall height while representing the physically observed 8 mm underside drop below its retained square body. Full datums, packaging ranges, and parameter defaults are in [dimensions.md](reports/dimensions.md).
 
 ## Build, test, and export
 
@@ -63,10 +63,10 @@ The source checks are fail-gated, but aggregate counts and artifact hashes are i
 
 ## Generated outputs
 
-The current source registry expects **18 printable definitions**: 14 installed assembly parts plus four reusable/non-installed templates. Regeneration writes:
+The current source registry expects **19 printable definitions**: 14 installed assembly parts plus the optional leather-strap screw and four reusable/non-installed templates. Regeneration writes:
 
 - one printable-part STEP and one print-oriented STL for each registered definition;
-- 21 coupon STEP files and 21 coupon STL files, including retained historical fit articles;
+- 22 coupon STEP files and 22 coupon STL files, including the new leather-strap thread trial and retained historical fit articles;
 - `complete_assembly.step`, `exploded_assembly.step`, and `packaging_study.step`;
 - `component_envelopes.step`, containing non-printable references and keep-outs;
 - four deterministic PNG renders; and
@@ -94,8 +94,8 @@ This convenience visualization is generated separately from the fail-gated STEP/
 | Two Wi-Fi RP-SMA connections | Rear bulkhead extensions | Two Ø6.6 holes at `X=30,-30`, `Z=198`, directly above 5G 1 and 4 and engraved `Wi-Fi`; former side docks removed | Exact RP-SMA gender, coax routing, antenna spacing, RF performance, and load test pending |
 | External Ethernet | One replaceable extension | One accepted 17 x 14 opening with 27.6 mm mounting pitch directly in the rear panel | Exact screws/locking, latch access, bend space, strain support, and link performance pending |
 | Internal Mac Ethernet | Internal patch lead | Placeholder plug volume in low-voltage lane | Consumes one native router port; actual lead fit pending |
-| Mac HDMI | Replaceable extension | Accepted V7 mount relocated to `(-6,108)`—60 mm from the right and 90 mm from the bottom when viewed from behind—with a 13 mm shelf and two top-down blind M3 mounts | Cable bend, strain support, access, and functional test pending |
-| Two Mac USB-C | Replaceable extensions | Accepted V7 mounts relocated to `(-24,68)` and `(-41,78)`—rear-view right/bottom offsets `(42,50)` and `(25,60)`—mounted from inside to 6 mm blind-boss bridges with sharp 14 x 6.5 x 2.5 mm reliefs | Cable bend, strain support, access, and functional test pending |
+| Mac HDMI | Replaceable extension | Accepted V7 mount stacked above LAN/WAN at `(-42,135)`, clear of the +X power box, with a 13 mm shelf and two top-down blind M3 mounts | Cable bend, strain support, access, and functional test pending |
+| Two Mac USB-C | Replaceable extensions | Accepted V7 mounts at `(-19,68)` and `(-41,78)`; only the inner connector moved 5 mm toward panel centre after the cable-overlap trial | Cable bend, strain support, access, and functional test pending |
 | Mac AC | Internal only | Diameter-12 gland and continuous stepped 6 mm reserved envelope from the covered zone toward the provisional Mac connector | This is packaging space, not a selected conduit or completed branch architecture; qualified design remains PENDING |
 | Candidate measured C8 | Direct component | Accepted 21 x 12.5 opening on the fixed inlet island at `(38,116)` with two full-depth Ø4.2 M3 insert pockets, integral with the relocated closed compartment | Insert installation, shroud, wiring, and electrical review pending |
 | Mac power button | Direct mechanical reach | Continuous rear-left/underside finger path; no Mac modification | Handedness corrected by full-cradle trial; physical ergonomics/guarding cycles pending |
@@ -109,10 +109,10 @@ The two native router ports now have a defined one-to-one allocation: one intern
 | `parameters.py`, `layout.py` | Defaults, datums, and packaging locations |
 | `components.py` | Official router import; controlled equipment, hardware, cable, and removal placeholders |
 | `base.py`, `mac_mount.py` | Base, intake/button path, three 2 mm pad positions in 1 mm seats, four clip/cam retainers, two bottom release rails, and shell-fastened cradle ears |
-| `shell.py` | Split shell, reinforced rear sill, three seam keys, six hidden internal seam joints/belts, magnetic logo receivers, dovetail cap rails, equipment supports, and handle load path |
-| `router_tray.py`, `rear_panel.py` | Router support, physically corrected side/top fit, four compliant pads, adjustable screw-mounted rear stops, and a full-height one-piece rear panel with six direct RF bulkheads and the measured extension mounts |
+| `shell.py` | Split shell, reinforced rear sill, three seam keys, six hidden internal seam joints/belts, magnetic logo receivers, rounded full-edge dovetail cap rails, equipment supports, and reinforced leather-strap bosses |
+| `router_tray.py`, `rear_panel.py` | Centred router support, physically corrected side/top fit, four compliant pads, 10 mm front corner stops, adjustable screw-mounted rear stops, and a labeled full-height rear panel |
 | `power_compartment.py` | Mechanical APV/mains enclosure, fixed C8 island/tunnel, sealed-floor tie bridges, top-service APV pilots, wall-tied upper cover bosses, four verified shell-mount access corridors, exits, and cover |
-| `handle.py` | Sliding dovetail cap, two concealed anti-slide locks, structural beams, underside four-screw handle feet, and mounting coupon |
+| `handle.py` | Sliding dovetail cap, two concealed anti-slide locks, centred underside four-screw rigid handle, optional printed M18 strap screws, and handle/thread coupons |
 | `wifi_dock.py`, `logo_panel.py` | Legacy dock coupon source retained for traceability; production magnet-retained logo panels |
 | `coupons.py` | High-risk physical-fit articles, including the original calibration set and four measured v4 interface coupons |
 | `prototype_v4.py` | Coupon-stage measured Ethernet/HDMI/USB-C/C8 interfaces, RF bulkhead wall trials, blind logo magnets, and concealed cap dovetails for the pending v4 redesign |

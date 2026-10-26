@@ -70,6 +70,7 @@ def test_router_tray_matches_physical_retention_feedback():
     assert components.router_rear_retainer_adjustment == 1.0
     assert components.router_tray_screw_head_height == 3.0
     assert DEFAULT.fasteners.m3_low_head_recess_depth == 2.2
+    assert components.router_center_y == 0.0
 
 
 def test_v4_measured_interface_inputs_are_recorded():
@@ -136,13 +137,23 @@ def test_v4_production_layout_uses_relocated_power_and_full_height_rear_panel():
     assert DEFAULT.interfaces.router_wifi_bulkhead_z == 198.0
 
 
-def test_v5_rear_connector_centres_match_edge_dimensioned_feedback():
+def test_rear_connector_centres_match_latest_physical_feedback():
     e = DEFAULT.enclosure
     i = DEFAULT.interfaces
     # Looking at the enclosure from behind reverses station X, so the visible
     # right-hand edge of the panel is the global -X edge.
     rear_view_right_edge = -e.rear_panel_width / 2.0
     bottom_edge = e.rear_opening_bottom
-    assert (i.usbc_position_x - rear_view_right_edge, i.usbc_position_z - bottom_edge) == (42.0, 50.0)
+    # Only the inner connector moved 5 mm toward panel centre.
+    assert (i.usbc_position_x - rear_view_right_edge, i.usbc_position_z - bottom_edge) == (47.0, 50.0)
     assert (i.usbc_second_position_x - rear_view_right_edge, i.usbc_second_position_z - bottom_edge) == (25.0, 60.0)
-    assert (i.hdmi_position_x - rear_view_right_edge, i.hdmi_position_z - bottom_edge) == (60.0, 90.0)
+    assert i.hdmi_position_x == i.ethernet_position_x
+    assert i.hdmi_position_z > i.ethernet_position_z
+
+
+def test_optional_leather_strap_inputs_match_user_hardware():
+    strap = DEFAULT.leather_strap
+    assert (strap.width, strap.thickness) == (40.0, 2.0)
+    assert (strap.thread_nominal_diameter, strap.thread_pitch) == (18.0, 2.5)
+    assert 30.0 <= strap.head_diameter <= 35.0
+    assert strap.mount_y == DEFAULT.logo.fastener_offset_y * 0.0

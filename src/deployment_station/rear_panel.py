@@ -95,6 +95,7 @@ def _rear_panel_engraving(
     x: float,
     z: float,
     p: StationParameters,
+    height: float | None = None,
 ) -> cq.Workplane:
     """Create text readable from outside while looking directly at the rear."""
 
@@ -109,7 +110,7 @@ def _rear_panel_engraving(
     )
     return cq.Workplane(plane).text(
         text,
-        i.router_bulkhead_label_height,
+        i.router_bulkhead_label_height if height is None else height,
         i.router_bulkhead_label_depth + 0.2,
         halign="center",
         valign="center",
@@ -125,6 +126,27 @@ def router_bulkhead_label_engravings(
     return tuple(
         _rear_panel_engraving(label, x, z, p)
         for label, x, z in router_bulkhead_labels(p)
+    )
+
+
+def rear_io_labels(p: StationParameters = DEFAULT) -> tuple[tuple[str, float, float], ...]:
+    """Rear-view-readable labels for the user-accessible data connectors."""
+
+    i = p.interfaces
+    return (
+        ("USB 1", i.usbc_position_x, i.usbc_position_z - 7.5),
+        ("USB 2", i.usbc_second_position_x, i.usbc_second_position_z - 7.5),
+        ("LAN / WAN", i.ethernet_position_x, i.ethernet_position_z - 14.0),
+        ("HDMI", i.hdmi_position_x, i.hdmi_position_z - 10.5),
+    )
+
+
+def rear_io_label_engravings(
+    p: StationParameters = DEFAULT,
+) -> tuple[cq.Workplane, ...]:
+    return tuple(
+        _rear_panel_engraving(label, x, z, p, p.interfaces.rear_io_label_height)
+        for label, x, z in rear_io_labels(p)
     )
 
 
@@ -248,6 +270,9 @@ def rear_panel(p: StationParameters = DEFAULT) -> cq.Workplane:
             ),
         )
         part = part.cut(reinforcement_pocket)
+
+    for engraving in rear_io_label_engravings(p):
+        part = part.cut(engraving)
 
     # Four cellular SMA bulkheads form the lower row; two Wi-Fi RP-SMA
     # bulkheads sit directly above positions 1 and 4.  An inside Ø12 rebate

@@ -9,17 +9,18 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `base` | 1 | Dark ASA | Feet, 116 mm intake, continuous button approach, four screw clearances |
 | `mac_cradle` | 1 | ASA | Physically calibrated Ø112 opening, 0.30 mm side gap, three 1 mm pad seats, four 8 mm-lowered positive-Z clip/cams, two extended bottom release rails, four shell-fastened ears |
 | `lower_shell` | 1 | Matte white ASA | Base/cradle/power supports, rear bosses, angle-reinforced rear sill, three seam keys, internal U-belt, six hidden structural seam inserts |
-| `upper_shell` | 1 | Matte white ASA | Router supports, rear bosses, four blind logo-magnet receivers, two cap dovetail rails/crossbars, internal U-belt, six hidden seam lugs/tool corridors |
-| `router_tray` | 1 | ASA | Vented plate, four compliant-pad lands, inward-corrected guides, lowered ledges, front stop, two M3 insert towers, and four deeply recessed shell fasteners; brittle rear clips removed |
+| `upper_shell` | 1 | Matte white ASA | Router supports, rear bosses, four blind logo-magnet receivers, two rounded full-edge cap dovetails, internal U-belt, six hidden seam lugs/tool corridors, and two reinforced pre-threaded leather-strap bosses |
+| `router_tray` | 1 | ASA | Centred vented plate, four compliant-pad lands, inward-corrected guides, lowered ledges, two 10 mm front corner stops, two M3 insert towers, and four deeply recessed shell fasteners |
 | `router_rear_retainer_left`, `router_rear_retainer_right` | 1 each | ASA | Rigid slotted rear-corner stops, installed after the router with one M3x8 screw each; remain outside the SMA envelopes |
 | `power_compartment` | 1 | Reviewed flame-/temperature-suitable engineering material | Mechanical APV/mains box, fixed C8 island/tunnel, raised sealed-floor tie bridges, two top-service blind APV pilots, four open lower-shell mounting corridors, four upper wall-tied cover bosses, and exits; not an approved electrical enclosure |
 | `power_compartment_cover` | 1 | Same reviewed material | Separate deliberate-access cover with four column-aligned M3 clearance axes |
-| `rear_panel` | 1 | Dark ASA | Full-height one-piece service face with one Ethernet, relocated HDMI/dual USB-C, four engraved lower 5G and two engraved upper Wi-Fi Ø6.6 bulkheads with 2.0 mm lands, and fixed C8-island clearance |
+| `rear_panel` | 1 | Dark ASA | Full-height one-piece service face with stacked HDMI/LAN-WAN, separated dual USB-C, enlarged RF engravings, `HDMI`/`LAN / WAN`/`USB 1`/`USB 2` labels, six Ø6.6 bulkheads, and fixed C8-island clearance |
 | `upper_cap` | 1 | Matte white ASA | Selected 0.10 mm/side dovetail grooves, crossmember, bearing pads, underside handle clearances, and two blind M4 lock inserts |
 | `removable_handle` | 1 | Candidate ASA/PA-CF after tests | Continuous cylindrical grip, spherical shoulders, round legs, flared roots, two rounded 42 x 32 x 8 mm feet, and four underside M3 insert pockets; no load rating |
+| `leather_strap_screw` | 2 | Candidate PA-CF or similarly tough filament after tests | Optional M18x2.5-style printed screw, Ø34 x 8 knurled head and 15 mm threaded shaft; use only after the dedicated coupon and complete carry proof test |
 | `logo_panel_left`, `logo_panel_right` | 1 each | ASA or approved variant | Recessed 70 mm faces with two blind 6 x 1.5 mm magnet pockets each |
 
-The registry contains **18 printable definitions**: the 14 installed parts above plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
+The registry contains **19 printable definitions**: the 14 installed rigid-handle assembly parts, the optional `leather_strap_screw` (print twice), plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
 
 ## Fit coupons
 
@@ -34,6 +35,7 @@ The registry contains **18 printable definitions**: the 14 installed parts above
 | `coupon_router_rf_access` | Legacy only | Historical coupon for the former common RF window; the production V4 uses six individual SMA bulkheads |
 | `coupon_logo_mount` | Per panel/shell material pair | Two-screw insert fit, seating, torque, service cycling, and rattle |
 | `coupon_handle_mount` | Per structural material/orientation | Representative two-screw foot/pad insert stack; torque, pull-out, and section inspection |
+| `coupon_leather_strap_thread` | Before reprinting `upper_shell` | Matching printed female boss and knurled M18 screw; verify full hand engagement, removal, conditioning, thread stripping, and retained clamp force |
 
 ## Owner equipment and controlled components
 

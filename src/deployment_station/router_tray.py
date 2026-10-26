@@ -179,8 +179,13 @@ def router_tray(p: StationParameters = DEFAULT) -> cq.Workplane:
         )
         web = box_at(5.0, 13.0, 9.0, (x, screw_y - 5.0, z0 + plate_h + 4.5))
         tray = tray.union(boss).union(web).cut(insert)
-    front_stop = box_at(c.router_width + 7.0, 3.0, 8.0, (x0, y0 - c.router_depth / 2.0 - 1.5, z0 + plate_h + 4.0))
-    tray = tray.union(front_stop)
+    # The former full-width front bar blocked insertion of the native Ethernet
+    # plugs.  Two 10 mm corner pads retain the router datum while leaving the
+    # complete connector/power face open for plugs and fingers.
+    front_stop_y = y0 - c.router_depth / 2.0 - 1.5
+    for side in (-1.0, 1.0):
+        front_stop = box_at(10.0, 3.0, 8.0, (x0 + side * 45.0, front_stop_y, z0 + plate_h + 4.0))
+        tray = tray.union(front_stop)
 
     # Rear-edge finger scallop is reachable as soon as the service panel is off.
     finger = cq.Workplane("XY").center(x0, y0 + plate_d / 2.0).circle(7.0).extrude(6.0).translate((0, 0, z0 - 1.0))

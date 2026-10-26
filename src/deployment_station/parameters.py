@@ -108,7 +108,10 @@ class ComponentParameters:
     router_height: float = 30.0
     router_mass_kg: float = 0.319
     router_center_x: float = 0.0
-    router_center_y: float = 28.0
+    # Physical assembly feedback: the rear-biased router left too little room
+    # to install the six SMA pigtails.  Centre the RUTM30 front-to-rear so the
+    # RF row faces the rear panel with equal service space at both ends.
+    router_center_y: float = 0.0
     router_tray_z: float = 151.0
     router_connector_depth: float = 36.0
     router_sma_pitch: float = 14.8
@@ -131,7 +134,7 @@ class ComponentParameters:
     router_rear_retainer_height: float = 10.0
     router_rear_retainer_thickness: float = 4.0
     router_rear_retainer_screw_x: float = 55.0
-    router_rear_retainer_screw_y: float = 72.5
+    router_rear_retainer_screw_y: float = 44.5
     router_rear_retainer_screw_length: float = 8.0
     router_tray_screw_head_height: float = 3.0
     psu_case_length: float = 84.0
@@ -199,11 +202,17 @@ class InterfaceParameters:
     # User-defined connector centres as seen from outside, looking directly at
     # the rear panel.  That view reverses station X: its right edge is X=-66.
     # Z is derived from the panel lower edge at station Z=18 mm.
-    hdmi_position_x: float = -6.0
-    hdmi_position_z: float = 108.0
+    # Stack HDMI directly above the external Ethernet adapter in the low-
+    # voltage lane.  This clears the +X power compartment and preserves room
+    # behind the centred router.
+    hdmi_position_x: float = -42.0
+    hdmi_position_z: float = 135.0
     usbc_cutout_width: float = 10.4
     usbc_cutout_height: float = 4.4
-    usbc_position_x: float = -24.0
+    # Physical cable trial: only the inner USB-C connector moves 5 mm farther
+    # toward the rear-panel centre.  The outer connector and both heights stay
+    # on their previously accepted datums.
+    usbc_position_x: float = -19.0
     usbc_position_z: float = 68.0
     usbc_second_position_x: float = -41.0
     usbc_second_position_z: float = 78.0
@@ -216,8 +225,9 @@ class InterfaceParameters:
     # bulkheads sit 20 mm higher, directly above 5G positions 1 and 4.
     router_bulkhead_z: float = 178.0
     router_wifi_bulkhead_z: float = 198.0
-    router_bulkhead_label_depth: float = 0.6
-    router_bulkhead_label_height: float = 4.4
+    router_bulkhead_label_depth: float = 0.8
+    router_bulkhead_label_height: float = 5.5
+    rear_io_label_height: float = 5.0
     rear_panel_screw_x: float = 63.0
     rear_panel_screw_z: tuple[float, ...] = (31.0, 92.0, 218.0, 244.0)
     finger_well_width: float = 26.0
@@ -279,6 +289,29 @@ class HandleParameters:
     reinforcement_rib_thickness: float = 5.0
     design_static_factor: float = 4.0
     provisional_complete_mass_kg: float = 1.8
+
+
+@dataclass(frozen=True)
+class LeatherStrapParameters:
+    """Optional side-mounted 40 mm leather carrying strap interface."""
+
+    width: float = 40.0
+    thickness: float = 2.0
+    mount_y: float = 0.0
+    mount_z: float = 232.0
+    thread_nominal_diameter: float = 18.0
+    thread_pitch: float = 2.5
+    thread_engagement: float = 15.0
+    thread_radial_depth: float = 1.30
+    thread_radial_clearance: float = 0.30
+    head_diameter: float = 34.0
+    head_thickness: float = 8.0
+    boss_diameter: float = 30.0
+    boss_depth: float = 20.0
+    reinforcement_depth: float = 9.0
+    reinforcement_width_y: float = 52.0
+    reinforcement_height: float = 64.0
+    knurl_count: int = 28
 
 
 @dataclass(frozen=True)
@@ -493,6 +526,7 @@ class StationParameters:
     interfaces: InterfaceParameters = field(default_factory=InterfaceParameters)
     power: PowerCompartmentParameters = field(default_factory=PowerCompartmentParameters)
     handle: HandleParameters = field(default_factory=HandleParameters)
+    leather_strap: LeatherStrapParameters = field(default_factory=LeatherStrapParameters)
     wifi: WifiDockParameters = field(default_factory=WifiDockParameters)
     logo: LogoParameters = field(default_factory=LogoParameters)
     prototype_v4: PrototypeV4Parameters = field(default_factory=PrototypeV4Parameters)

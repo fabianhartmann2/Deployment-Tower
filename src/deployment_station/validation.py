@@ -22,6 +22,8 @@ from .handle import (
     cap_dovetail_y_positions,
     cap_fastener_positions,
     handle_mount_fastener_positions,
+    leather_strap_mount_positions,
+    rigid_handle_anchor_y,
 )
 from .logo_panel import logo_magnet_positions
 from .mac_mount import (
@@ -43,6 +45,8 @@ from .rear_panel import (
     ethernet_mount_positions,
     hdmi_mount_positions,
     mac_extension_mount_positions,
+    rear_io_label_engravings,
+    rear_io_labels,
     router_bulkhead_label_engravings,
     router_bulkhead_labels,
     router_bulkhead_positions,
@@ -460,7 +464,7 @@ def handle_structural_mount_check(
             h.foot_width - 2.0,
             h.foot_depth - 2.0,
             0.2,
-            (anchor_x, -42.0, e.height - 0.1),
+            (anchor_x, rigid_handle_anchor_y(p), e.height - 0.1),
         )
         above = below.translate((0.0, 0.0, 0.2))
         bearing_witnesses.append(
@@ -906,14 +910,128 @@ def router_bulkhead_label_check(
     passed = (
         labels == expected
         and len(engravings) == 6
+        and p.interfaces.router_bulkhead_label_depth >= 0.8
+        and p.interfaces.router_bulkhead_label_height >= 5.5
         and max(remaining_material) <= INTERSECTION_VOLUME_TOLERANCE_MM3
         and min(backing_witnesses) > INTERSECTION_VOLUME_TOLERANCE_MM3
     )
     return _check(
         "rear RF connector engraving labels",
         passed,
-        "rear-readable engravings are 5G 1-4 below the lower row and unnumbered Wi-Fi above both upper holes, with solid backing",
+        "rear-readable enlarged engravings are 5G 1-4 below the lower row and unnumbered Wi-Fi above both upper holes, with solid backing",
         f"labels={labels}, engraving obstructions={remaining_material}, backing witnesses={backing_witnesses}",
+    )
+
+
+def rear_io_label_check(
+    p: StationParameters,
+    rear_panel: cq.Workplane,
+) -> CheckResult:
+    """Verify the four requested data-port engravings and their backing."""
+
+    expected = (
+        ("USB 1", -19.0, 60.5),
+        ("USB 2", -41.0, 70.5),
+        ("LAN / WAN", -42.0, 94.0),
+        ("HDMI", -42.0, 124.5),
+    )
+    labels = rear_io_labels(p)
+    engravings = rear_io_label_engravings(p)
+    remaining_material = [_intersection_volume(engraving, rear_panel) for engraving in engravings]
+    backing_witnesses = [
+        _intersection_volume(engraving.translate((0.0, -1.0, 0.0)), rear_panel)
+        for engraving in engravings
+    ]
+    passed = (
+        labels == expected
+        and len(engravings) == 4
+        and p.interfaces.rear_io_label_height >= 5.0
+        and max(remaining_material) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(backing_witnesses) > INTERSECTION_VOLUME_TOLERANCE_MM3
+    )
+    return _check(
+        "rear data-port engraving labels",
+        passed,
+        "rear-readable 5.0 mm engravings identify HDMI, LAN / WAN, USB 1, and USB 2 with solid backing",
+        f"labels={labels}, engraving obstructions={remaining_material}, backing witnesses={backing_witnesses}",
+    )
+
+
+def router_connector_service_access_check(
+    p: StationParameters,
+    parts: Mapping[str, cq.Workplane],
+) -> CheckResult:
+    """Guard the centred router's rear SMA and open front connector spaces."""
+
+    e = p.enclosure
+    c = p.components
+    layout = packaging_layout(p)
+    x0, y0, z0 = layout.router_center
+    rear_face = y0 + c.router_depth / 2.0
+    front_face = y0 - c.router_depth / 2.0
+    rear_gap = e.depth / 2.0 - e.rear_panel_thickness - rear_face
+    front_gap = front_face - (-e.depth / 2.0 + e.wall)
+    open_width = c.router_width - 20.0
+    open_front = box_at(
+        open_width - 0.4,
+        4.0,
+        c.router_height + 1.0,
+        (x0, front_face - 2.0, z0),
+    )
+    obstruction = _intersection_volume(open_front, parts["router_tray"])
+    passed = (
+        abs(y0) <= 1e-6
+        and rear_gap >= 30.0
+        and front_gap >= 30.0
+        and obstruction <= INTERSECTION_VOLUME_TOLERANCE_MM3
+    )
+    return _check(
+        "centred RUTM30 front/rear connector service access",
+        passed,
+        f"router is centred at Y=0 with {rear_gap:.1f} mm rear SMA space, {front_gap:.1f} mm front space, and an unobstructed {open_width:.0f} mm connector opening between two 10 mm corner stops",
+        f"router Y={y0:.2f}, rear gap={rear_gap:.2f}, front gap={front_gap:.2f}, central stop obstruction={obstruction:.3f} mm^3",
+    )
+
+
+def leather_strap_mount_check(
+    p: StationParameters,
+    parts: Mapping[str, cq.Workplane],
+) -> CheckResult:
+    """Verify both optional side-thread axes and reinforced boss material."""
+
+    shell = parts["upper_shell"]
+    screw = parts["leather_strap_screw"]
+    s = p.leather_strap
+    e = p.enclosure
+    axis_obstructions: list[float] = []
+    boss_witnesses: list[float] = []
+    for side_name, x, y, z in leather_strap_mount_positions(p):
+        direction = (1.0, 0.0, 0.0) if side_name == "left" else (-1.0, 0.0, 0.0)
+        # Stop 0.2 mm short of the modeled blind floor; the witness proves the
+        # usable bore without falsely demanding a through-hole.
+        axis = cylinder_axis(7.0, s.thread_engagement + e.wall - 0.2, (x, y, z), direction)
+        ring = _annular_axis_witness(14.0, 9.4, 1.0, (x + direction[0] * 10.0, y, z), direction)
+        axis_obstructions.append(_intersection_volume(axis, shell))
+        boss_witnesses.append(_intersection_volume(ring, shell))
+    expected_ring = pi * (14.0**2 - 9.4**2)
+    screw_bounds = screw.val().BoundingBox()
+    passed = (
+        len(leather_strap_mount_positions(p)) == 2
+        and s.mount_y == 0.0
+        and s.thickness == 2.0
+        and s.thread_nominal_diameter == 18.0
+        and 30.0 <= s.head_diameter <= 35.0
+        and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
+        and min(boss_witnesses) >= 0.85 * expected_ring
+        and screw.val().isValid()
+        and len(screw.solids().vals()) == 1
+        and abs(max(screw_bounds.xlen, screw_bounds.ylen) - s.head_diameter) <= 0.1
+    )
+    return _check(
+        "optional leather-strap M18 side mounts",
+        passed,
+        "two Y=0 side-wall mounts use reinforced Ø30 bosses, printable M18x2.5-style threads, and a Ø34 knurled head for the 2 mm leather strap",
+        f"axis obstructions={axis_obstructions}, boss witnesses={boss_witnesses}/{expected_ring:.2f}, screw bbox={(screw_bounds.xlen, screw_bounds.ylen, screw_bounds.zlen)}",
     )
 
 
@@ -2380,6 +2498,8 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
 
     results.append(router_bulkhead_geometry_check(p, parts["rear_panel"]))
     results.append(router_bulkhead_label_check(p, parts["rear_panel"]))
+    results.append(rear_io_label_check(p, parts["rear_panel"]))
+    results.append(router_connector_service_access_check(p, parts))
 
     for name in ("logo_panel_left", "logo_panel_right"):
         dims = bbox_dimensions(parts[name])
@@ -2394,6 +2514,7 @@ def geometry_checks(p: StationParameters = DEFAULT) -> list[CheckResult]:
         )
 
     results.append(handle_structural_mount_check(p, parts))
+    results.append(leather_strap_mount_check(p, parts))
     results.append(cap_dovetail_engagement_check(p, parts))
     results.append(shell_seam_access_check(p, parts))
     results.append(rear_sill_reinforcement_check(p, parts["lower_shell"]))

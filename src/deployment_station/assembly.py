@@ -10,7 +10,7 @@ import cadquery as cq
 
 from .base import base
 from .components import build_reference_model
-from .handle import removable_handle, upper_cap
+from .handle import leather_strap_screw_printable, removable_handle, upper_cap
 from .logo_panel import blank_logo_panel, example_embossed_logo_panel, logo_panel
 from .mac_mount import compliant_pad_template, mac_cradle
 from .parameters import DEFAULT, StationParameters
@@ -55,6 +55,14 @@ def part_definitions() -> OrderedDict[str, PartDefinition]:
             PartDefinition("rear_panel", rear_panel, "ASA, dark", dark),
             PartDefinition("upper_cap", upper_cap, "ASA, matte white", white),
             PartDefinition("removable_handle", removable_handle, "ASA/PA-CF after load test", dark),
+            PartDefinition(
+                "leather_strap_screw",
+                leather_strap_screw_printable,
+                "PA-CF or similarly tough filament after thread/load test",
+                dark,
+                False,
+                "Optional side-strap fastener; print two",
+            ),
             PartDefinition("logo_panel_left", lambda p: logo_panel("left", p), "ASA, matte white", white),
             PartDefinition("logo_panel_right", lambda p: logo_panel("right", p), "ASA, matte white", white),
             PartDefinition("logo_panel_blank_template", blank_logo_panel, "ASA", white, False, "Reusable panel template"),

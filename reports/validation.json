@@ -195,6 +195,16 @@
     "detail": "one connected solid"
   },
   {
+    "name": "build volume: leather_strap_screw",
+    "status": "PASS",
+    "detail": "bounding box 34.0 x 34.0 x 23.0 mm fits 256 mm cube after orientation"
+  },
+  {
+    "name": "valid solid: leather_strap_screw",
+    "status": "PASS",
+    "detail": "OpenCascade shape is valid"
+  },
+  {
     "name": "build volume: logo_panel_left",
     "status": "PASS",
     "detail": "bounding box 2.4 x 70.0 x 70.0 mm fits 256 mm cube after orientation"
@@ -321,6 +331,16 @@
   },
   {
     "name": "coupon validity: coupon_handle_mount",
+    "status": "PASS",
+    "detail": "valid shape"
+  },
+  {
+    "name": "coupon build volume: coupon_leather_strap_thread",
+    "status": "PASS",
+    "detail": "bounding box 78.0 x 34.0 x 23.0 mm"
+  },
+  {
+    "name": "coupon validity: coupon_leather_strap_thread",
     "status": "PASS",
     "detail": "valid shape"
   },
@@ -1122,7 +1142,17 @@
   {
     "name": "rear RF connector engraving labels",
     "status": "PASS",
-    "detail": "rear-readable engravings are 5G 1-4 below the lower row and unnumbered Wi-Fi above both upper holes, with solid backing"
+    "detail": "rear-readable enlarged engravings are 5G 1-4 below the lower row and unnumbered Wi-Fi above both upper holes, with solid backing"
+  },
+  {
+    "name": "rear data-port engraving labels",
+    "status": "PASS",
+    "detail": "rear-readable 5.0 mm engravings identify HDMI, LAN / WAN, USB 1, and USB 2 with solid backing"
+  },
+  {
+    "name": "centred RUTM30 front/rear connector service access",
+    "status": "PASS",
+    "detail": "router is centred at Y=0 with 32.4 mm rear SMA space, 32.4 mm front space, and an unobstructed 80 mm connector opening between two 10 mm corner stops"
   },
   {
     "name": "square replaceable panel: logo_panel_left",
@@ -1138,6 +1168,11 @@
     "name": "handle four-screw reinforced mounting stack",
     "status": "PASS",
     "detail": "four hidden underside M3 axes, two 42 x 32 x 8 mm feet, broad cap pads, and 5.0 mm nominal handle-insert engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass"
+  },
+  {
+    "name": "optional leather-strap M18 side mounts",
+    "status": "PASS",
+    "detail": "two Y=0 side-wall mounts use reinforced \u00d830 bosses, printable M18x2.5-style threads, and a \u00d834 knurled head for the 2 mm leather strap"
   },
   {
     "name": "top-cap selected dovetail engagement",
@@ -1270,6 +1305,11 @@
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
   {
+    "name": "watertight STL: coupon_leather_strap_thread.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
     "name": "watertight STL: coupon_logo_magnet_v1.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
@@ -1346,6 +1386,11 @@
   },
   {
     "name": "watertight STL: coupon_wifi_dock_v2.stl",
+    "status": "PASS",
+    "detail": "1 manifold mesh body/bodies; consistent winding"
+  },
+  {
+    "name": "watertight STL: leather_strap_screw.stl",
     "status": "PASS",
     "detail": "1 manifold mesh body/bodies; consistent winding"
   },
@@ -1465,6 +1510,11 @@
     "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
   {
+    "name": "grounded STL components: coupon_leather_strap_thread.stl",
+    "status": "PASS",
+    "detail": "2 independently grounded watertight component(s); Z minima [0.00000, 0.00000] mm"
+  },
+  {
     "name": "grounded STL components: coupon_logo_magnet_v1.stl",
     "status": "PASS",
     "detail": "2 independently grounded watertight component(s); Z minima [0.00000, -0.00000] mm"
@@ -1543,6 +1593,11 @@
     "name": "grounded STL components: coupon_wifi_dock_v2.stl",
     "status": "PASS",
     "detail": "3 independently grounded watertight component(s); Z minima [0.00000, 0.00000, 0.00000] mm"
+  },
+  {
+    "name": "grounded STL components: leather_strap_screw.stl",
+    "status": "PASS",
+    "detail": "1 independently grounded watertight component(s); Z minima [0.00000] mm"
   },
   {
     "name": "grounded STL components: logo_panel_blank_template.stl",

@@ -46,12 +46,15 @@ from deployment_station.validation import (
     power_shell_mount_access_check,
     power_tie_bridge_floor_check,
     rear_sill_reinforcement_check,
+    rear_io_label_check,
+    router_connector_service_access_check,
     router_screw_retainer_check,
     router_bulkhead_geometry_check,
     router_bulkhead_label_check,
     router_support_stack_check,
     shell_seam_access_check,
     shell_exterior_profile_check,
+    leather_strap_mount_check,
 )
 
 
@@ -74,6 +77,7 @@ def test_required_printable_part_breakdown_exists():
         "rear_panel",
         "upper_cap",
         "removable_handle",
+        "leather_strap_screw",
         "logo_panel_left",
         "logo_panel_right",
         "logo_panel_blank_template",
@@ -106,6 +110,7 @@ def test_all_required_coupons_exist_and_are_valid():
         "coupon_rear_panel_fit_v2",
         "coupon_logo_mount",
         "coupon_handle_mount",
+        "coupon_leather_strap_thread",
         "coupon_wifi_dock_v2",
         "coupon_mac_button_recess",
         "coupon_router_rf_access",
@@ -345,6 +350,9 @@ def test_new_cap_and_bulkhead_interfaces_validate(validation_parts):
     assert cap_result.status == "PASS", cap_result.detail
     assert rf_result.status == "PASS", rf_result.detail
     assert label_result.status == "PASS", label_result.detail
+    assert rear_io_label_check(DEFAULT, validation_parts["rear_panel"]).status == "PASS"
+    assert router_connector_service_access_check(DEFAULT, validation_parts).status == "PASS"
+    assert leather_strap_mount_check(DEFAULT, validation_parts).status == "PASS"
 
 
 def test_external_ethernet_measured_body_plug_and_bend_are_clear(validation_parts):

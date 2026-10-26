@@ -5,7 +5,12 @@ from __future__ import annotations
 import cadquery as cq
 
 from .geometry import box_at, cylinder_axis, rounded_panel_xz, rounded_rect_prism, rounded_rect_ring
-from .handle import cap_dovetail_rail, cap_dovetail_y_positions, cap_fastener_positions
+from .handle import (
+    cap_dovetail_rail,
+    cap_dovetail_y_positions,
+    cap_fastener_positions,
+    leather_strap_shell_boss_and_cutter,
+)
 from .logo_panel import logo_magnet_positions
 from .mac_mount import mac_cradle_fastener_positions
 from .parameters import DEFAULT, StationParameters
@@ -358,20 +363,22 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     # Shell-tied router cross rails and top-loaded M3 insert bosses.
     tray_positions = router_tray_fastener_positions(p)
     rows = sorted({round(pos[1], 6) for pos in tray_positions})
-    for index, y in enumerate(rows):
-        rail_width = e.width - 2.0 * e.wall + (1.0 if index == 0 else -7.5)
+    for y in rows:
+        # Both rails now reach the inner side walls after the router moved to
+        # Y=0.  The former shortened rear rail became a disconnected island at
+        # its new position and no longer serves any power-box clearance need.
+        rail_width = e.width - 2.0 * e.wall + 1.0
         part = part.union(box_at(rail_width, 8.0, 4.0, (0.0, y, p.components.router_tray_z - 2.0)))
     for x, y in tray_positions:
         boss = cq.Workplane("XY").center(x, y).circle(f.m3_boss_diameter / 2.0).extrude(8.0).translate((0, 0, p.components.router_tray_z - 8.0))
         insert = cq.Workplane("XY").center(x, y).circle(f.m3_insert_hole_diameter / 2.0).extrude(6.5).translate((0, 0, p.components.router_tray_z - 5.8))
         part = part.union(boss).cut(insert)
 
-    # Two deep vertical ribs carry cap/handle loads down into both side walls.
-    rib_x = p.handle.anchor_spacing / 2.0
-    for x in (-rib_x, rib_x):
-        rib = box_at(p.handle.reinforcement_rib_thickness, 22.0, 54.0, (x, -48.0, e.shell_top - 27.0))
-        tie = box_at(24.0, 24.0, 54.0, (x, -68.0, e.shell_top - 27.0))
-        part = part.union(rib).union(tie)
+    # The old forward-offset rigid-handle ribs are removed.  The optional rigid
+    # handle is now centred on the cap, whose broad crossmember distributes its
+    # load into both dovetails.  The alternative strap bosses are joined only
+    # after all ordinary shell booleans below, because their real helical
+    # threads are intentionally much more topologically complex.
 
     # Two full-width crossbars carry the selected dovetail rails into both side
     # walls.  The detached cap/handle subassembly slides sideways over them.
@@ -428,4 +435,10 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     # The dovetail crossbars and handle-load ribs are deliberately oversized
     # before unioning.  This final cosmetic-envelope trim prevents their ends
     # from printing through the strongly rounded upper corners.
-    return part.intersect(_exterior_profile_clip(p, z0 - 1.0, e.shell_top + 6.0))
+    part = part.intersect(_exterior_profile_clip(p, z0 - 1.0, e.shell_top + 6.0))
+    # Add the two pre-threaded, internally reinforced strap receivers last.
+    # Their load plates are already wholly inside the rounded envelope.
+    for side in ("left", "right"):
+        strap_boss, strap_entry = leather_strap_shell_boss_and_cutter(side, p)
+        part = part.cut(strap_entry).union(strap_boss)
+    return part
