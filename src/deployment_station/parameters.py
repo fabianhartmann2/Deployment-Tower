@@ -300,16 +300,18 @@ class LeatherStrapParameters:
     mount_y: float = 0.0
     mount_z: float = 232.0
     thread_nominal_diameter: float = 18.0
-    thread_pitch: float = 2.5
-    thread_engagement: float = 15.0
-    thread_radial_depth: float = 1.30
-    thread_radial_clearance: float = 0.30
+    # Deliberately non-standard, coarse FDM trapezoidal profile.  The first
+    # 2.5 mm-pitch trial had visibly thin flanks and is withdrawn.
+    thread_pitch: float = 4.0
+    thread_engagement: float = 18.0
+    thread_radial_depth: float = 1.80
+    thread_radial_clearance: float = 0.35
     head_diameter: float = 34.0
-    head_thickness: float = 8.0
-    boss_diameter: float = 30.0
-    boss_depth: float = 20.0
-    reinforcement_depth: float = 9.0
-    reinforcement_width_y: float = 52.0
+    head_thickness: float = 10.0
+    boss_diameter: float = 32.0
+    boss_depth: float = 24.0
+    reinforcement_depth: float = 10.0
+    reinforcement_width_y: float = 56.0
     reinforcement_height: float = 64.0
     knurl_count: int = 28
 

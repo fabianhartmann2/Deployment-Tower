@@ -197,7 +197,7 @@
   {
     "name": "build volume: leather_strap_screw",
     "status": "PASS",
-    "detail": "bounding box 34.0 x 34.0 x 23.0 mm fits 256 mm cube after orientation"
+    "detail": "bounding box 34.0 x 34.0 x 28.0 mm fits 256 mm cube after orientation"
   },
   {
     "name": "valid solid: leather_strap_screw",
@@ -337,7 +337,7 @@
   {
     "name": "coupon build volume: coupon_leather_strap_thread",
     "status": "PASS",
-    "detail": "bounding box 78.0 x 34.0 x 23.0 mm"
+    "detail": "bounding box 79.0 x 34.0 x 28.0 mm"
   },
   {
     "name": "coupon validity: coupon_leather_strap_thread",
@@ -1170,9 +1170,9 @@
     "detail": "four hidden underside M3 axes, two 42 x 32 x 8 mm feet, broad cap pads, and 5.0 mm nominal handle-insert engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass"
   },
   {
-    "name": "optional leather-strap M18 side mounts",
+    "name": "optional leather-strap coarse \u00d818 side mounts",
     "status": "PASS",
-    "detail": "two Y=0 side-wall mounts use reinforced \u00d830 bosses, printable M18x2.5-style threads, and a \u00d834 knurled head for the 2 mm leather strap"
+    "detail": "two Y=0 side-wall mounts use reinforced \u00d832 bosses, a coarse \u00d818 x 4 FDM trapezoidal thread with 1.8 mm radial depth, and a \u00d834 x 10 knurled head for the 2 mm leather strap"
   },
   {
     "name": "top-cap selected dovetail engagement",

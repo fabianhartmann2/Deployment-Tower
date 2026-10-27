@@ -40,7 +40,7 @@ The generated fixed-envelope result is `165.00 x 165.00 x 280.00`. Non-default p
 | Router tray datum | `Z=151` | 3 thick plate | Shell-supported fasteners; guide/retainer geometry extends above the plate |
 | RUTM30 official STEP | `(0,0,170.5)` | 100 x 93.7 x 30 | X `-50..50`; Y `-46.85..46.85`; Z `155.5..185.5`; 32.45 mm nominal service space at both connector faces |
 | Rigid-handle anchor reference | cap top `Z=280` | centres at X `+/-54`, Y `0` | Centred on the enclosure balance line |
-| Leather-strap anchors | side walls at `(X,Y,Z)=(+/-82.5,0,232)` | 40 wide x 2 thick strap; printed M18x2.5-style screws | Ø30 internal bosses/load plates; Ø34 knurled heads; physical thread/load test mandatory |
+| Leather-strap anchors | side walls at `(X,Y,Z)=(+/-82.5,0,232)` | 40 wide x 2 thick strap; coarse printed Ø18 x 4 trapezoidal screws with 1.8 mm radial thread depth | Ø32 internal bosses/load plates; Ø34 x 10 knurled heads; physical thread/load test mandatory |
 
 The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled placeholders. Only the RUTM30 body is imported from official STEP.
 
@@ -87,7 +87,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `rear_panel` | 132 x 16.2 x 250, including internal HDMI/USB supports |
 | `upper_cap` | 165 x 165 x 12 |
 | `removable_handle` | 150 x 32 x 80 |
-| `leather_strap_screw` | approximately 34 x 34 x 23; print two |
+| `leather_strap_screw` | approximately 34 x 34 x 28; print two |
 | each installed/blank logo panel | 2.4 x 70 x 70 |
 | example embossed logo panel | 3.2 x 70 x 70 |
 | Mac compliant-pad template | 14.6 x 14.6 x 2 |
@@ -103,7 +103,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | `coupon_rear_panel_fit_v2` | 120 x 22.5 x 37; upright receiver plus flat insert |
 | `coupon_logo_mount` | 23.2 x 32 x 18 |
 | `coupon_handle_mount` | 100 x 36 x 20 |
-| `coupon_leather_strap_thread` | approximately 78 x 34 x 23; separate threaded receiver and screw |
+| `coupon_leather_strap_thread` | approximately 79 x 34 x 28; separate threaded receiver and screw |
 | `coupon_wifi_dock_v2` | 17.9 x 120 x 42 |
 | `coupon_mac_button_recess` | 54 x 58 x 12 |
 | `coupon_router_rf_access` | 110 x 3.2 x 46 |
@@ -208,7 +208,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Rib thickness | 5 | Structural geometry |
 | Complete mass / proof-load factor | 1.8 kg provisional / 4.0 | 70.6 N provisional test target; not a rating |
 | Cap dovetails | two rounded-full-edge rails at Y `±68`; 0.10 mm clearance per side | Physical v2 coupon selection; rails now continue into the shell corner profile without four end gaps |
-| Leather strap mounts | Y `0`, Z `232`; strap 40 x 2; M18x2.5-style thread; Ø34 x 8 head | Two pre-threaded Ø30 bosses and 64 mm-high side load plates; print two identical screws; coupon and proof-load tests required |
+| Leather strap mounts | Y `0`, Z `232`; strap 40 x 2; coarse Ø18 x 4 trapezoidal thread, 1.8 mm deep and 18 mm engaged; Ø34 x 10 head | Two pre-threaded Ø32 x 24 bosses and 64 mm-high side load plates; print two identical screws; coupon and proof-load tests required |
 | Cap locks | two M4x10 axes at X `±55`, Y `0` | Blind cap inserts and internal shell clearances; prevents sideways escape |
 | Rear antenna bulkheads | lower 5G row: four Ø6.6 holes at 20 pitch and Z=178; upper Wi-Fi pair: X ±30 at Z=198; 2.0 clamping lands and 0.8-deep, 5.5-high engraved labels | Four SMA mobile plus two RP-SMA Wi-Fi positions |
 | Wi-Fi antenna length | 170 | Type-15 screw-on antenna reference; hinge sweep and RF validation pending |

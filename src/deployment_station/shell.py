@@ -441,4 +441,15 @@ def upper_shell(p: StationParameters = DEFAULT) -> cq.Workplane:
     for side in ("left", "right"):
         strap_boss, strap_entry = leather_strap_shell_boss_and_cutter(side, p)
         part = part.cut(strap_entry).union(strap_boss)
+    # The broad strap load plates cross the two middle seam-driver axes.  Recut
+    # all six internal tool corridors after the plates are present so the M4
+    # shell joint remains serviceable without opening the exterior skin.
+    for x, y in shell_seam_fastener_positions(p):
+        driver_clear = cylinder_axis(
+            e.seam_driver_clearance_diameter / 2.0,
+            e.shell_top - lug_top - e.seam_head_clearance_height + 1.0,
+            (x, y, lug_top + e.seam_head_clearance_height),
+            (0, 0, 1),
+        )
+        part = part.cut(driver_clear)
     return part

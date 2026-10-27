@@ -45,7 +45,7 @@ Summary: 323 PASS, 1 WARN, 12 PENDING, 0 FAIL.
 | build volume: removable_handle | PASS | bounding box 150.0 x 32.0 x 80.0 mm fits 256 mm cube after orientation |
 | valid solid: removable_handle | PASS | OpenCascade shape is valid |
 | connected printable part: removable_handle | PASS | one connected solid |
-| build volume: leather_strap_screw | PASS | bounding box 34.0 x 34.0 x 23.0 mm fits 256 mm cube after orientation |
+| build volume: leather_strap_screw | PASS | bounding box 34.0 x 34.0 x 28.0 mm fits 256 mm cube after orientation |
 | valid solid: leather_strap_screw | PASS | OpenCascade shape is valid |
 | build volume: logo_panel_left | PASS | bounding box 2.4 x 70.0 x 70.0 mm fits 256 mm cube after orientation |
 | valid solid: logo_panel_left | PASS | OpenCascade shape is valid |
@@ -73,7 +73,7 @@ Summary: 323 PASS, 1 WARN, 12 PENDING, 0 FAIL.
 | coupon validity: coupon_logo_mount | PASS | valid shape |
 | coupon build volume: coupon_handle_mount | PASS | bounding box 100.0 x 36.0 x 20.0 mm |
 | coupon validity: coupon_handle_mount | PASS | valid shape |
-| coupon build volume: coupon_leather_strap_thread | PASS | bounding box 78.0 x 34.0 x 23.0 mm |
+| coupon build volume: coupon_leather_strap_thread | PASS | bounding box 79.0 x 34.0 x 28.0 mm |
 | coupon validity: coupon_leather_strap_thread | PASS | valid shape |
 | coupon build volume: coupon_wifi_dock_v2 | PASS | bounding box 17.9 x 120.0 x 42.0 mm |
 | coupon validity: coupon_wifi_dock_v2 | PASS | valid shape |
@@ -240,7 +240,7 @@ Summary: 323 PASS, 1 WARN, 12 PENDING, 0 FAIL.
 | square replaceable panel: logo_panel_left | PASS | 70.00 x 70.00 mm face; 0.25 mm/side rail clearance |
 | square replaceable panel: logo_panel_right | PASS | 70.00 x 70.00 mm face; 0.25 mm/side rail clearance |
 | handle four-screw reinforced mounting stack | PASS | four hidden underside M3 axes, two 42 x 32 x 8 mm feet, broad cap pads, and 5.0 mm nominal handle-insert engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass |
-| optional leather-strap M18 side mounts | PASS | two Y=0 side-wall mounts use reinforced Ø30 bosses, printable M18x2.5-style threads, and a Ø34 knurled head for the 2 mm leather strap |
+| optional leather-strap coarse Ø18 side mounts | PASS | two Y=0 side-wall mounts use reinforced Ø32 bosses, a coarse Ø18 x 4 FDM trapezoidal thread with 1.8 mm radial depth, and a Ø34 x 10 knurled head for the 2 mm leather strap |
 | top-cap selected dovetail engagement | PASS | two full-width transverse rails use the physically selected 0.10 mm/side clearance; the cap slides laterally without modeled interference and two concealed M4 locks prevent drift |
 | six-M4 hidden structural shell seam access | PASS | six internal M4x18 axes have Ø8.2 head pockets for the measured Ø7.0 heads, explicit lateral entry slots, top driver corridors, lower insert pilots, bearing rings, and closed exterior skins |
 | rear-panel lower sill angle-beam reinforcement | PASS | the 4 mm sill has an internal flange/web beam tied into both rear base-boss regions; the separate Mac-button swept-path check remains authoritative for the local notch |

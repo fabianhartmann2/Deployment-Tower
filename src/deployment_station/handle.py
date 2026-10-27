@@ -257,8 +257,10 @@ def _helical_thread_ridge(
     non-watertight face islands in STL, which made the upper shell unusable.
     """
 
-    root_half_width = 0.26 * pitch + flank_clearance
-    crest_half_width = 0.14 * pitch + flank_clearance
+    # Broad FDM trapezoid: 3.04 mm root and 1.76 mm crest at the selected
+    # 4 mm pitch.  This replaces the withdrawn 1.30/0.70 mm first profile.
+    root_half_width = 0.38 * pitch + flank_clearance
+    crest_half_width = 0.22 * pitch + flank_clearance
     profile = (
         cq.Workplane("XY")
         .polyline(
@@ -275,7 +277,7 @@ def _helical_thread_ridge(
 
 
 def leather_strap_external_thread(p: StationParameters = DEFAULT) -> cq.Workplane:
-    """Local M18x2.5-style male thread with explicit FDM radial clearance."""
+    """Local Ø18 x 4 coarse trapezoidal thread with FDM clearance."""
 
     s = p.leather_strap
     major_radius = s.thread_nominal_diameter / 2.0 - s.thread_radial_clearance
@@ -299,7 +301,9 @@ def leather_strap_female_thread_cutter(
     female_major = male_major + s.thread_radial_clearance
     bore = cylinder_axis(female_root, length, (0.0, 0.0, 0.0), (0, 0, 1))
     ridge = _helical_thread_ridge(
-        female_root,
+        # Deliberate radial overlap prevents a merely tangent bore/ridge seam,
+        # which can leave a detached sliver in coarse printed profiles.
+        female_root - 0.20,
         female_major,
         s.thread_pitch,
         length,

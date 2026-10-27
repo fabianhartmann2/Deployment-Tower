@@ -1003,23 +1003,43 @@ def leather_strap_mount_check(
     screw = parts["leather_strap_screw"]
     s = p.leather_strap
     e = p.enclosure
+    male_major = s.thread_nominal_diameter / 2.0 - s.thread_radial_clearance
+    male_root = male_major - s.thread_radial_depth
+    female_root = male_root + s.thread_radial_clearance
+    female_major = male_major + s.thread_radial_clearance
     axis_obstructions: list[float] = []
     boss_witnesses: list[float] = []
     for side_name, x, y, z in leather_strap_mount_positions(p):
         direction = (1.0, 0.0, 0.0) if side_name == "left" else (-1.0, 0.0, 0.0)
         # Stop 0.2 mm short of the modeled blind floor; the witness proves the
         # usable bore without falsely demanding a through-hole.
-        axis = cylinder_axis(7.0, s.thread_engagement + e.wall - 0.2, (x, y, z), direction)
-        ring = _annular_axis_witness(14.0, 9.4, 1.0, (x + direction[0] * 10.0, y, z), direction)
+        axis = cylinder_axis(
+            female_root - 0.2,
+            s.thread_engagement + e.wall - 0.2,
+            (x, y, z),
+            direction,
+        )
+        ring = _annular_axis_witness(
+            s.boss_diameter / 2.0 - 1.0,
+            female_major + 0.4,
+            1.0,
+            (x + direction[0] * 12.0, y, z),
+            direction,
+        )
         axis_obstructions.append(_intersection_volume(axis, shell))
         boss_witnesses.append(_intersection_volume(ring, shell))
-    expected_ring = pi * (14.0**2 - 9.4**2)
+    expected_ring = pi * ((s.boss_diameter / 2.0 - 1.0) ** 2 - (female_major + 0.4) ** 2)
     screw_bounds = screw.val().BoundingBox()
     passed = (
         len(leather_strap_mount_positions(p)) == 2
         and s.mount_y == 0.0
         and s.thickness == 2.0
         and s.thread_nominal_diameter == 18.0
+        and s.thread_pitch >= 4.0
+        and s.thread_radial_depth >= 1.8
+        and s.thread_engagement >= 18.0
+        and s.boss_diameter >= 32.0
+        and s.head_thickness >= 10.0
         and 30.0 <= s.head_diameter <= 35.0
         and max(axis_obstructions) <= INTERSECTION_VOLUME_TOLERANCE_MM3
         and min(boss_witnesses) >= 0.85 * expected_ring
@@ -1028,9 +1048,9 @@ def leather_strap_mount_check(
         and abs(max(screw_bounds.xlen, screw_bounds.ylen) - s.head_diameter) <= 0.1
     )
     return _check(
-        "optional leather-strap M18 side mounts",
+        "optional leather-strap coarse Ø18 side mounts",
         passed,
-        "two Y=0 side-wall mounts use reinforced Ø30 bosses, printable M18x2.5-style threads, and a Ø34 knurled head for the 2 mm leather strap",
+        "two Y=0 side-wall mounts use reinforced Ø32 bosses, a coarse Ø18 x 4 FDM trapezoidal thread with 1.8 mm radial depth, and a Ø34 x 10 knurled head for the 2 mm leather strap",
         f"axis obstructions={axis_obstructions}, boss witnesses={boss_witnesses}/{expected_ring:.2f}, screw bbox={(screw_bounds.xlen, screw_bounds.ylen, screw_bounds.zlen)}",
     )
 
