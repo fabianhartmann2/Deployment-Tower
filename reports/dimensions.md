@@ -40,7 +40,7 @@ The generated fixed-envelope result is `165.00 x 165.00 x 280.00`. Non-default p
 | Router tray datum | `Z=151` | 3 thick plate | Shell-supported fasteners; guide/retainer geometry extends above the plate |
 | RUTM30 official STEP | `(0,0,170.5)` | 100 x 93.7 x 30 | X `-50..50`; Y `-46.85..46.85`; Z `155.5..185.5`; 32.45 mm nominal service space at both connector faces |
 | Rigid-handle anchor reference | cap top `Z=280` | centres at X `+/-54`, Y `0` | Centred on the enclosure balance line |
-| Leather-strap anchors | side walls at `(X,Y,Z)=(+/-82.5,0,232)` | 40 wide x 2 thick strap; coarse printed Ø18 x 4 trapezoidal screws with 1.8 mm radial thread depth | Ø32 internal bosses/load plates; Ø34 x 10 knurled heads; physical thread/load test mandatory |
+| Leather-strap anchors | side walls at `(X,Y,Z)=(+/-82.5,0,232)` | 40 wide x 2 thick strap; ISO Tr18x4 screws, 4 mm pitch, 30 degree flanks and 2.0 mm basic-profile height | Ø32 internal bosses/load plates; Ø34 x 10 knurled heads; 0.35 mm radial FDM clearance; physical thread/load test mandatory |
 
 The Mac, APV, antennas, C8, extensions, plugs, and cable ranges are controlled placeholders. Only the RUTM30 body is imported from official STEP.
 
@@ -208,7 +208,7 @@ These are assembly-coordinate STEP bounding boxes. Hooks, bosses, clips, and ret
 | Rib thickness | 5 | Structural geometry |
 | Complete mass / proof-load factor | 1.8 kg provisional / 4.0 | 70.6 N provisional test target; not a rating |
 | Cap dovetails | two rounded-full-edge rails at Y `±68`; 0.10 mm clearance per side | Physical v2 coupon selection; rails now continue into the shell corner profile without four end gaps |
-| Leather strap mounts | Y `0`, Z `232`; strap 40 x 2; coarse Ø18 x 4 trapezoidal thread, 1.8 mm deep and 18 mm engaged; Ø34 x 10 head | Two pre-threaded Ø32 x 24 bosses and 64 mm-high side load plates; print two identical screws; coupon and proof-load tests required |
+| Leather strap mounts | Y `0`, Z `232`; strap 40 x 2; ISO Tr18x4 trapezoidal thread, 2.0 mm basic height and 18 mm engaged; Ø34 x 10 head | Two pre-threaded Ø32 x 24 bosses and 64 mm-high side load plates; print two identical screws; coupon and proof-load tests required |
 | Cap locks | two M4x10 axes at X `±55`, Y `0` | Blind cap inserts and internal shell clearances; prevents sideways escape |
 | Rear antenna bulkheads | lower 5G row: four Ø6.6 holes at 20 pitch and Z=178; upper Wi-Fi pair: X ±30 at Z=198; 2.0 clamping lands and 0.8-deep, 5.5-high engraved labels | Four SMA mobile plus two RP-SMA Wi-Fi positions |
 | Wi-Fi antenna length | 170 | Type-15 screw-on antenna reference; hinge sweep and RF validation pending |

@@ -240,7 +240,7 @@ Summary: 323 PASS, 1 WARN, 12 PENDING, 0 FAIL.
 | square replaceable panel: logo_panel_left | PASS | 70.00 x 70.00 mm face; 0.25 mm/side rail clearance |
 | square replaceable panel: logo_panel_right | PASS | 70.00 x 70.00 mm face; 0.25 mm/side rail clearance |
 | handle four-screw reinforced mounting stack | PASS | four hidden underside M3 axes, two 42 x 32 x 8 mm feet, broad cap pads, and 5.0 mm nominal handle-insert engagement; CAD design target 70.6 N total (17.7 N/screw) at 4x provisional assembled mass |
-| optional leather-strap coarse Ø18 side mounts | PASS | two Y=0 side-wall mounts use reinforced Ø32 bosses, a coarse Ø18 x 4 FDM trapezoidal thread with 1.8 mm radial depth, and a Ø34 x 10 knurled head for the 2 mm leather strap |
+| optional leather-strap ISO Tr18x4 side mounts | PASS | two Y=0 side-wall mounts use reinforced Ø32 bosses, an ISO Tr18x4 basic profile with 30 degree flanks and separate FDM allowances, and a Ø34 x 10 knurled head for the 2 mm leather strap |
 | top-cap selected dovetail engagement | PASS | two full-width transverse rails use the physically selected 0.10 mm/side clearance; the cap slides laterally without modeled interference and two concealed M4 locks prevent drift |
 | six-M4 hidden structural shell seam access | PASS | six internal M4x18 axes have Ø8.2 head pockets for the measured Ø7.0 heads, explicit lateral entry slots, top driver corridors, lower insert pilots, bearing rings, and closed exterior skins |
 | rear-panel lower sill angle-beam reinforcement | PASS | the 4 mm sill has an internal flange/web beam tied into both rear base-boss regions; the separate Mac-button swept-path check remains authoritative for the local notch |

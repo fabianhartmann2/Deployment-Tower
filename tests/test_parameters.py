@@ -155,7 +155,13 @@ def test_optional_leather_strap_inputs_match_user_hardware():
     strap = DEFAULT.leather_strap
     assert (strap.width, strap.thickness) == (40.0, 2.0)
     assert (strap.thread_nominal_diameter, strap.thread_pitch) == (18.0, 4.0)
-    assert strap.thread_radial_depth >= 1.8
+    assert strap.thread_flank_angle_degrees == 30.0
+    assert strap.thread_radial_depth == strap.thread_pitch / 2.0
+    assert (
+        strap.thread_external_radial_allowance
+        + strap.thread_internal_radial_allowance
+        == strap.thread_radial_clearance
+    )
     assert strap.thread_engagement >= 18.0
     assert strap.boss_diameter >= 32.0
     assert 30.0 <= strap.head_diameter <= 35.0

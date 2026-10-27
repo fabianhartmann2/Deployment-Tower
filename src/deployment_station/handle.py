@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from math import radians, tan
+
 import cadquery as cq
 
 from .geometry import box_at, cylinder_axis, rounded_rect_prism
@@ -243,92 +245,175 @@ def leather_strap_mount_positions(
     )
 
 
-def _helical_thread_ridge(
-    root_radius: float,
-    major_radius: float,
+def _trapezoidal_thread_widths(
+    pitch: float,
+    flank_angle_degrees: float,
+) -> tuple[float, float]:
+    """Return crest/root widths for the ISO trapezoidal basic profile."""
+
+    shoulder = (pitch / 2.0) * tan(radians(flank_angle_degrees / 2.0))
+    return pitch / 2.0 - shoulder, pitch / 2.0 + shoulder
+
+
+def _helical_trapezoid_ridge(
+    inner_radius: float,
+    inner_width: float,
+    outer_radius: float,
+    outer_width: float,
     pitch: float,
     length: float,
-    flank_clearance: float = 0.0,
 ) -> cq.Workplane:
-    """Printable coarse helical key ridge on the local +Z axis.
+    """Create one continuous helical trapezoid on the local +Z axis.
 
-    A twisted closed section tessellates as one watertight body.  The earlier
-    swept triangular wire produced a valid OCC solid but fragmented into many
-    non-watertight face islands in STL, which made the upper shell unusable.
+    Four exact helical boundary wires define the crest, root, and both 30
+    degree flanks.  Ruled faces between those wires form the closed thread
+    tooth.  This is an analytic helix, not the former twisted radial key or a
+    faceted angular approximation.  Extending one pitch past both ends lets
+    the caller square or chamfer the thread at its final datums.
     """
 
-    # Broad FDM trapezoid: 3.04 mm root and 1.76 mm crest at the selected
-    # 4 mm pitch.  This replaces the withdrawn 1.30/0.70 mm first profile.
-    root_half_width = 0.38 * pitch + flank_clearance
-    crest_half_width = 0.22 * pitch + flank_clearance
-    profile = (
-        cq.Workplane("XY")
-        .polyline(
-            (
-                (root_radius, -root_half_width),
-                (major_radius, -crest_half_width),
-                (major_radius, crest_half_width),
-                (root_radius, root_half_width),
-            )
+    z_start = -pitch
+    helical_height = length + 2.0 * pitch
+    outer_edges = [
+        cq.Wire.makeHelix(pitch, helical_height, outer_radius).translate(
+            (0.0, 0.0, z_start + side * outer_width)
         )
-        .close()
-    )
-    return profile.twistExtrude(length, 360.0 * length / pitch)
+        for side in (-0.5, 0.5)
+    ]
+    inner_edges = [
+        cq.Wire.makeHelix(pitch, helical_height, inner_radius).translate(
+            (0.0, 0.0, z_start + side * inner_width)
+        )
+        for side in (-0.5, 0.5)
+    ]
+    end_faces: list[cq.Face] = []
+    for position in (0.0, 1.0):
+        end_wire = cq.Wire.makePolygon(
+            [
+                outer_edges[0].positionAt(position),
+                outer_edges[1].positionAt(position),
+                inner_edges[1].positionAt(position),
+                inner_edges[0].positionAt(position),
+                outer_edges[0].positionAt(position),
+            ]
+        )
+        end_faces.append(cq.Face.makeFromWires(end_wire))
+    flank_faces = [
+        cq.Face.makeRuledSurface(outer_edges[0], outer_edges[1]),
+        cq.Face.makeRuledSurface(outer_edges[1], inner_edges[1]),
+        cq.Face.makeRuledSurface(inner_edges[1], inner_edges[0]),
+        cq.Face.makeRuledSurface(inner_edges[0], outer_edges[0]),
+    ]
+    shell = cq.Shell.makeShell(flank_faces + end_faces)
+    return cq.Workplane(obj=cq.Solid.makeSolid(shell))
 
 
 def leather_strap_external_thread(p: StationParameters = DEFAULT) -> cq.Workplane:
-    """Local Ø18 x 4 coarse trapezoidal thread with FDM clearance."""
+    """Local right-hand ISO Tr18x4 external thread with FDM allowance."""
 
     s = p.leather_strap
-    major_radius = s.thread_nominal_diameter / 2.0 - s.thread_radial_clearance
+    crest_width, root_width = _trapezoidal_thread_widths(
+        s.thread_pitch,
+        s.thread_flank_angle_degrees,
+    )
+    major_radius = s.thread_nominal_diameter / 2.0 - s.thread_external_radial_allowance
     root_radius = major_radius - s.thread_radial_depth
-    core = cylinder_axis(root_radius + 0.05, s.thread_engagement, (0.0, 0.0, 0.0), (0, 0, 1))
-    ridge = _helical_thread_ridge(root_radius, major_radius, s.thread_pitch, s.thread_engagement)
+    # A small hidden overlap joins the helical tooth to the cylindrical core;
+    # it is below the load flank and does not alter the Tr18x4 working profile.
+    core_radius = root_radius + 0.03
+    core = cylinder_axis(core_radius, s.thread_engagement, (0.0, 0.0, 0.0), (0, 0, 1))
+    ridge = _helical_trapezoid_ridge(
+        root_radius - 0.05,
+        root_width,
+        major_radius,
+        crest_width,
+        s.thread_pitch,
+        s.thread_engagement,
+    )
     clip = cylinder_axis(major_radius + 0.05, s.thread_engagement, (0.0, 0.0, 0.0), (0, 0, 1))
-    return core.union(ridge).intersect(clip)
+    # Square the analytically extended helix before unioning it to the core;
+    # this avoids relying on raw helical end-cap orientation in OCC booleans.
+    thread = core.union(ridge.intersect(clip))
+
+    # One-pitch standard-style lead chamfer leaves a full core-sized pilot at
+    # the free end so the printed screw can start without cross-threading.
+    lead_start = s.thread_engagement - s.thread_lead_length
+    envelope = cylinder_axis(
+        major_radius + 0.05,
+        lead_start,
+        (0.0, 0.0, 0.0),
+        (0, 0, 1),
+    ).union(
+        cq.Workplane(
+            obj=cq.Solid.makeCone(
+                major_radius + 0.05,
+                core_radius + 0.25,
+                s.thread_lead_length,
+                cq.Vector(0.0, 0.0, lead_start),
+                cq.Vector(0.0, 0.0, 1.0),
+            )
+        )
+    )
+    return thread.intersect(envelope)
 
 
 def leather_strap_female_thread_cutter(
     length: float,
     p: StationParameters = DEFAULT,
 ) -> cq.Workplane:
-    """Local matching female-threaded void on +Z; lead-in is cut separately."""
+    """Local Tr18x4 female groove void on +Z; lead-in is cut separately."""
 
     s = p.leather_strap
-    male_major = s.thread_nominal_diameter / 2.0 - s.thread_radial_clearance
+    crest_width, root_width = _trapezoidal_thread_widths(
+        s.thread_pitch,
+        s.thread_flank_angle_degrees,
+    )
+    male_major = s.thread_nominal_diameter / 2.0 - s.thread_external_radial_allowance
     male_root = male_major - s.thread_radial_depth
-    female_root = male_root + s.thread_radial_clearance
-    female_major = male_major + s.thread_radial_clearance
-    bore = cylinder_axis(female_root, length, (0.0, 0.0, 0.0), (0, 0, 1))
-    ridge = _helical_thread_ridge(
-        # Deliberate radial overlap prevents a merely tangent bore/ridge seam,
-        # which can leave a detached sliver in coarse printed profiles.
-        female_root - 0.20,
+    female_minor = (
+        s.thread_nominal_diameter / 2.0
+        - s.thread_radial_depth
+        + s.thread_internal_radial_allowance
+    )
+    female_major = s.thread_nominal_diameter / 2.0 + s.thread_internal_radial_allowance
+    # Expand the negative groove axially as well as radially.  At the female
+    # minor diameter the male flank is broader than its crest; calculating the
+    # width at that radius is essential for actual screw engagement.
+    flank_slope = tan(radians(s.thread_flank_angle_degrees / 2.0))
+    inner_width = (
+        root_width
+        - 2.0 * (female_minor - male_root) * flank_slope
+        + 2.0 * s.thread_flank_clearance_per_side
+    )
+    outer_width = crest_width + 2.0 * s.thread_flank_clearance_per_side
+    bore = cylinder_axis(female_minor, length, (0.0, 0.0, 0.0), (0, 0, 1))
+    groove = _helical_trapezoid_ridge(
+        female_minor - 0.05,
+        inner_width,
         female_major,
+        outer_width,
         s.thread_pitch,
         length,
-        flank_clearance=s.thread_radial_clearance,
     )
-    # The twisted ridge is already bounded by ``female_major``.  Avoid a
-    # redundant cylindrical intersection here: OCC can collapse that boolean
-    # to an empty shape for this internal-thread profile at some lengths.
-    threaded_void = bore.union(ridge)
-    return threaded_void
+    clip = cylinder_axis(female_major + 0.05, length, (0.0, 0.0, 0.0), (0, 0, 1))
+    return bore.union(groove.intersect(clip))
 
 
 def _leather_strap_thread_entry_cutter(p: StationParameters = DEFAULT) -> cq.Workplane:
     """Smooth local lead-in, applied as a separate boolean for clean STL."""
 
     s = p.leather_strap
-    male_major = s.thread_nominal_diameter / 2.0 - s.thread_radial_clearance
-    male_root = male_major - s.thread_radial_depth
-    female_root = male_root + s.thread_radial_clearance
-    female_major = s.thread_nominal_diameter / 2.0
+    female_minor = (
+        s.thread_nominal_diameter / 2.0
+        - s.thread_radial_depth
+        + s.thread_internal_radial_allowance
+    )
+    female_major = s.thread_nominal_diameter / 2.0 + s.thread_internal_radial_allowance
     return cq.Workplane(
         obj=cq.Solid.makeCone(
             female_major + 0.8,
-            female_root,
-            4.5,
+            female_minor,
+            s.thread_lead_length,
             cq.Vector(0.0, 0.0, 0.0),
             cq.Vector(0.0, 0.0, 1.0),
         )
@@ -417,7 +502,7 @@ def leather_strap_shell_boss_and_cutter(
             s.mount_z + 4.0,
         ),
     )
-    female_major = s.thread_nominal_diameter / 2.0
+    female_major = s.thread_nominal_diameter / 2.0 + s.thread_internal_radial_allowance
     plate_clearance = cylinder_axis(
         female_major + 0.8,
         s.boss_depth,

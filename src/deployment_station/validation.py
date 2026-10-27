@@ -22,6 +22,8 @@ from .handle import (
     cap_dovetail_y_positions,
     cap_fastener_positions,
     handle_mount_fastener_positions,
+    leather_strap_external_thread,
+    leather_strap_female_thread_cutter,
     leather_strap_mount_positions,
     rigid_handle_anchor_y,
 )
@@ -1003,10 +1005,14 @@ def leather_strap_mount_check(
     screw = parts["leather_strap_screw"]
     s = p.leather_strap
     e = p.enclosure
-    male_major = s.thread_nominal_diameter / 2.0 - s.thread_radial_clearance
+    male_major = s.thread_nominal_diameter / 2.0 - s.thread_external_radial_allowance
     male_root = male_major - s.thread_radial_depth
-    female_root = male_root + s.thread_radial_clearance
-    female_major = male_major + s.thread_radial_clearance
+    female_root = (
+        s.thread_nominal_diameter / 2.0
+        - s.thread_radial_depth
+        + s.thread_internal_radial_allowance
+    )
+    female_major = s.thread_nominal_diameter / 2.0 + s.thread_internal_radial_allowance
     axis_obstructions: list[float] = []
     boss_witnesses: list[float] = []
     for side_name, x, y, z in leather_strap_mount_positions(p):
@@ -1030,13 +1036,22 @@ def leather_strap_mount_check(
         boss_witnesses.append(_intersection_volume(ring, shell))
     expected_ring = pi * ((s.boss_diameter / 2.0 - 1.0) ** 2 - (female_major + 0.4) ** 2)
     screw_bounds = screw.val().BoundingBox()
+    male_thread = leather_strap_external_thread(p)
+    female_void = leather_strap_female_thread_cutter(s.thread_engagement, p)
+    containment_gap = male_thread.val().Volume() - _intersection_volume(male_thread, female_void)
     passed = (
         len(leather_strap_mount_positions(p)) == 2
         and s.mount_y == 0.0
         and s.thickness == 2.0
         and s.thread_nominal_diameter == 18.0
-        and s.thread_pitch >= 4.0
-        and s.thread_radial_depth >= 1.8
+        and s.thread_pitch == 4.0
+        and s.thread_flank_angle_degrees == 30.0
+        and s.thread_radial_depth == s.thread_pitch / 2.0
+        and abs(
+            s.thread_external_radial_allowance
+            + s.thread_internal_radial_allowance
+            - s.thread_radial_clearance
+        ) <= 1e-9
         and s.thread_engagement >= 18.0
         and s.boss_diameter >= 32.0
         and s.head_thickness >= 10.0
@@ -1045,13 +1060,14 @@ def leather_strap_mount_check(
         and min(boss_witnesses) >= 0.85 * expected_ring
         and screw.val().isValid()
         and len(screw.solids().vals()) == 1
+        and abs(containment_gap) <= 1e-3
         and abs(max(screw_bounds.xlen, screw_bounds.ylen) - s.head_diameter) <= 0.1
     )
     return _check(
-        "optional leather-strap coarse Ø18 side mounts",
+        "optional leather-strap ISO Tr18x4 side mounts",
         passed,
-        "two Y=0 side-wall mounts use reinforced Ø32 bosses, a coarse Ø18 x 4 FDM trapezoidal thread with 1.8 mm radial depth, and a Ø34 x 10 knurled head for the 2 mm leather strap",
-        f"axis obstructions={axis_obstructions}, boss witnesses={boss_witnesses}/{expected_ring:.2f}, screw bbox={(screw_bounds.xlen, screw_bounds.ylen, screw_bounds.zlen)}",
+        "two Y=0 side-wall mounts use reinforced Ø32 bosses, an ISO Tr18x4 basic profile with 30 degree flanks and separate FDM allowances, and a Ø34 x 10 knurled head for the 2 mm leather strap",
+        f"axis obstructions={axis_obstructions}, boss witnesses={boss_witnesses}/{expected_ring:.2f}, thread containment gap={containment_gap:.6f} mm^3, screw bbox={(screw_bounds.xlen, screw_bounds.ylen, screw_bounds.zlen)}",
     )
 
 

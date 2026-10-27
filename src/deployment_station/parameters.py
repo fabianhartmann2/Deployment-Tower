@@ -293,19 +293,34 @@ class HandleParameters:
 
 @dataclass(frozen=True)
 class LeatherStrapParameters:
-    """Optional side-mounted 40 mm leather carrying strap interface."""
+    """Optional side-mounted 40 mm leather carrying strap interface.
+
+    The printed fastener uses the ISO metric trapezoidal designation Tr18x4:
+    18 mm nominal diameter, 4 mm pitch and a 30 degree included flank angle.
+    ISO profile geometry and additive-manufacturing fit allowances are kept as
+    separate inputs so printer compensation never silently changes the thread
+    designation.
+    """
 
     width: float = 40.0
     thickness: float = 2.0
     mount_y: float = 0.0
     mount_z: float = 232.0
     thread_nominal_diameter: float = 18.0
-    # Deliberately non-standard, coarse FDM trapezoidal profile.  The first
-    # 2.5 mm-pitch trial had visibly thin flanks and is withdrawn.
     thread_pitch: float = 4.0
+    thread_flank_angle_degrees: float = 30.0
     thread_engagement: float = 18.0
-    thread_radial_depth: float = 1.80
+    # ISO trapezoidal basic profile height is P/2.  This produces a full
+    # 2.0 mm radial tooth instead of the rejected thin twisted ridge.
+    thread_radial_depth: float = 2.0
+    # Diametral/radial printer allowances are intentionally not ISO metal
+    # tolerances.  Together they provide 0.35 mm radial running clearance
+    # while retaining the Tr18x4 pitch and 30 degree load flanks.
+    thread_external_radial_allowance: float = 0.15
+    thread_internal_radial_allowance: float = 0.20
     thread_radial_clearance: float = 0.35
+    thread_flank_clearance_per_side: float = 0.20
+    thread_lead_length: float = 4.0
     head_diameter: float = 34.0
     head_thickness: float = 10.0
     boss_diameter: float = 32.0

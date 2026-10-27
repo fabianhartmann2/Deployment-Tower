@@ -60,8 +60,8 @@
     "name": "upper_shell",
     "kind": "printable STEP",
     "path": "exports/step/upper_shell.step",
-    "bytes": 1868254,
-    "sha256": "04d8487445227ec464b43713e82e3dc10c3d669bb33d2e8a879e8bb96b1ff881",
+    "bytes": 1802326,
+    "sha256": "f64eb1bce9407e3b397901adfa8ea96d12000885a87ed2a082f71c17fff66952",
     "design_bbox_mm": [
       165.0,
       164.9531,
@@ -72,8 +72,8 @@
     "name": "upper_shell",
     "kind": "print-oriented STL",
     "path": "exports/stl/upper_shell.stl",
-    "bytes": 7663184,
-    "sha256": "983b13e8d324496c5b618b829730ec4258c2e53b3ac6b832d32c32bbb54fe080"
+    "bytes": 1533284,
+    "sha256": "112b61cb53dfa4e06bfc8b718f634ae7d7504be64b3a079ac19282ddf332f356"
   },
   {
     "name": "router_tray",
@@ -231,8 +231,8 @@
     "name": "leather_strap_screw",
     "kind": "printable STEP",
     "path": "exports/step/leather_strap_screw.step",
-    "bytes": 740809,
-    "sha256": "a8896887d7df2bc845168874a0931cb8d61ab479066645b11953d02e09c1fb5f",
+    "bytes": 794261,
+    "sha256": "21b44c84e8a7b9abc9df99b75b9b815b404a4632c60107c5643f68eb0c7ddd01",
     "design_bbox_mm": [
       33.9623,
       33.9623,
@@ -243,8 +243,8 @@
     "name": "leather_strap_screw",
     "kind": "print-oriented STL",
     "path": "exports/stl/leather_strap_screw.stl",
-    "bytes": 3753584,
-    "sha256": "508f750c781b31fc15463646f382b7eb82dc5e9d53101df0652952a4eef45948"
+    "bytes": 284684,
+    "sha256": "4998df695a5cf0a1604afd62a5487cbacd7551bd5c54283908c3a453f9db4c1a"
   },
   {
     "name": "logo_panel_left",
@@ -448,15 +448,15 @@
     "name": "coupon_leather_strap_thread",
     "kind": "coupon STEP",
     "path": "exports/step/coupon_leather_strap_thread.step",
-    "bytes": 1060947,
-    "sha256": "267dad6850c89b2bb9e00053e89a5f3d6959b618073a8ed872f1b7b845d06cb4"
+    "bytes": 1077375,
+    "sha256": "521706525a94a24c251aa4f08f2f90669e5ec545cfdc63030f42f0930fe33c48"
   },
   {
     "name": "coupon_leather_strap_thread",
     "kind": "coupon STL",
     "path": "exports/stl/coupon_leather_strap_thread.stl",
-    "bytes": 6995484,
-    "sha256": "d5366be105c86c503aa819aba84ad827e1d1aa97968e3c427336f2b51a99551f"
+    "bytes": 557184,
+    "sha256": "d4f896b87e139f2aa65b5a23b0c9eb88c897abe5a8d1027b3ffa3733cd2af53c"
   },
   {
     "name": "coupon_wifi_dock_v2",
@@ -672,22 +672,22 @@
     "name": "complete_assembly",
     "kind": "assembly STEP",
     "path": "exports/step/complete_assembly.step",
-    "bytes": 39523837,
-    "sha256": "b01e5d1f0b8b93924eb080c32eee3d093a51cff228ce08752009f7bfadc2645f"
+    "bytes": 39455780,
+    "sha256": "560852033e4cf6ceb0aae7d11c90e6621e6f4d0c89448df5f66937814f340049"
   },
   {
     "name": "exploded_assembly",
     "kind": "assembly STEP",
     "path": "exports/step/exploded_assembly.step",
-    "bytes": 9646254,
-    "sha256": "22b5cf964b19d64c150483fa4d16af7e8ea26eb59dd85f34150f36e9924073e9"
+    "bytes": 9578128,
+    "sha256": "836dceb7f4261bf09c5513fe7a8292cc7691cd9133e5101d5cf8bec61907fd0e"
   },
   {
     "name": "packaging_study",
     "kind": "assembly STEP",
     "path": "exports/step/packaging_study.step",
-    "bytes": 29813141,
-    "sha256": "ec67c3c9a326aecd74815512a2a2530c0dea2cbdf1e4cd9c8d823ddff6a8cc3e"
+    "bytes": 29813129,
+    "sha256": "31fe209ffc5fb00546fbd8ef5151e7f58ad7fb128c74ec4c748ef97629688ddc"
   },
   {
     "name": "component_envelopes",
@@ -700,8 +700,8 @@
     "name": "assembled_three_quarter",
     "kind": "render PNG",
     "path": "renders/assembled_three_quarter.png",
-    "bytes": 49975,
-    "sha256": "f97fb5142f125ee7874e0cc84a90f7f4d03d5050379497ba975d04240402e541"
+    "bytes": 50017,
+    "sha256": "6608dd643ef77a070e55a4772bef9f325fd7e14f00ebd3712a5a9f1e0d7d37af"
   },
   {
     "name": "rear_interface",
@@ -714,8 +714,8 @@
     "name": "exploded_view",
     "kind": "render PNG",
     "path": "renders/exploded_view.png",
-    "bytes": 65145,
-    "sha256": "eb2c5e8c7593ed3d501603e200c066c1fb7c61caf8f24bd0e68fa91a761785be"
+    "bytes": 65239,
+    "sha256": "323d14198d527cb329c97f81a6982455c2af62f4b3b43c8cbf9df0dc2392376f"
   },
   {
     "name": "packaging_study",

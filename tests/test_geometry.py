@@ -6,6 +6,10 @@ from deployment_station.assembly import part_definitions, printable_parts
 from deployment_station.components import build_reference_model, mac_reference, router_connector_clearances, router_source_kind
 from deployment_station.coupons import fit_coupons
 from deployment_station.geometry import bbox_dimensions, box_at, cylinder_axis
+from deployment_station.handle import (
+    leather_strap_external_thread,
+    leather_strap_female_thread_cutter,
+)
 from deployment_station.mac_mount import (
     mac_cradle,
     mac_release_rail_datums,
@@ -353,6 +357,20 @@ def test_new_cap_and_bulkhead_interfaces_validate(validation_parts):
     assert rear_io_label_check(DEFAULT, validation_parts["rear_panel"]).status == "PASS"
     assert router_connector_service_access_check(DEFAULT, validation_parts).status == "PASS"
     assert leather_strap_mount_check(DEFAULT, validation_parts).status == "PASS"
+
+
+def test_tr18x4_male_thread_is_fully_contained_by_female_groove():
+    """The selected FDM allowances must leave no modeled thread collision."""
+
+    strap = DEFAULT.leather_strap
+    male = leather_strap_external_thread(DEFAULT)
+    female_void = leather_strap_female_thread_cutter(strap.thread_engagement, DEFAULT)
+    contained_volume = male.intersect(female_void).val().Volume()
+    assert male.val().isValid()
+    assert female_void.val().isValid()
+    assert len(male.solids().vals()) == 1
+    assert len(female_void.solids().vals()) == 1
+    assert abs(male.val().Volume() - contained_volume) <= 1e-3
 
 
 def test_external_ethernet_measured_body_plug_and_bend_are_clear(validation_parts):

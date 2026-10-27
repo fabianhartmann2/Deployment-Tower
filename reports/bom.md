@@ -17,7 +17,7 @@ This is a prototype-planning BOM, not a purchasing or production release. Quanti
 | `rear_panel` | 1 | Dark ASA | Full-height one-piece service face with stacked HDMI/LAN-WAN, separated dual USB-C, enlarged RF engravings, `HDMI`/`LAN / WAN`/`USB 1`/`USB 2` labels, six Ø6.6 bulkheads, and fixed C8-island clearance |
 | `upper_cap` | 1 | Matte white ASA | Selected 0.10 mm/side dovetail grooves, crossmember, bearing pads, underside handle clearances, and two blind M4 lock inserts |
 | `removable_handle` | 1 | Candidate ASA/PA-CF after tests | Continuous cylindrical grip, spherical shoulders, round legs, flared roots, two rounded 42 x 32 x 8 mm feet, and four underside M3 insert pockets; no load rating |
-| `leather_strap_screw` | 2 | Candidate PA-CF or similarly tough filament after tests | Optional coarse Ø18 x 4 trapezoidal printed screw, 1.8 mm radial thread depth, Ø34 x 10 knurled head and 18 mm threaded shaft; use only after the dedicated coupon and complete carry proof test |
+| `leather_strap_screw` | 2 | Candidate PA-CF or similarly tough filament after tests | Optional ISO Tr18x4 printed screw with 30 degree flanks, 2.0 mm basic-profile height, one-pitch lead chamfer, Ø34 x 10 knurled head and 18 mm threaded shaft; use only after the dedicated coupon and complete carry proof test |
 | `logo_panel_left`, `logo_panel_right` | 1 each | ASA or approved variant | Recessed 70 mm faces with two blind 6 x 1.5 mm magnet pockets each |
 
 The registry contains **19 printable definitions**: the 14 installed rigid-handle assembly parts, the optional `leather_strap_screw` (print twice), plus `logo_panel_blank_template`, `logo_panel_example_embossed`, `compliant_pad_template`, and `router_compliant_pad_template`. Make three provisional 14.6 x 14.6 x 2 mm Mac pads for the 1 mm seats and four provisional 8 x 16 x 1.3 mm router pads; material, compression, contact compatibility, and release status remain open.
@@ -35,7 +35,7 @@ The registry contains **19 printable definitions**: the 14 installed rigid-handl
 | `coupon_router_rf_access` | Legacy only | Historical coupon for the former common RF window; the production V4 uses six individual SMA bulkheads |
 | `coupon_logo_mount` | Per panel/shell material pair | Two-screw insert fit, seating, torque, service cycling, and rattle |
 | `coupon_handle_mount` | Per structural material/orientation | Representative two-screw foot/pad insert stack; torque, pull-out, and section inspection |
-| `coupon_leather_strap_thread` | Before reprinting `upper_shell` | Matching Ø32 female boss and coarse Ø18 x 4 trapezoidal knurled-head screw; verify broad-flank formation, full hand engagement, removal, conditioning, thread stripping, and retained clamp force |
+| `coupon_leather_strap_thread` | Before reprinting `upper_shell` | Matching Ø32 female boss and ISO Tr18x4 knurled-head screw with separate FDM allowance; verify lead-in, broad-flank formation, full hand engagement, removal, conditioning, thread stripping, and retained clamp force |
 
 ## Owner equipment and controlled components
 
